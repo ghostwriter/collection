@@ -1,11 +1,11 @@
 {
-    "name": "ghostwriter/wip",
-    "description": "Here be dragons",
+    "name": "ghostwriter/collection",
+    "description": "Provides a Collection implementation for PHP",
     "license": "BSD-3-Clause",
     "type": "library",
     "keywords": [
         "ghostwriter",
-        "wip"
+        "collection"
     ],
     "authors": [
         {
@@ -15,13 +15,13 @@
             "role": "Developer"
         }
     ],
-    "homepage": "https://github.com/ghostwriter/wip",
+    "homepage": "https://github.com/ghostwriter/collection",
     "support": {
-        "issues": "https://github.com/ghostwriter/wip/issues",
-        "forum": "https://github.com/ghostwriter/wip/discussions",
-        "source": "https://github.com/ghostwriter/wip",
-        "docs": "https://github.com/ghostwriter/wip",
-        "rss": "https://github.com/ghostwriter/wip/releases.atom"
+        "issues": "https://github.com/ghostwriter/collection/issues",
+        "forum": "https://github.com/ghostwriter/collection/discussions",
+        "source": "https://github.com/ghostwriter/collection",
+        "docs": "https://github.com/ghostwriter/collection",
+        "rss": "https://github.com/ghostwriter/collection/releases.atom"
     },
     "funding": [
         {
@@ -50,22 +50,14 @@
     "prefer-stable": true,
     "autoload": {
         "psr-4": {
-            "Ghostwriter\\wip\\": "src/"
-        },
-        "files": [
-            "src/constants.php",
-            "src/functions.php"
-        ]
+            "Ghostwriter\\Collection\\": "src/"
+        }
     },
     "autoload-dev": {
         "psr-4": {
-            "Ghostwriter\\wip\\Tests\\": "tests/"
+            "Ghostwriter\\Collection\\Tests\\": "tests/"
         }
     },
-    "bin": [
-        "bin/my-other-script",
-        "bin/my-script"
-    ],
     "config": {
         "allow-plugins": {
             "infection/extension-installer": true
