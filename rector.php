@@ -77,7 +77,6 @@ return static function (RectorConfig $rectorConfig): void {
         SetList::RECTOR_CONFIG,
     ]);
     $rectorConfig->paths([
-        __DIR__ . '/bin',
         __DIR__ . '/compliance.php',
         __DIR__ . '/ecs.php',
         __DIR__ . '/rector.php',
