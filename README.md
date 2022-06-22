@@ -1,30 +1,44 @@
-# wip
+# Collection
 
-[![Compliance](https://github.com/ghostwriter/wip/actions/workflows/compliance.yml/badge.svg)](https://github.com/ghostwriter/wip/actions/workflows/continuous-integration.yml)
-[![Supported PHP Version](https://badgen.net/packagist/php/ghostwriter/wip?color=8892bf)](https://www.php.net/supported-versions)
-[![Type Coverage](https://shepherd.dev/github/ghostwriter/wip/coverage.svg)](https://shepherd.dev/github/ghostwriter/wip)
-[![Latest Version on Packagist](https://badgen.net/packagist/v/ghostwriter/wip)](https://packagist.org/packages/ghostwriter/wip)
-[![Downloads](https://badgen.net/packagist/dt/ghostwriter/wip?color=blue)](https://packagist.org/packages/ghostwriter/wip)
+[![Compliance](https://github.com/ghostwriter/collection/actions/workflows/compliance.yml/badge.svg)](https://github.com/ghostwriter/collection/actions/workflows/continuous-integration.yml)
+[![Supported PHP Version](https://badgen.net/packagist/php/ghostwriter/collection?color=8892bf)](https://www.php.net/supported-versions)
+[![Type Coverage](https://shepherd.dev/github/ghostwriter/collection/coverage.svg)](https://shepherd.dev/github/ghostwriter/collection)
+[![Latest Version on Packagist](https://badgen.net/packagist/v/ghostwriter/collection)](https://packagist.org/packages/ghostwriter/collection)
+[![Downloads](https://badgen.net/packagist/dt/ghostwriter/collection?color=blue)](https://packagist.org/packages/ghostwriter/collection)
 
-work in progress
+Provides a Collection implementation for PHP.
 
 > **Warning**
 >
 > This project is not finished yet, work in progress.
-
 
 ## Installation
 
 You can install the package via composer:
 
 ``` bash
-composer require ghostwriter/wip
+composer require ghostwriter/collection
 ```
 
 ## Usage
 
 ```php
-// work in progress
+/** @var \Ghostwriter\Collection\Collection $collection */
+$collection = Collection::fromIterable([1, 2, 3])
+    ->append([4, 5, 6, 7, 8, 9])
+    ->map(static fn ($v): int => $v * 10)
+    ->filter(static fn ($v): bool => 0 === $v % 20);
+    
+$collection->toArray();  // [20, 40, 60, 80]
+$collection->drop(1)     // [40, 60, 80]
+           ->take(2)     // [40, 60]
+           ->slice(1, 1) // [60]
+           ->toArray();  // [60]
+
+// Create custom Collection classes by extending AbstractCollection
+class CustomCollection extends \Ghostwriter\Collection\AbstractCollection 
+{
+}
 ```
 
 ## Testing
@@ -49,7 +63,7 @@ Maintaining open source software is a thankless, time-consuming job.
 
 Sponsorships are one of the best ways to contribute to the long-term sustainability of an open-source licensed project.
 
-Please consider giving back, to fund the continued development of `ghostwriter/wip`, by sponsoring me here on GitHub.
+Please consider giving back, to fund the continued development of `ghostwriter/collection`, by sponsoring me here on GitHub.
 
 [[Become a GitHub Sponsor](https://github.com/sponsors/ghostwriter)]
 
@@ -60,7 +74,7 @@ Please consider helping your company become a GitHub Sponsor, to support the ope
 ## Credits
 
 - [Nathanael Esayeas](https://github.com/ghostwriter)
-- [All Contributors](https://github.com/ghostwriter/wip/contributors)
+- [All Contributors](https://github.com/ghostwriter/collection/contributors)
 
 ## License
 
