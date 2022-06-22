@@ -1,0 +1,46 @@
+name: Compliance
+
+on:
+  workflow_dispatch:
+  pull_request:
+  push:
+    branches:
+      - "**"
+      - "[0-9]+.[0-9]+.x"
+      - "v[0-9]+"
+  schedule:
+    - cron: "0 * * * *" # Runs hourly
+
+jobs:
+  matrix:
+    name: Generate job matrix
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.matrix.outputs.matrix }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Determine CI Jobs
+        id: matrix
+        uses: ghostwriter/compliance@v1
+        with:
+          command: matrix
+  qa:
+    name: ${{ matrix.name }} on PHP ${{ matrix.php }} with ${{ matrix.dependency }} dependencies
+    needs: [matrix]
+    runs-on: ${{ matrix.os }}
+    continue-on-error: ${{ matrix.experimental }}
+    strategy:
+      fail-fast: false
+      matrix: ${{ fromJSON(needs.matrix.outputs.matrix) }}
+    steps:
+      - name: ${{ matrix.name }} on PHP ${{ matrix.php }}
+        uses: ghostwriter/laminas-continuous-integration-action@temp
+        with:
+          job: '{"php":"${{ matrix.php }}","dependencies":"${{ matrix.dependency }}","extensions":[],"ini":[],"command":"${{ matrix.command }}"}'
+#      - name: QA Check ${{ matrix.name }} on PHP ${{ matrix.php }}
+#        uses: ghostwriter/compliance@qa/test-workflow
+#        with:
+#          command: check
+#          job: ${{ matrix.command }}

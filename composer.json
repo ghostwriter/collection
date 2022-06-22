@@ -1,0 +1,132 @@
+{
+    "name": "ghostwriter/wip",
+    "description": "Here be dragons",
+    "license": "BSD-3-Clause",
+    "type": "library",
+    "keywords": [
+        "ghostwriter",
+        "wip"
+    ],
+    "authors": [
+        {
+            "name": "Nathanael Esayeas",
+            "email": "nathanael.esayeas@protonmail.com",
+            "homepage": "https://github.com/ghostwriter",
+            "role": "Developer"
+        }
+    ],
+    "homepage": "https://github.com/ghostwriter/wip",
+    "support": {
+        "issues": "https://github.com/ghostwriter/wip/issues",
+        "forum": "https://github.com/ghostwriter/wip/discussions",
+        "source": "https://github.com/ghostwriter/wip",
+        "docs": "https://github.com/ghostwriter/wip",
+        "rss": "https://github.com/ghostwriter/wip/releases.atom"
+    },
+    "funding": [
+        {
+            "type": "github",
+            "url": "https://github.com/sponsors/ghostwriter"
+        }
+    ],
+    "require": {
+        "php": ">=8.0,<8.2",
+        "ghostwriter/container": "^0.4.0",
+        "ghostwriter/event-dispatcher": "^0.3.2"
+    },
+    "require-dev": {
+        "nikic/php-parser": "^4.14.0",
+        "phpbench/phpbench": "^1.2.5",
+        "phpunit/phpunit": "^9.5.20",
+        "psalm/plugin-phpunit": "^0.17.0",
+        "rector/rector": "^0.13.5",
+        "roave/infection-static-analysis-plugin": "^1.20.0",
+        "roave/security-advisories": "dev-latest",
+        "symplify/easy-coding-standard": "^11.0.3",
+        "vimeo/psalm": "^4.23.0"
+    },
+    "replace": {},
+    "minimum-stability": "stable",
+    "prefer-stable": true,
+    "autoload": {
+        "psr-4": {
+            "Ghostwriter\\wip\\": "src/"
+        },
+        "files": [
+            "src/constants.php",
+            "src/functions.php"
+        ]
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Ghostwriter\\wip\\Tests\\": "tests/"
+        }
+    },
+    "bin": [
+        "bin/my-other-script",
+        "bin/my-script"
+    ],
+    "config": {
+        "allow-plugins": {
+            "infection/extension-installer": true
+        },
+        "classmap-authoritative": true,
+        "discard-changes": true,
+        "optimize-autoloader": true,
+        "preferred-install": "dist",
+        "prepend-autoloader": true,
+        "process-timeout": 5000,
+        "sort-packages": true
+    },
+    "scripts": {
+        "cache:clear": [
+            "rm -fr ./.cache"
+        ],
+        "check": [
+            "@composer validate",
+            "@normalizer",
+            "@cs-check",
+            "@cs-fix",
+            "@test",
+            "@psalm",
+            "@rector:dry-run",
+            "@psalm:security"
+        ],
+        "cs-check": "vendor/bin/ecs check --clear-cache || true",
+        "cs-fix": "vendor/bin/ecs check --fix --clear-cache",
+        "dev": [
+            "@cs-fix",
+            "@test",
+            "@psalm",
+            "@infection"
+        ],
+        "infection": [
+            "@putenv XDEBUG_MODE=coverage",
+            "roave-infection-static-analysis-plugin"
+        ],
+        "missing-returntypes": "psalm --alter --issues=MissingReturnType",
+        "normalizer": "composer normalize --no-check-lock",
+        "phpbench": "phpbench run",
+        "phpunit": "phpunit --colors=always --testdox --stop-on-failure",
+        "psalm": "@psalm:shepherd",
+        "psalm:baseline": "psalm --set-baseline=psalm-baseline.xml",
+        "psalm:dry-run": "psalm --alter --issues=all --dry-run",
+        "psalm:missing": "psalm --alter --issues=MissingReturnType",
+        "psalm:security": "psalm --taint-analysis",
+        "psalm:shepherd": "psalm --shepherd --stats --no-diff --no-cache",
+        "rector": "vendor/bin/rector process",
+        "rector:dry-run": "vendor/bin/rector process --dry-run || true",
+        "test": [
+            "@xdebug",
+            "@phpunit"
+        ],
+        "test:coverage": [
+            "@cache:clear",
+            "@xdebug",
+            "@phpunit"
+        ],
+        "xdebug": [
+            "@putenv XDEBUG_MODE=coverage"
+        ]
+    }
+}
