@@ -14,14 +14,12 @@
     },
     "timeout": 10,
     "logs": {
+        "stryker": {
+            "report": "/.*?/"
+        },
         "text": "php:\/\/stderr",
         "github": true
     },
     "minMsi": 0,
     "minCoveredMsi": 0
-    "logs": {
-        "stryker": {
-            "report": "/.*?/"
-        }
-    }
 }
