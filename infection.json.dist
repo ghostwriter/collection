@@ -19,4 +19,9 @@
     },
     "minMsi": 0,
     "minCoveredMsi": 0
+    "logs": {
+        "stryker": {
+            "report": "/.*?/"
+        }
+    }
 }
