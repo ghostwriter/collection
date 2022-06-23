@@ -14,7 +14,6 @@ use Ghostwriter\Collection\Exception\InvalidArgumentException;
  * @internal
  *
  * @small
- * @psalm-suppress MixedInferredReturnType
  */
 final class CollectionTest extends AbstractTestCase
 {
