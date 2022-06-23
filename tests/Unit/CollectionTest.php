@@ -170,11 +170,11 @@ final class CollectionTest extends AbstractTestCase
     }
 
     /**
-     * @covers       \Ghostwriter\Collection\AbstractCollection::__construct
-     * @covers       \Ghostwriter\Collection\AbstractCollection::fromIterable
-     * @covers       \Ghostwriter\Collection\AbstractCollection::getIterator
-     * @covers       \Ghostwriter\Collection\AbstractCollection::slice
-     * @covers       \Ghostwriter\Collection\AbstractCollection::toArray
+     * @covers \Ghostwriter\Collection\AbstractCollection::__construct
+     * @covers \Ghostwriter\Collection\AbstractCollection::fromIterable
+     * @covers \Ghostwriter\Collection\AbstractCollection::getIterator
+     * @covers \Ghostwriter\Collection\AbstractCollection::slice
+     * @covers \Ghostwriter\Collection\AbstractCollection::toArray
      *
      * @dataProvider sliceDataProvider
      *
