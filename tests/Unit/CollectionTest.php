@@ -30,14 +30,14 @@ final class CollectionTest extends AbstractTestCase
     }
 
     /**
-     * @covers \Ghostwriter\Collection\AbstractCollection::__construct
-     * @covers \Ghostwriter\Collection\AbstractCollection::append
-     * @covers \Ghostwriter\Collection\AbstractCollection::count
-     * @covers \Ghostwriter\Collection\AbstractCollection::filter
-     * @covers \Ghostwriter\Collection\AbstractCollection::fromIterable
-     * @covers \Ghostwriter\Collection\AbstractCollection::getIterator
-     * @covers \Ghostwriter\Collection\AbstractCollection::map
-     * @covers \Ghostwriter\Collection\AbstractCollection::toArray
+     * @covers \Ghostwriter\Collection\Collection::__construct
+     * @covers \Ghostwriter\Collection\Collection::append
+     * @covers \Ghostwriter\Collection\Collection::count
+     * @covers \Ghostwriter\Collection\Collection::filter
+     * @covers \Ghostwriter\Collection\Collection::fromIterable
+     * @covers \Ghostwriter\Collection\Collection::getIterator
+     * @covers \Ghostwriter\Collection\Collection::map
+     * @covers \Ghostwriter\Collection\Collection::toArray
      */
     public function testAppendMapFilter(): void
     {
@@ -53,10 +53,10 @@ final class CollectionTest extends AbstractTestCase
     }
 
     /**
-     * @covers \Ghostwriter\Collection\AbstractCollection::__construct
-     * @covers \Ghostwriter\Collection\AbstractCollection::fromIterable
-     * @covers \Ghostwriter\Collection\AbstractCollection::getIterator
-     * @covers \Ghostwriter\Collection\AbstractCollection::contains
+     * @covers \Ghostwriter\Collection\Collection::__construct
+     * @covers \Ghostwriter\Collection\Collection::fromIterable
+     * @covers \Ghostwriter\Collection\Collection::getIterator
+     * @covers \Ghostwriter\Collection\Collection::contains
      */
     public function testContains(): void
     {
@@ -77,18 +77,18 @@ final class CollectionTest extends AbstractTestCase
     }
 
     /**
-     * @covers \Ghostwriter\Collection\AbstractCollection::__construct
-     * @covers \Ghostwriter\Collection\AbstractCollection::append
-     * @covers \Ghostwriter\Collection\AbstractCollection::count
-     * @covers \Ghostwriter\Collection\AbstractCollection::drop
-     * @covers \Ghostwriter\Collection\AbstractCollection::filter
-     * @covers \Ghostwriter\Collection\AbstractCollection::first
-     * @covers \Ghostwriter\Collection\AbstractCollection::fromIterable
-     * @covers \Ghostwriter\Collection\AbstractCollection::getIterator
-     * @covers \Ghostwriter\Collection\AbstractCollection::map
-     * @covers \Ghostwriter\Collection\AbstractCollection::slice
-     * @covers \Ghostwriter\Collection\AbstractCollection::take
-     * @covers \Ghostwriter\Collection\AbstractCollection::toArray
+     * @covers \Ghostwriter\Collection\Collection::__construct
+     * @covers \Ghostwriter\Collection\Collection::append
+     * @covers \Ghostwriter\Collection\Collection::count
+     * @covers \Ghostwriter\Collection\Collection::drop
+     * @covers \Ghostwriter\Collection\Collection::filter
+     * @covers \Ghostwriter\Collection\Collection::first
+     * @covers \Ghostwriter\Collection\Collection::fromIterable
+     * @covers \Ghostwriter\Collection\Collection::getIterator
+     * @covers \Ghostwriter\Collection\Collection::map
+     * @covers \Ghostwriter\Collection\Collection::slice
+     * @covers \Ghostwriter\Collection\Collection::take
+     * @covers \Ghostwriter\Collection\Collection::toArray
      */
     public function testDropTakeSlice(): void
     {
@@ -109,11 +109,11 @@ final class CollectionTest extends AbstractTestCase
     }
 
     /**
-     * @covers \Ghostwriter\Collection\AbstractCollection::__construct
-     * @covers \Ghostwriter\Collection\AbstractCollection::count
-     * @covers \Ghostwriter\Collection\AbstractCollection::fromGenerator
-     * @covers \Ghostwriter\Collection\AbstractCollection::getIterator
-     * @covers \Ghostwriter\Collection\AbstractCollection::isEmpty
+     * @covers \Ghostwriter\Collection\Collection::__construct
+     * @covers \Ghostwriter\Collection\Collection::count
+     * @covers \Ghostwriter\Collection\Collection::fromGenerator
+     * @covers \Ghostwriter\Collection\Collection::getIterator
+     * @covers \Ghostwriter\Collection\Collection::isEmpty
      */
     public function testFromGenerator(): void
     {
@@ -124,10 +124,10 @@ final class CollectionTest extends AbstractTestCase
     }
 
     /**
-     * @covers \Ghostwriter\Collection\AbstractCollection::__construct
-     * @covers \Ghostwriter\Collection\AbstractCollection::count
-     * @covers \Ghostwriter\Collection\AbstractCollection::fromIterable
-     * @covers \Ghostwriter\Collection\AbstractCollection::getIterator
+     * @covers \Ghostwriter\Collection\Collection::__construct
+     * @covers \Ghostwriter\Collection\Collection::count
+     * @covers \Ghostwriter\Collection\Collection::fromIterable
+     * @covers \Ghostwriter\Collection\Collection::getIterator
      */
     public function testFromIterable(): void
     {
@@ -135,10 +135,10 @@ final class CollectionTest extends AbstractTestCase
     }
 
     /**
-     * @covers \Ghostwriter\Collection\AbstractCollection::__construct
-     * @covers \Ghostwriter\Collection\AbstractCollection::fromIterable
-     * @covers \Ghostwriter\Collection\AbstractCollection::getIterator
-     * @covers \Ghostwriter\Collection\AbstractCollection::last
+     * @covers \Ghostwriter\Collection\Collection::__construct
+     * @covers \Ghostwriter\Collection\Collection::fromIterable
+     * @covers \Ghostwriter\Collection\Collection::getIterator
+     * @covers \Ghostwriter\Collection\Collection::last
      */
     public function testLast(): void
     {
@@ -148,10 +148,10 @@ final class CollectionTest extends AbstractTestCase
     }
 
     /**
-     * @covers \Ghostwriter\Collection\AbstractCollection::__construct
-     * @covers \Ghostwriter\Collection\AbstractCollection::fromIterable
-     * @covers \Ghostwriter\Collection\AbstractCollection::getIterator
-     * @covers \Ghostwriter\Collection\AbstractCollection::reduce
+     * @covers \Ghostwriter\Collection\Collection::__construct
+     * @covers \Ghostwriter\Collection\Collection::fromIterable
+     * @covers \Ghostwriter\Collection\Collection::getIterator
+     * @covers \Ghostwriter\Collection\Collection::reduce
      */
     public function testReduce(): void
     {
@@ -170,11 +170,11 @@ final class CollectionTest extends AbstractTestCase
     }
 
     /**
-     * @covers \Ghostwriter\Collection\AbstractCollection::__construct
-     * @covers \Ghostwriter\Collection\AbstractCollection::fromIterable
-     * @covers \Ghostwriter\Collection\AbstractCollection::getIterator
-     * @covers \Ghostwriter\Collection\AbstractCollection::slice
-     * @covers \Ghostwriter\Collection\AbstractCollection::toArray
+     * @covers \Ghostwriter\Collection\Collection::__construct
+     * @covers \Ghostwriter\Collection\Collection::fromIterable
+     * @covers \Ghostwriter\Collection\Collection::getIterator
+     * @covers \Ghostwriter\Collection\Collection::slice
+     * @covers \Ghostwriter\Collection\Collection::toArray
      *
      * @dataProvider sliceDataProvider
      *
