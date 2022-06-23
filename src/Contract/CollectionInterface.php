@@ -6,6 +6,7 @@ namespace Ghostwriter\Collection\Contract;
 
 use Closure;
 use Countable;
+use Generator;
 use Ghostwriter\Collection\Exception\InvalidArgumentException;
 use IteratorAggregate;
 use Traversable;
@@ -55,7 +56,7 @@ interface CollectionInterface extends Countable, IteratorAggregate
     public static function fromIterable(iterable $iterable = []): self;
 
     /**
-     * @return Traversable<array-key,TValue>
+     * @return Generator<TValue>
      */
     public function getIterator(): Traversable;
 
