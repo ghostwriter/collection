@@ -14,28 +14,26 @@ use const PHP_INT_MAX;
 /**
  * @template TValue
  * @implements CollectionInterface<TValue>
+ * @psalm-consistent-constructor
+ * @psalm-consistent-templates
  */
 abstract class AbstractCollection implements CollectionInterface
 {
-    /**
-     * @var Closure():Generator<TValue>
-     */
-    private Closure $generator;
+    /** @param SplFixedArray<TValue> $generator */
+    private SplFixedArray $iterable;
 
     /**
      * @param Closure():Generator<TValue> $generator
      */
     final private function __construct(Closure $generator)
     {
-        /** @param SplFixedArray<TValue> $iterator */
-        $this->generator = (
-            static fn (SplFixedArray $iterator): Closure => static fn (): Generator => yield from $iterator
-        )(SplFixedArray::fromArray(iterator_to_array($generator(), false)));
+        /** @param SplFixedArray<TValue> $iterable */
+        $this->iterable = SplFixedArray::fromArray(iterator_to_array($generator(), false));
     }
 
     public function append(iterable $iterable = []): static
     {
-        return new (static::class)(function () use ($iterable): Generator {
+        return new static(function () use ($iterable): Generator {
             yield from $this;
             yield from $iterable;
         });
@@ -65,7 +63,7 @@ abstract class AbstractCollection implements CollectionInterface
 
     public function filter(Closure $function): static
     {
-        return new (static::class)(function () use ($function): Generator {
+        return new static(function () use ($function): Generator {
             foreach ($this as $value) {
                 if (true === $function($value)) {
                     yield $value;
@@ -89,9 +87,9 @@ abstract class AbstractCollection implements CollectionInterface
     public static function fromGenerator(Closure $generator): static
     {
         /**
-         * @var Closure():Generator<TValue> $iterable
+         * @var Closure():Generator<TValue> $generator
          */
-        return new (static::class)($generator);
+        return new static($generator);
     }
 
     public static function fromIterable(iterable $iterable = []): static
@@ -99,12 +97,12 @@ abstract class AbstractCollection implements CollectionInterface
         /**
          * @var iterable<TValue> $iterable
          */
-        return new (static::class)(static fn () => yield from $iterable);
+        return new static(static fn () => yield from $iterable);
     }
 
     public function getIterator(): Generator
     {
-        yield from ($this->generator)();
+        yield from $this->iterable;
     }
 
     public function isEmpty(): bool
@@ -127,7 +125,7 @@ abstract class AbstractCollection implements CollectionInterface
 
     public function map(Closure $function): static
     {
-        return new (static::class)(function () use ($function) {
+        return new static(function () use ($function): Generator {
             foreach ($this as $value) {
                 yield $function($value);
             }
@@ -151,10 +149,10 @@ abstract class AbstractCollection implements CollectionInterface
         if ($length < 0) {
             throw new InvalidArgumentException('$length must be positive');
         }
-        return new (static::class)(
+        return new static(
             function () use ($offset, $length): Generator {
                 $count = 0;
-                $max = $offset + $length;
+                $maxCount = $offset + $length;
                 if ($count === $length) {
                     return;
                 }
@@ -163,7 +161,7 @@ abstract class AbstractCollection implements CollectionInterface
                         continue;
                     }
                     yield $current;
-                    if ($count >= $max) {
+                    if ($count >= $maxCount) {
                         return;
                     }
                 }
