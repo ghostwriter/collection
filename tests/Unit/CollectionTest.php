@@ -31,29 +31,6 @@ final class CollectionTest extends AbstractTestCase
 
     /**
      * @covers \Ghostwriter\Collection\Collection::__construct
-     * @covers \Ghostwriter\Collection\Collection::append
-     * @covers \Ghostwriter\Collection\Collection::count
-     * @covers \Ghostwriter\Collection\Collection::filter
-     * @covers \Ghostwriter\Collection\Collection::fromIterable
-     * @covers \Ghostwriter\Collection\Collection::getIterator
-     * @covers \Ghostwriter\Collection\Collection::map
-     * @covers \Ghostwriter\Collection\Collection::toArray
-     */
-    public function testAppendMapFilter(): void
-    {
-        $collection = Collection::fromIterable([1, 2, 3]);
-        self::assertCount(3, $collection);
-
-        $new = $collection->append([4, 5, 6, 7, 8, 9])
-            ->map(static fn (int $v): int => $v * 10)
-            ->filter(static fn (int $v): bool => 0 === $v % 20);
-
-        // print_r([$new]);
-        self::assertSame([20, 40, 60, 80], $new->toArray());
-    }
-
-    /**
-     * @covers \Ghostwriter\Collection\Collection::__construct
      * @covers \Ghostwriter\Collection\Collection::fromIterable
      * @covers \Ghostwriter\Collection\Collection::getIterator
      * @covers \Ghostwriter\Collection\Collection::contains
@@ -95,17 +72,16 @@ final class CollectionTest extends AbstractTestCase
         $collection = Collection::fromIterable([1, 2, 3]);
         self::assertCount(3, $collection);
 
-        $new = $collection->append([4, 5, 6, 7, 8, 9])
+        $collection = $collection->append([4, 5, 6, 7, 8, 9])
             ->map(static fn (int $v): int => $v * 10)
             ->filter(static fn (int $v): bool => 0 === $v % 20)
             ->slice(1, 3)
             ->drop(1)
             ->take(1);
 
-        // print_r([$new]);
-        self::assertNull($new->first(static fn (mixed $value): bool => is_object($value)));
-        self::assertSame(60, $new->first());
-        self::assertSame([60], $new->toArray());
+        self::assertNull($collection->first(static fn (mixed $value): bool => is_object($value)));
+        self::assertSame(60, $collection->first());
+        self::assertSame([60], $collection->toArray());
     }
 
     /**
@@ -145,6 +121,32 @@ final class CollectionTest extends AbstractTestCase
         $collection = Collection::fromIterable([1, 2, 3]);
         self::assertSame(3, $collection->last());
         self::assertSame(2, $collection->last(static fn (int $value): bool => 0 === $value % 2));
+    }
+
+    /**
+     * @covers \Ghostwriter\Collection\Collection::__construct
+     * @covers \Ghostwriter\Collection\Collection::append
+     * @covers \Ghostwriter\Collection\Collection::count
+     * @covers \Ghostwriter\Collection\Collection::drop
+     * @covers \Ghostwriter\Collection\Collection::filter
+     * @covers \Ghostwriter\Collection\Collection::fromIterable
+     * @covers \Ghostwriter\Collection\Collection::getIterator
+     * @covers \Ghostwriter\Collection\Collection::map
+     * @covers \Ghostwriter\Collection\Collection::slice
+     * @covers \Ghostwriter\Collection\Collection::take
+     * @covers \Ghostwriter\Collection\Collection::toArray
+     */
+    public function testReadMeExample(): void
+    {
+        $collection = Collection::fromIterable([1, 2, 3]);
+        self::assertCount(3, $collection);
+
+        $collection = $collection->append([4, 5, 6, 7, 8, 9])
+            ->map(static fn (int $v): int => $v * 10)
+            ->filter(static fn (int $v): bool => 0 === $v % 20);
+
+        self::assertSame([20, 40, 60, 80], $collection->toArray());
+        self::assertSame([60], $collection->drop(1)->take(2)->slice(1, 1)->toArray());
     }
 
     /**
