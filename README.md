@@ -30,11 +30,6 @@ $collection->drop(1)     // [40, 60, 80]
            ->take(2)     // [40, 60]
            ->slice(1, 1) // [60]
            ->toArray();  // [60]
-
-// Create custom Collection classes by extending AbstractCollection
-class CustomCollection extends \Ghostwriter\Collection\AbstractCollection 
-{
-}
 ```
 
 ## Testing
