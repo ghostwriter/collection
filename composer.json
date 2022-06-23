@@ -30,12 +30,9 @@
         }
     ],
     "require": {
-        "php": ">=8.0,<8.2",
-        "ghostwriter/container": "^0.4.0",
-        "ghostwriter/event-dispatcher": "^0.3.2"
+        "php": ">=8.0,<8.2"
     },
     "require-dev": {
-        "nikic/php-parser": "^4.14.0",
         "phpbench/phpbench": "^1.2.5",
         "phpunit/phpunit": "^9.5.21",
         "psalm/plugin-phpunit": "^0.17.0",
