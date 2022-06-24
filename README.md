@@ -62,6 +62,14 @@ Please consider giving back, to fund the continued development of `ghostwriter/c
 
 Please consider helping your company become a GitHub Sponsor, to support the open-source licensed project that runs your business.
 
+## Thank you
+
+Thank you for freely sharing your knowledge, insight and free time with me in [Laminas Chat](https://laminas.dev/chat) and writing very detailed [Technical Blog](https://www.garfieldtech.com/). I absolutely appreciate you all, and the work you've done.
+
+- [Larry Garfield](https://github.com/crell)
+- [Aleksei Khudiakov](https://github.com/xerkus)
+- [Andi Rückauer](https://github.com/arueckauer)
+
 ## Credits
 
 - [Nathanael Esayeas](https://github.com/ghostwriter)
