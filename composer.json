@@ -33,16 +33,14 @@
         "php": ">=8.0,<8.2"
     },
     "require-dev": {
+        "infection/infection": "^0.26.13",
         "phpbench/phpbench": "^1.2.5",
         "phpunit/phpunit": "^9.5.21",
         "psalm/plugin-phpunit": "^0.17.0",
-        "rector/rector": "^0.13.6",
-        "roave/infection-static-analysis-plugin": "^1.20.0",
-        "roave/security-advisories": "dev-latest",
-        "symplify/easy-coding-standard": "^11.0.5",
-        "vimeo/psalm": "^4.23.0"
+        "rector/rector": "^0.13.8",
+        "symplify/easy-coding-standard": "^11.0.8",
+        "vimeo/psalm": "^4.24.0"
     },
-    "replace": {},
     "minimum-stability": "stable",
     "prefer-stable": true,
     "autoload": {
@@ -91,7 +89,7 @@
         ],
         "infection": [
             "@putenv XDEBUG_MODE=coverage",
-            "roave-infection-static-analysis-plugin"
+            "vendor/bin/infection --verbose"
         ],
         "missing-returntypes": "psalm --alter --issues=MissingReturnType",
         "normalizer": "composer normalize --no-check-lock",
