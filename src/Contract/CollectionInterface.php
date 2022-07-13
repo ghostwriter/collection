@@ -74,8 +74,8 @@ interface CollectionInterface extends Countable, IteratorAggregate
     /**
      * @template TAccumulator
      *
-     * @param null|TAccumulator                          $accumulator
-     * @param Closure(?TAccumulator,TValue):TAccumulator $function
+     * @param null|TAccumulator                              $accumulator
+     * @param Closure(null|TAccumulator,TValue):TAccumulator $function
      *
      * @return TAccumulator
      */
