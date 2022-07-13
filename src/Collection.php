@@ -31,14 +31,19 @@ final class Collection implements CollectionInterface
 
     public function append(iterable $iterable = []): self
     {
-        if ([] === $iterable) {
-            return $this;
+        if ([] !== $iterable) {
+            $this->array = SplFixedArray::fromArray(
+                iterator_to_array(
+                    (function (iterable $iterable): Generator {
+                        yield from $this;
+                        yield from $iterable;
+                    })($iterable),
+                    false
+                )
+            );
         }
 
-        return new (self::class)(function () use ($iterable): Generator {
-            yield from $this;
-            yield from $iterable;
-        });
+        return $this;
     }
 
     public function contains(mixed $value, ?Closure $function = null): bool
