@@ -32,9 +32,6 @@ interface CollectionInterface extends Countable, IteratorAggregate
      */
     public function contains(mixed $value, ?Closure $function = null): bool;
 
-    /**
-     * @return int<0, max>
-     */
     public function count(): int;
 
     public function drop(int $length): self;
@@ -60,8 +57,6 @@ interface CollectionInterface extends Countable, IteratorAggregate
      */
     public function getIterator(): Traversable;
 
-    public function isEmpty(): bool;
-
     /**
      * @param ?Closure(TValue):bool $function
      *
@@ -79,8 +74,8 @@ interface CollectionInterface extends Countable, IteratorAggregate
     /**
      * @template TAccumulator
      *
-     * @param null|TAccumulator                         $accumulator
-     * @param Closure(TAccumulator,TValue):TAccumulator $function
+     * @param null|TAccumulator                          $accumulator
+     * @param Closure(?TAccumulator,TValue):TAccumulator $function
      *
      * @return TAccumulator
      */

@@ -31,19 +31,29 @@ final class Collection implements CollectionInterface
 
     public function append(iterable $iterable = []): self
     {
-        return new (self::class)(function () use ($iterable): Generator {
-            yield from $this;
-            yield from $iterable;
-        });
+        if ([] !== $iterable) {
+            $this->array = SplFixedArray::fromArray(
+                iterator_to_array(
+                    (function (iterable $iterable): Generator {
+                        yield from $this;
+                        yield from $iterable;
+                    })($iterable),
+                    false
+                )
+            );
+        }
+
+        return $this;
     }
 
     public function contains(mixed $value, ?Closure $function = null): bool
     {
         $function ??= static fn (mixed $current, mixed $value): bool => $current === $value;
         foreach ($this as $current) {
-            if (true === $function($current, $value)) {
-                return true;
+            if (! $function($current, $value)) {
+                continue;
             }
+            return true;
         }
 
         return false;
@@ -51,7 +61,7 @@ final class Collection implements CollectionInterface
 
     public function count(): int
     {
-        return iterator_count($this);
+        return $this->array->count();
     }
 
     public function drop(int $length): self
@@ -63,9 +73,10 @@ final class Collection implements CollectionInterface
     {
         return new self(function () use ($function): Generator {
             foreach ($this as $value) {
-                if (true === $function($value)) {
-                    yield $value;
+                if (! $function($value)) {
+                    continue;
                 }
+                yield $value;
             }
         });
     }
@@ -74,9 +85,10 @@ final class Collection implements CollectionInterface
     {
         $function ??= static fn (mixed $_): bool => true;
         foreach ($this as $value) {
-            if (true === $function($value)) {
-                return $value;
+            if (! $function($value)) {
+                continue;
             }
+            return $value;
         }
 
         return null;
@@ -103,19 +115,15 @@ final class Collection implements CollectionInterface
         yield from $this->array;
     }
 
-    public function isEmpty(): bool
-    {
-        return 0 === $this->count();
-    }
-
     public function last(?Closure $function = null): mixed
     {
         $last = null;
         $function ??= static fn (mixed $_): bool => true;
         foreach ($this as $value) {
-            if (true === $function($value)) {
-                $last = $value;
+            if (! $function($value)) {
+                continue;
             }
+            $last = $value;
         }
 
         return $last;
@@ -133,9 +141,9 @@ final class Collection implements CollectionInterface
     public function reduce(Closure $function, mixed $accumulator = null): mixed
     {
         foreach ($this as $value) {
-            /** @psalm-suppress PossiblyNullArgument */
             $accumulator = $function($accumulator, $value);
         }
+
         return $accumulator;
     }
 

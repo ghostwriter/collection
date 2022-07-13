@@ -7,6 +7,7 @@ namespace Ghostwriter\Collection\Tests\Unit;
 use Generator;
 use Ghostwriter\Collection\Collection;
 use Ghostwriter\Collection\Exception\InvalidArgumentException;
+use function sprintf;
 
 /**
  * @coversDefaultClass \Ghostwriter\Collection\Collection
@@ -19,14 +20,16 @@ final class CollectionTest extends AbstractTestCase
 {
     public function sliceDataProvider(): Generator
     {
-        yield 'empty' => [[], [0], []];
-        yield '[1,2,3] -> slice(0, -1)' => [[1, 2, 3], [0, -1], [1], true];
-        yield '[1,2,3] -> slice(-1)' => [[1, 2, 3], [-1], [1], true];
-        yield '[1,2,3] -> slice(0)' => [[1, 2, 3], [0], [1, 2, 3]];
-        yield '[1,2,3] -> slice(0, 1)' => [[1, 2, 3], [0, 1], [1]];
-        yield '[1,2,3] -> slice(1, 1)' => [[1, 2, 3], [1, 1], [2]];
-        yield '[1,2,3] -> slice(1, PHP_MAX_INT)' => [[1, 2, 3], [1], [2, 3]];
-        yield '[1,2,3] -> slice(1, 0)' => [[1, 2, 3], [1, 0], []];
+        yield from [
+            'empty' => [[], [0], []],
+            '[1,2,3] -> slice(0, -1)' => [[1, 2, 3], [0, -1], [1], true],
+            '[1,2,3] -> slice(-1)' => [[1, 2, 3], [-1], [1], true],
+            '[1,2,3] -> slice(0)' => [[1, 2, 3], [0], [1, 2, 3]],
+            '[1,2,3] -> slice(0, 1)' => [[1, 2, 3], [0, 1], [1]],
+            '[1,2,3] -> slice(1, 1)' => [[1, 2, 3], [1, 1], [2]],
+            '[1,2,3] -> slice(1, PHP_MAX_INT)' => [[1, 2, 3], [1], [2, 3]],
+            '[1,2,3] -> slice(1, 0)' => [[1, 2, 3], [1, 0], []],
+        ];
     }
 
     /**
@@ -89,14 +92,10 @@ final class CollectionTest extends AbstractTestCase
      * @covers \Ghostwriter\Collection\Collection::count
      * @covers \Ghostwriter\Collection\Collection::fromGenerator
      * @covers \Ghostwriter\Collection\Collection::getIterator
-     * @covers \Ghostwriter\Collection\Collection::isEmpty
      */
     public function testFromGenerator(): void
     {
-        $generator = static fn (): Generator => yield from [];
-        $collection = Collection::fromGenerator($generator);
-        self::assertEmpty($collection);
-        self::assertTrue($collection->isEmpty());
+        self::assertCount(0, Collection::fromGenerator(static fn (): Generator => yield from []));
     }
 
     /**
@@ -159,11 +158,15 @@ final class CollectionTest extends AbstractTestCase
     {
         $collection = Collection::fromIterable([1, 2, 3]);
         self::assertSame(6, $collection->reduce(
-            static fn (?int $accumulator, int $value): int => ($accumulator ?? 0) + $value
+            static fn (mixed $accumulator, int $value): int => null !== $accumulator ? (int) $accumulator + $value : $value
         ));
 
         self::assertSame('123', $collection->reduce(
-            static fn (?string $accumulator, int $value): string => ($accumulator ?? '') . $value
+            static fn (mixed $accumulator, int $value): string => is_string($accumulator) ? sprintf(
+                '%s%s',
+                $accumulator,
+                $value
+            ) : (string) $value
         ));
 
         self::assertNull($collection->reduce(
