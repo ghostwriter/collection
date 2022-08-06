@@ -6,7 +6,7 @@ namespace Ghostwriter\Collection\Tests\Unit;
 
 use Generator;
 use Ghostwriter\Collection\Collection;
-use Ghostwriter\Collection\Exception\InvalidArgumentException;
+use Ghostwriter\Collection\Exception\CollectionException;
 use function sprintf;
 
 /**
@@ -44,12 +44,10 @@ final class CollectionTest extends AbstractTestCase
 
         self::assertTrue($collection->contains(2));
 
-        self::assertTrue(
-            $collection->contains(
-                3,
-                static fn (int $current, int $value): bool => 3 === $current && $current === $value
-            )
-        );
+        self::assertTrue($collection->contains(
+            3,
+            static fn (int $current, int $value): bool => 3 === $current && $current === $value
+        ));
 
         self::assertFalse(
             $collection->contains(1, static fn (int $current, int $value): bool => $current > 10 && $value > 10)
@@ -158,7 +156,7 @@ final class CollectionTest extends AbstractTestCase
     {
         $collection = Collection::fromIterable([1, 2, 3]);
         self::assertSame(6, $collection->reduce(
-            static fn (mixed $accumulator, int $value): int => null !== $accumulator ? (int) $accumulator + $value : $value
+            static fn (mixed $accumulator, int $value): int => /** @var null|int $accumulator */ null !== $accumulator ? $accumulator + $value : $value
         ));
 
         self::assertSame('123', $collection->reduce(
@@ -170,7 +168,7 @@ final class CollectionTest extends AbstractTestCase
         ));
 
         self::assertNull($collection->reduce(
-            static fn (mixed $accumulator, int $_): ?string => null === $accumulator ? $accumulator : null
+            static fn (mixed $accumulator, int $_): ?string => /** @var null|string $accumulator */ $accumulator
         ));
     }
 
@@ -185,12 +183,13 @@ final class CollectionTest extends AbstractTestCase
      *
      * @param array<int<0,max>> $slice
      */
-    public function testSlice(iterable $input, array $slice, array $expected, bool $throws = false): void
+    public function testSlice(array $input, array $slice, array $expected, bool $throws = false): void
     {
         $collection = Collection::fromIterable($input);
         if ($throws) {
-            $this->expectException(InvalidArgumentException::class);
+            $this->expectException(CollectionException::class);
         }
+
         self::assertSame($expected, $collection->slice(...$slice)->toArray());
     }
 }
