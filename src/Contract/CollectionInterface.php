@@ -7,7 +7,7 @@ namespace Ghostwriter\Collection\Contract;
 use Closure;
 use Countable;
 use Generator;
-use Ghostwriter\Collection\Exception\InvalidArgumentException;
+use Ghostwriter\Collection\Exception\CollectionException;
 use IteratorAggregate;
 use Traversable;
 use const PHP_INT_MAX;
@@ -25,10 +25,10 @@ interface CollectionInterface extends Countable, IteratorAggregate
     public function append(iterable $iterable): self;
 
     /**
-     * @template TSearchValue
+     * @template TContains
      *
-     * @param TSearchValue                        $value
-     * @param ?Closure(TValue, TSearchValue):bool $function
+     * @param TContains                        $value
+     * @param ?Closure(TValue, TContains):bool $function
      */
     public function contains(mixed $value, ?Closure $function = null): bool;
 
@@ -65,9 +65,9 @@ interface CollectionInterface extends Countable, IteratorAggregate
     public function last(?Closure $function = null): mixed;
 
     /**
-     * @template TMapValue
+     * @template TMap
      *
-     * @param Closure(TValue):TMapValue $function
+     * @param Closure(TValue):TMap $function
      */
     public function map(Closure $function): self;
 
@@ -81,15 +81,9 @@ interface CollectionInterface extends Countable, IteratorAggregate
      */
     public function reduce(Closure $function, mixed $accumulator = null): mixed;
 
-    /**
-     * @throws InvalidArgumentException If $offset must be positive
-     * @throws InvalidArgumentException If $length must be positive
-     */
+    /** @throws CollectionException If $offset or $length are non-negative */
     public function slice(int $offset, int $length = PHP_INT_MAX): self;
 
-    /**
-     * @param int<0, max> $length
-     */
     public function take(int $length): self;
 
     /**
