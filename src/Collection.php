@@ -7,26 +7,27 @@ namespace Ghostwriter\Collection;
 use Closure;
 use Generator;
 use Ghostwriter\Collection\Contract\CollectionInterface;
-use Ghostwriter\Collection\Exception\InvalidArgumentException;
-use SplFixedArray;
+use Ghostwriter\Collection\Exception\CollectionException;
+use Ghostwriter\Option\Contract\OptionInterface;
+use Ghostwriter\Option\Some;
 use const PHP_INT_MAX;
 
 /**
  * @template TValue
  * @implements CollectionInterface<TValue>
+ *
+ * @see \Ghostwriter\Collection\Tests\Unit\CollectionTest
  */
 final class Collection implements CollectionInterface
 {
-    /** @param SplFixedArray<TValue> $generator */
-    private SplFixedArray $array;
+    /** @var OptionInterface<TValue> */
+    private OptionInterface $option;
 
-    /**
-     * @param Closure():Generator<TValue> $generator
-     */
+    /** @param Closure():Generator<TValue> $generator */
     private function __construct(Closure $generator)
     {
-        /** @param SplFixedArray<TValue> $iterable */
-        $this->array = SplFixedArray::fromArray(iterator_to_array($generator(), false));
+        /** @var OptionInterface<TValue> $this->option */
+        $this->option = Some::of($generator);
     }
 
     public function append(iterable $iterable = []): self
@@ -44,10 +45,11 @@ final class Collection implements CollectionInterface
     public function contains(mixed $value, ?Closure $function = null): bool
     {
         $function ??= static fn (mixed $current, mixed $value): bool => $current === $value;
-        foreach ($this as $current) {
+        foreach ($this->getIterator() as $current) {
             if (! $function($current, $value)) {
                 continue;
             }
+
             return true;
         }
 
@@ -56,7 +58,7 @@ final class Collection implements CollectionInterface
 
     public function count(): int
     {
-        return $this->array->count();
+        return iterator_count($this);
     }
 
     public function drop(int $length): self
@@ -67,10 +69,11 @@ final class Collection implements CollectionInterface
     public function filter(Closure $function): self
     {
         return new self(function () use ($function): Generator {
-            foreach ($this as $value) {
+            foreach ($this->getIterator() as $value) {
                 if (! $function($value)) {
                     continue;
                 }
+
                 yield $value;
             }
         });
@@ -79,10 +82,11 @@ final class Collection implements CollectionInterface
     public function first(Closure $function = null): mixed
     {
         $function ??= static fn (mixed $_): bool => true;
-        foreach ($this as $value) {
+        foreach ($this->getIterator() as $value) {
             if (! $function($value)) {
                 continue;
             }
+
             return $value;
         }
 
@@ -107,17 +111,22 @@ final class Collection implements CollectionInterface
 
     public function getIterator(): Generator
     {
-        yield from $this->array;
+        yield from $this->option->andThen(
+            static fn (
+                mixed $generator
+            ): Generator => /** @var Closure():Generator $generator */ $generator()
+        )->unwrap();
     }
 
     public function last(?Closure $function = null): mixed
     {
         $last = null;
         $function ??= static fn (mixed $_): bool => true;
-        foreach ($this as $value) {
+        foreach ($this->getIterator() as $value) {
             if (! $function($value)) {
                 continue;
             }
+
             $last = $value;
         }
 
@@ -127,7 +136,7 @@ final class Collection implements CollectionInterface
     public function map(Closure $function): self
     {
         return new self(function () use ($function): Generator {
-            foreach ($this as $value) {
+            foreach ($this->getIterator() as $value) {
                 yield $function($value);
             }
         });
@@ -135,7 +144,7 @@ final class Collection implements CollectionInterface
 
     public function reduce(Closure $function, mixed $accumulator = null): mixed
     {
-        foreach ($this as $value) {
+        foreach ($this->getIterator() as $value) {
             $accumulator = $function($accumulator, $value);
         }
 
@@ -145,24 +154,28 @@ final class Collection implements CollectionInterface
     public function slice(int $offset, int $length = PHP_INT_MAX): self
     {
         if ($offset < 0) {
-            throw new InvalidArgumentException('$offset must be positive');
+            throw new CollectionException('$offset must be positive');
         }
+
         if ($length < 0) {
-            throw new InvalidArgumentException('$length must be positive');
+            throw new CollectionException('$length must be positive');
         }
+
         return new self(
             function () use ($offset, $length): Generator {
-                $count = 0;
-                $maxCount = $offset + $length;
-                if ($count === $length) {
+                $total = 0;
+                if ($total === $length) {
                     return;
                 }
-                foreach ($this as $current) {
-                    if ($count++ < $offset) {
+
+                $limit = $offset + $length;
+                foreach ($this->getIterator() as $current) {
+                    if ($total++ < $offset) {
                         continue;
                     }
+
                     yield $current;
-                    if ($count >= $maxCount) {
+                    if ($total >= $limit) {
                         return;
                     }
                 }
