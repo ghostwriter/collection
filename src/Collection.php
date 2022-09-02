@@ -14,6 +14,7 @@ use const PHP_INT_MAX;
 
 /**
  * @template TValue
+ *
  * @implements CollectionInterface<TValue>
  *
  * @see \Ghostwriter\Collection\Tests\Unit\CollectionTest
