@@ -14,6 +14,7 @@ use const PHP_INT_MAX;
 
 /**
  * @template TValue
+ *
  * @extends Countable
  * @extends IteratorAggregate<array-key,TValue>
  */
