@@ -28,7 +28,7 @@ final class Collection implements CollectionInterface
     private function __construct(Closure $generator)
     {
         /** @var OptionInterface<TValue> $this->option */
-        $this->option = Some::of($generator);
+        $this->option = Some::create($generator);
     }
 
     public function append(iterable $iterable = []): self
@@ -47,13 +47,10 @@ final class Collection implements CollectionInterface
     {
         $function ??= static fn (mixed $current, mixed $value): bool => $current === $value;
         foreach ($this->getIterator() as $current) {
-            if (! $function($current, $value)) {
-                continue;
+            if (true === $function($current, $value)) {
+                return true;
             }
-
-            return true;
         }
-
         return false;
     }
 
@@ -71,11 +68,9 @@ final class Collection implements CollectionInterface
     {
         return new self(function () use ($function): Generator {
             foreach ($this->getIterator() as $value) {
-                if (! $function($value)) {
-                    continue;
+                if (true === $function($value)) {
+                    yield $value;
                 }
-
-                yield $value;
             }
         });
     }
@@ -84,13 +79,10 @@ final class Collection implements CollectionInterface
     {
         $function ??= static fn (mixed $_): bool => true;
         foreach ($this->getIterator() as $value) {
-            if (! $function($value)) {
-                continue;
+            if (true === $function($value)) {
+                return $value;
             }
-
-            return $value;
         }
-
         return null;
     }
 
@@ -112,26 +104,18 @@ final class Collection implements CollectionInterface
 
     public function getIterator(): Generator
     {
-        yield from $this->option->andThen(
-            static fn (
-                mixed $generator
-            ): Generator => /** @var Closure():Generator $generator */ $generator()
-        )->unwrap();
+        yield from $this->option->unwrap()();
     }
 
     public function last(?Closure $function = null): mixed
     {
-        $last = null;
         $function ??= static fn (mixed $_): bool => true;
         foreach ($this->getIterator() as $value) {
-            if (! $function($value)) {
-                continue;
+            if (true === $function($value)) {
+                $last = $value;
             }
-
-            $last = $value;
         }
-
-        return $last;
+        return $last ?? null;
     }
 
     public function map(Closure $function): self
