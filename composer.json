@@ -31,16 +31,16 @@
     ],
     "require": {
         "php": ">=8.0,<8.3",
-        "ghostwriter/option": "^1.0.1"
+        "ghostwriter/option": "^1.2.0"
     },
     "require-dev": {
-        "infection/infection": "^0.26.16",
-        "phpbench/phpbench": "^1.2.7",
-        "phpunit/phpunit": "^9.5.26",
-        "psalm/plugin-phpunit": "^0.17.0",
-        "rector/rector": "^0.14.7",
-        "symplify/easy-coding-standard": "^11.1.17",
-        "vimeo/psalm": "^4.30"
+        "infection/infection": "^0.26",
+        "phpbench/phpbench": "^1.2",
+        "phpunit/phpunit": "^9.5",
+        "psalm/plugin-phpunit": "^0.18",
+        "rector/rector": "^0.14",
+        "symplify/easy-coding-standard": "^11.1",
+        "vimeo/psalm": "^5.0"
     },
     "minimum-stability": "stable",
     "prefer-stable": true,
