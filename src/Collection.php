@@ -51,6 +51,7 @@ final class Collection implements CollectionInterface
                 return true;
             }
         }
+
         return false;
     }
 
@@ -77,12 +78,13 @@ final class Collection implements CollectionInterface
 
     public function first(Closure $function = null): mixed
     {
-        $function ??= static fn (mixed $_): bool => true;
+        $function ??= static fn (mixed $value): bool => null !== $value;
         foreach ($this->getIterator() as $value) {
             if (true === $function($value)) {
                 return $value;
             }
         }
+
         return null;
     }
 
@@ -109,13 +111,15 @@ final class Collection implements CollectionInterface
 
     public function last(?Closure $function = null): mixed
     {
-        $function ??= static fn (mixed $_): bool => true;
+        $last = null;
+        $function ??= static fn (mixed $value): bool => null !== $value;
         foreach ($this->getIterator() as $value) {
             if (true === $function($value)) {
                 $last = $value;
             }
         }
-        return $last ?? null;
+
+        return $last;
     }
 
     public function map(Closure $function): self
