@@ -1,19 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<files psalm-version="4.29.0@7ec5ffbd5f68ae03782d7fd33fff0c45a69f95b3">
+<files psalm-version="5.0.0@4e177bf0c9f03c17d2fbfd83b7cc9c47605274d8">
   <file src="src/Collection.php">
     <MixedFunctionCall occurrences="1">
       <code>$this-&gt;option-&gt;unwrap()()</code>
     </MixedFunctionCall>
-    <MixedInferredReturnType occurrences="1">
-      <code>mixed</code>
-    </MixedInferredReturnType>
-    <MixedReturnStatement occurrences="1">
-      <code>$last ?? null</code>
-    </MixedReturnStatement>
-  </file>
-  <file src="tests/Unit/CollectionTest.php">
-    <MixedInferredReturnType occurrences="1">
-      <code>Generator</code>
-    </MixedInferredReturnType>
   </file>
 </files>
