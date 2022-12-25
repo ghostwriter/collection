@@ -5,49 +5,57 @@ declare(strict_types=1);
 namespace Ghostwriter\Collection;
 
 use Closure;
+use Countable;
 use Generator;
-use Ghostwriter\Collection\Contract\CollectionInterface;
 use Ghostwriter\Collection\Exception\CollectionException;
-use Ghostwriter\Option\Contract\OptionInterface;
+use Ghostwriter\Option\Contract\SomeInterface;
 use Ghostwriter\Option\Some;
+use IteratorAggregate;
+use Traversable;
+
 use const PHP_INT_MAX;
 
 /**
  * @template TValue
  *
- * @implements CollectionInterface<TValue>
+ * @implements IteratorAggregate<int,TValue>
  *
  * @see \Ghostwriter\Collection\Tests\Unit\CollectionTest
  */
-final class Collection implements CollectionInterface
+final class Collection implements Countable, IteratorAggregate
 {
-    /** @var OptionInterface<TValue> */
-    private OptionInterface $option;
-
-    /** @param Closure():Generator<TValue> $generator */
-    private function __construct(Closure $generator)
-    {
-        /** @var OptionInterface<TValue> $this->option */
-        $this->option = Some::create($generator);
+    /** @param SomeInterface<Closure():Traversable<int,TValue>> $some */
+    private function __construct(
+        private SomeInterface $some
+    ) {
     }
 
+    /**
+     * @param iterable<TValue> $iterable
+     */
     public function append(iterable $iterable = []): self
     {
         if ([] === $iterable) {
             return $this;
         }
 
-        return new self(function () use ($iterable): Generator {
+        return self::fromGenerator(function () use ($iterable): Generator {
             yield from $this;
             yield from $iterable;
         });
     }
 
+    /**
+     * @template TContains
+     *
+     * @param TContains                           $value
+     * @param ?Closure(TValue,TContains,int):bool $function
+     */
     public function contains(mixed $value, ?Closure $function = null): bool
     {
-        $function ??= static fn (mixed $current, mixed $value): bool => $current === $value;
-        foreach ($this->getIterator() as $current) {
-            if (true === $function($current, $value)) {
+        $function ??= static fn (mixed $current, mixed $value, int $_): bool => $current === $value;
+        foreach ($this->getIterator() as $key => $current) {
+            if (true === $function($current, $value, $key)) {
                 return true;
             }
         }
@@ -60,27 +68,38 @@ final class Collection implements CollectionInterface
         return iterator_count($this);
     }
 
+    /**
+     * @param int<0,max> $length
+     */
     public function drop(int $length): self
     {
         return $this->slice($length);
     }
 
+    /**
+     * @param Closure(TValue,int):bool $function
+     */
     public function filter(Closure $function): self
     {
-        return new self(function () use ($function): Generator {
-            foreach ($this->getIterator() as $value) {
-                if (true === $function($value)) {
+        return self::fromGenerator(function () use ($function): Generator {
+            foreach ($this->getIterator() as $key => $value) {
+                if (true === $function($value, $key)) {
                     yield $value;
                 }
             }
         });
     }
 
+    /**
+     * @param ?Closure(TValue,int):bool $function
+     *
+     * @return ?TValue
+     */
     public function first(Closure $function = null): mixed
     {
-        $function ??= static fn (mixed $value): bool => null !== $value;
-        foreach ($this->getIterator() as $value) {
-            if (true === $function($value)) {
+        $function ??= static fn (mixed $value, int $_): bool => null !== $value;
+        foreach ($this->getIterator() as $key => $value) {
+            if (true === $function($value, $key)) {
                 return $value;
             }
         }
@@ -88,12 +107,17 @@ final class Collection implements CollectionInterface
         return null;
     }
 
+    /**
+     * @template TGenerator
+     *
+     * @param Closure():Traversable<int,TGenerator> $generator
+     */
     public static function fromGenerator(Closure $generator): self
     {
-        /**
-         * @var Closure():Generator<TValue> $generator
-         */
-        return new self($generator);
+        /** @var Some<Closure():Traversable<int,TGenerator>> $some */
+        $some = Some::create($generator);
+
+        return new self($some);
     }
 
     public static function fromIterable(iterable $iterable = []): self
@@ -101,20 +125,28 @@ final class Collection implements CollectionInterface
         /**
          * @var iterable<TValue> $iterable
          */
-        return new self(static fn () => yield from $iterable);
+        return self::fromGenerator(static fn () => yield from $iterable);
     }
 
-    public function getIterator(): Generator
+    public function getIterator(): Traversable
     {
-        yield from $this->option->unwrap()();
+        /** @var Closure():Traversable<int,TValue> $closure */
+        $closure = $this->some->unwrap();
+
+        yield from $closure();
     }
 
+    /**
+     * @param ?Closure(TValue,int):bool $function
+     *
+     * @return null|TValue
+     */
     public function last(?Closure $function = null): mixed
     {
         $last = null;
-        $function ??= static fn (mixed $value): bool => null !== $value;
-        foreach ($this->getIterator() as $value) {
-            if (true === $function($value)) {
+        $function ??= static fn (mixed $value, int $_): bool => null !== $value;
+        foreach ($this->getIterator() as $key => $value) {
+            if (true === $function($value, $key)) {
                 $last = $value;
             }
         }
@@ -122,24 +154,47 @@ final class Collection implements CollectionInterface
         return $last;
     }
 
+    /**
+     * @template TMap
+     *
+     * @param Closure(TValue,int):TMap $function
+     */
     public function map(Closure $function): self
     {
-        return new self(function () use ($function): Generator {
-            foreach ($this->getIterator() as $value) {
-                yield $function($value);
+        return self::fromGenerator(function () use ($function): Generator {
+            foreach ($this->getIterator() as $key => $value) {
+                yield $function($value, $key);
             }
         });
     }
 
+    /**
+     * @template TAccumulator
+     *
+     * @param ?TAccumulator                                      $accumulator
+     * @param Closure(null|TAccumulator,TValue,int):TAccumulator $function
+     *
+     * @return ?TAccumulator
+     */
     public function reduce(Closure $function, mixed $accumulator = null): mixed
     {
-        foreach ($this->getIterator() as $value) {
-            $accumulator = $function($accumulator, $value);
+        foreach ($this->getIterator() as $key => $value) {
+            $accumulator = $function($accumulator, $value, $key);
         }
 
         return $accumulator;
     }
 
+    /**
+     * @param int<0,max> $offset
+     * @param int<0,max> $length
+     *
+     * @throws CollectionException If $offset or $length are negative
+     *
+     * @noinspection PhpConditionAlreadyCheckedInspection
+     *
+     * @psalm-suppress DocblockTypeContradiction
+     */
     public function slice(int $offset, int $length = PHP_INT_MAX): self
     {
         if ($offset < 0) {
@@ -150,7 +205,7 @@ final class Collection implements CollectionInterface
             throw new CollectionException('$length must be positive');
         }
 
-        return new self(
+        return self::fromGenerator(
             function () use ($offset, $length): Generator {
                 $total = 0;
                 if ($total === $length) {
@@ -172,11 +227,17 @@ final class Collection implements CollectionInterface
         );
     }
 
+    /**
+     * @param int<0,max> $length
+     */
     public function take(int $length): self
     {
         return $this->slice(0, $length);
     }
 
+    /**
+     * @return array<int,TValue>
+     */
     public function toArray(): array
     {
         return iterator_to_array($this, false);
