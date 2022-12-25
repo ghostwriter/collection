@@ -34,6 +34,7 @@ final class CollectionTest extends AbstractTestCase
 
     /**
      * @covers \Ghostwriter\Collection\Collection::__construct
+     * @covers \Ghostwriter\Collection\Collection::fromGenerator
      * @covers \Ghostwriter\Collection\Collection::fromIterable
      * @covers \Ghostwriter\Collection\Collection::getIterator
      * @covers \Ghostwriter\Collection\Collection::contains
@@ -61,6 +62,7 @@ final class CollectionTest extends AbstractTestCase
      * @covers \Ghostwriter\Collection\Collection::drop
      * @covers \Ghostwriter\Collection\Collection::filter
      * @covers \Ghostwriter\Collection\Collection::first
+     * @covers \Ghostwriter\Collection\Collection::fromGenerator
      * @covers \Ghostwriter\Collection\Collection::fromIterable
      * @covers \Ghostwriter\Collection\Collection::getIterator
      * @covers \Ghostwriter\Collection\Collection::map
@@ -99,16 +101,18 @@ final class CollectionTest extends AbstractTestCase
     /**
      * @covers \Ghostwriter\Collection\Collection::__construct
      * @covers \Ghostwriter\Collection\Collection::count
+     * @covers \Ghostwriter\Collection\Collection::fromGenerator
      * @covers \Ghostwriter\Collection\Collection::fromIterable
      * @covers \Ghostwriter\Collection\Collection::getIterator
      */
     public function testFromIterable(): void
     {
-        self::assertEmpty(Collection::fromIterable());
+        self::assertEmpty(Collection::fromIterable([]));
     }
 
     /**
      * @covers \Ghostwriter\Collection\Collection::__construct
+     * @covers \Ghostwriter\Collection\Collection::fromGenerator
      * @covers \Ghostwriter\Collection\Collection::fromIterable
      * @covers \Ghostwriter\Collection\Collection::getIterator
      * @covers \Ghostwriter\Collection\Collection::last
@@ -126,6 +130,7 @@ final class CollectionTest extends AbstractTestCase
      * @covers \Ghostwriter\Collection\Collection::count
      * @covers \Ghostwriter\Collection\Collection::drop
      * @covers \Ghostwriter\Collection\Collection::filter
+     * @covers \Ghostwriter\Collection\Collection::fromGenerator
      * @covers \Ghostwriter\Collection\Collection::fromIterable
      * @covers \Ghostwriter\Collection\Collection::getIterator
      * @covers \Ghostwriter\Collection\Collection::map
@@ -148,6 +153,7 @@ final class CollectionTest extends AbstractTestCase
 
     /**
      * @covers \Ghostwriter\Collection\Collection::__construct
+     * @covers \Ghostwriter\Collection\Collection::fromGenerator
      * @covers \Ghostwriter\Collection\Collection::fromIterable
      * @covers \Ghostwriter\Collection\Collection::getIterator
      * @covers \Ghostwriter\Collection\Collection::reduce
@@ -174,6 +180,7 @@ final class CollectionTest extends AbstractTestCase
 
     /**
      * @covers \Ghostwriter\Collection\Collection::__construct
+     * @covers \Ghostwriter\Collection\Collection::fromGenerator
      * @covers \Ghostwriter\Collection\Collection::fromIterable
      * @covers \Ghostwriter\Collection\Collection::getIterator
      * @covers \Ghostwriter\Collection\Collection::slice
