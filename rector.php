@@ -8,7 +8,6 @@ use Rector\Core\ValueObject\PhpVersion;
 use Rector\DeadCode\Rector\ClassMethod\RemoveEmptyClassMethodRector;
 use Rector\Php55\Rector\String_\StringClassNameToClassConstantRector;
 use Rector\Php74\Rector\Property\RestoreDefaultNullToNullableTypePropertyRector;
-use Rector\Php74\Rector\Property\TypedPropertyRector;
 use Rector\PHPUnit\Rector\Class_\AddSeeTestAnnotationRector;
 use Rector\PHPUnit\Rector\Class_\ConstructClassMethodToSetUpTestCaseRector;
 use Rector\PHPUnit\Rector\Class_\RemoveDataProviderTestPrefixRector;
@@ -48,7 +47,6 @@ use Rector\PHPUnit\Set\PHPUnitLevelSetList;
 use Rector\Renaming\Rector\FileWithoutNamespace\PseudoNamespaceToNamespaceRector;
 use Rector\Set\ValueObject\LevelSetList;
 use Rector\Set\ValueObject\SetList;
-use Rector\TypeDeclaration\Rector\ClassMethod\AddArrayReturnDocTypeRector;
 
 return static function (RectorConfig $rectorConfig): void {
     $rectorConfig->importNames();
@@ -60,7 +58,7 @@ return static function (RectorConfig $rectorConfig): void {
         PHPUnitLevelSetList::UP_TO_PHPUNIT_70,
         PHPUnitLevelSetList::UP_TO_PHPUNIT_80,
         PHPUnitLevelSetList::UP_TO_PHPUNIT_90,
-        PHPUnitLevelSetList::UP_TO_PHPUNIT_100,
+        // PHPUnitLevelSetList::UP_TO_PHPUNIT_100,
         LevelSetList::UP_TO_PHP_54,
         LevelSetList::UP_TO_PHP_55,
         LevelSetList::UP_TO_PHP_56,
@@ -78,7 +76,6 @@ return static function (RectorConfig $rectorConfig): void {
         SetList::PRIVATIZATION,
         SetList::PSR_4,
         SetList::TYPE_DECLARATION,
-        SetList::TYPE_DECLARATION_STRICT,
         SetList::EARLY_RETURN,
         SetList::PHP_52,
         SetList::PHP_53,
@@ -104,7 +101,6 @@ return static function (RectorConfig $rectorConfig): void {
         RemoveEmptyClassMethodRector::class,
         RemoveEmptyTestMethodRector::class,
         StringClassNameToClassConstantRector::class,
-        AddArrayReturnDocTypeRector::class,
     ]);
     $rectorConfig->rules([
         AddSeeTestAnnotationRector::class,
@@ -141,7 +137,6 @@ return static function (RectorConfig $rectorConfig): void {
         SpecificAssertInternalTypeRector::class,
         TestListenerToHooksRector::class,
         TryCatchToExpectExceptionRector::class,
-        TypedPropertyRector::class,
         UseSpecificWillMethodRector::class,
     ]);
 };
