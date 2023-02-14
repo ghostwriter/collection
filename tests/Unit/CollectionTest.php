@@ -18,7 +18,7 @@ use function sprintf;
  */
 final class CollectionTest extends AbstractTestCase
 {
-    public function sliceDataProvider(): Generator
+    public static function sliceDataProvider(): Generator
     {
         yield from [
             'empty' => [[], [0], []],
@@ -162,7 +162,9 @@ final class CollectionTest extends AbstractTestCase
     {
         $collection = Collection::fromIterable([1, 2, 3]);
         self::assertSame(6, $collection->reduce(
-            static fn (mixed $accumulator, int $value): int => /** @var null|int $accumulator */ null !== $accumulator ? $accumulator + $value : $value
+            static fn (mixed $accumulator, int $value): int =>
+            /** @var null|int $accumulator */
+            null !== $accumulator ? $accumulator + $value : $value
         ));
 
         self::assertSame('123', $collection->reduce(
@@ -174,7 +176,9 @@ final class CollectionTest extends AbstractTestCase
         ));
 
         self::assertNull($collection->reduce(
-            static fn (mixed $accumulator, int $_): ?string => /** @var null|string $accumulator */ $accumulator
+            static fn (mixed $accumulator, int $_): ?string =>
+            /** @var null|string $accumulator */
+            $accumulator
         ));
     }
 
