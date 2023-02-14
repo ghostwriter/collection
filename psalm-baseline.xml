@@ -1,8 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<files psalm-version="5.0.0@4e177bf0c9f03c17d2fbfd83b7cc9c47605274d8">
+<files psalm-version="5.6.0@e784128902dfe01d489c4123d69918a9f3c1eac5">
   <file src="src/Collection.php">
-    <MixedFunctionCall occurrences="1">
-      <code>$this-&gt;option-&gt;unwrap()()</code>
-    </MixedFunctionCall>
+    <PossiblyUnusedMethod>
+      <code>append</code>
+      <code>contains</code>
+      <code>count</code>
+      <code>drop</code>
+      <code>filter</code>
+      <code>first</code>
+      <code>fromIterable</code>
+      <code>last</code>
+      <code>map</code>
+      <code>reduce</code>
+      <code>take</code>
+      <code>toArray</code>
+    </PossiblyUnusedMethod>
   </file>
 </files>
