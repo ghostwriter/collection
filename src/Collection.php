@@ -130,7 +130,6 @@ final class Collection implements Countable, IteratorAggregate
 
     public function getIterator(): Traversable
     {
-        /** @var Closure():Traversable<int,TValue> $closure */
         $closure = $this->some->unwrap();
 
         yield from $closure();
