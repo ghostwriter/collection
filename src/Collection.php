@@ -48,14 +48,16 @@ final class Collection implements Countable, IteratorAggregate
     /**
      * @template TContains
      *
-     * @param TContains                           $value
-     * @param ?Closure(TValue,TContains,int):bool $function
+     * @param Closure(TValue,int):bool|TContains $functionOrValue
      */
-    public function contains(mixed $value, ?Closure $function = null): bool
+    public function contains(mixed $functionOrValue): bool
     {
-        $function ??= static fn (mixed $current, mixed $value, int $_): bool => $current === $value;
-        foreach ($this->getIterator() as $key => $current) {
-            if (true === $function($current, $value, $key)) {
+        $function = $functionOrValue instanceof Closure ?
+            $functionOrValue :
+            static fn (mixed $value, mixed $_): bool => $value === $functionOrValue;
+
+        foreach ($this->getIterator() as $key => $value) {
+            if ($function($value, $key)) {
                 return true;
             }
         }
