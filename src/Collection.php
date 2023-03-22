@@ -221,7 +221,7 @@ final class Collection implements Countable, IteratorAggregate
 
                     yield $current;
                     if ($total >= $limit) {
-                        return;
+                        break;
                     }
                 }
             }
