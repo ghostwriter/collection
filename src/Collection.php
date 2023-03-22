@@ -85,7 +85,7 @@ final class Collection implements Countable, IteratorAggregate
     {
         return self::fromGenerator(function () use ($function): Generator {
             foreach ($this->getIterator() as $key => $value) {
-                if (true === $function($value, $key)) {
+                if ($function($value, $key)) {
                     yield $value;
                 }
             }
@@ -101,7 +101,7 @@ final class Collection implements Countable, IteratorAggregate
     {
         $function ??= static fn (mixed $value, int $_): bool => null !== $value;
         foreach ($this->getIterator() as $key => $value) {
-            if (true === $function($value, $key)) {
+            if ($function($value, $key)) {
                 return $value;
             }
         }
@@ -147,7 +147,7 @@ final class Collection implements Countable, IteratorAggregate
         $last = null;
         $function ??= static fn (mixed $value, int $_): bool => null !== $value;
         foreach ($this->getIterator() as $key => $value) {
-            if (true === $function($value, $key)) {
+            if ($function($value, $key)) {
                 $last = $value;
             }
         }
