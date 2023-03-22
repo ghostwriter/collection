@@ -45,13 +45,12 @@ final class CollectionTest extends AbstractTestCase
 
         self::assertTrue($collection->contains(2));
 
-        self::assertTrue($collection->contains(
-            3,
-            static fn (int $current, int $value): bool => 3 === $current && $current === $value
-        ));
+        self::assertTrue($collection->contains(static fn (int $value, int $key): bool => 3 === $value && 2 === $key));
+
+        self::assertTrue($collection->contains(static fn (int $value): bool => 1 === $value));
 
         self::assertFalse(
-            $collection->contains(1, static fn (int $current, int $value): bool => $current > 10 && $value > 10)
+            $collection->contains(static fn (int $value, int $key): bool => 0 === $value && 1 === $key)
         );
     }
 
