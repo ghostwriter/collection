@@ -8,8 +8,8 @@ use Closure;
 use Countable;
 use Generator;
 use Ghostwriter\Collection\Exception\CollectionException;
-use Ghostwriter\Option\Contract\SomeInterface;
 use Ghostwriter\Option\Some;
+use Ghostwriter\Option\SomeInterface;
 use IteratorAggregate;
 use Traversable;
 
@@ -35,7 +35,7 @@ final class Collection implements Countable, IteratorAggregate
      */
     public function append(iterable $iterable = []): self
     {
-        if ([] === $iterable) {
+        if ($iterable === []) {
             return $this;
         }
 
@@ -99,7 +99,7 @@ final class Collection implements Countable, IteratorAggregate
      */
     public function first(Closure $function = null): mixed
     {
-        $function ??= static fn (mixed $value, int $_): bool => null !== $value;
+        $function ??= static fn (mixed $value, int $_): bool => $value !== null;
         foreach ($this->getIterator() as $key => $value) {
             if ($function($value, $key)) {
                 return $value;
@@ -145,7 +145,7 @@ final class Collection implements Countable, IteratorAggregate
     public function last(?Closure $function = null): mixed
     {
         $last = null;
-        $function ??= static fn (mixed $value, int $_): bool => null !== $value;
+        $function ??= static fn (mixed $value, int $_): bool => $value !== null;
         foreach ($this->getIterator() as $key => $value) {
             if ($function($value, $key)) {
                 $last = $value;
