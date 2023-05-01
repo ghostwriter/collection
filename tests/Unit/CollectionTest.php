@@ -45,12 +45,12 @@ final class CollectionTest extends AbstractTestCase
 
         self::assertTrue($collection->contains(2));
 
-        self::assertTrue($collection->contains(static fn (int $value, int $key): bool => 3 === $value && 2 === $key));
+        self::assertTrue($collection->contains(static fn (int $value, int $key): bool => $value === 3 && $key === 2));
 
-        self::assertTrue($collection->contains(static fn (int $value): bool => 1 === $value));
+        self::assertTrue($collection->contains(static fn (int $value): bool => $value === 1));
 
         self::assertFalse(
-            $collection->contains(static fn (int $value, int $key): bool => 0 === $value && 1 === $key)
+            $collection->contains(static fn (int $value, int $key): bool => $value === 0 && $key === 1)
         );
     }
 
@@ -76,7 +76,7 @@ final class CollectionTest extends AbstractTestCase
 
         $collection = $collection->append([4, 5, 6, 7, 8, 9])
             ->map(static fn (int $v): int => $v * 10)
-            ->filter(static fn (int $v): bool => 0 === $v % 20)
+            ->filter(static fn (int $v): bool => $v % 20 === 0)
             ->slice(1, 3)
             ->drop(1)
             ->take(1);
@@ -120,7 +120,7 @@ final class CollectionTest extends AbstractTestCase
     {
         $collection = Collection::fromIterable([1, 2, 3]);
         self::assertSame(3, $collection->last());
-        self::assertSame(2, $collection->last(static fn (int $value): bool => 0 === $value % 2));
+        self::assertSame(2, $collection->last(static fn (int $value): bool => $value % 2 === 0));
     }
 
     /**
@@ -144,7 +144,7 @@ final class CollectionTest extends AbstractTestCase
 
         $collection = $collection->append([4, 5, 6, 7, 8, 9])
             ->map(static fn (int $v): int => $v * 10)
-            ->filter(static fn (int $v): bool => 0 === $v % 20);
+            ->filter(static fn (int $v): bool => $v % 20 === 0);
 
         self::assertSame([20, 40, 60, 80], $collection->toArray());
         self::assertSame([60], $collection->drop(1)->take(2)->slice(1, 1)->toArray());
@@ -163,7 +163,7 @@ final class CollectionTest extends AbstractTestCase
         self::assertSame(6, $collection->reduce(
             static fn (mixed $accumulator, int $value): int =>
             /** @var null|int $accumulator */
-            null !== $accumulator ? $accumulator + $value : $value
+            $accumulator !== null ? $accumulator + $value : $value
         ));
 
         self::assertSame('123', $collection->reduce(
