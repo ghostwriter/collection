@@ -20,6 +20,6 @@
         "text": "php:\/\/stderr",
         "github": true
     },
-    "minMsi": 0,
-    "minCoveredMsi": 0
+    "minMsi": 100,
+    "minCoveredMsi": 100
 }
