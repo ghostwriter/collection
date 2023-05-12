@@ -2,22 +2,20 @@ name: Compliance
 
 on:
   pull_request:
-
+    branches:
+      - "**"
   push:
     branches:
       - "main"
       - "[0-9]+.[0-9]+.x"
       - "v[0-9]+"
-
   schedule:
     - cron: "0 * * * *" # Runs hourly
-
   workflow_dispatch: # Manually Trigger workflow
 
 jobs:
-  compliance:
+  automation:
     uses: ghostwriter/compliance/.github/workflows/automation.yml@main
     secrets:
       CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
-      INFECTION_DASHBOARD_API_KEY: ${{ secrets.INFECTION_DASHBOARD_API_KEY }}
       STRYKER_DASHBOARD_API_KEY: ${{ secrets.STRYKER_DASHBOARD_API_KEY }}
