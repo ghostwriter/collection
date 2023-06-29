@@ -15,7 +15,7 @@ on:
 
 jobs:
   automation:
-    uses: ghostwriter/compliance/.github/workflows/automation.yml@main
+    uses: ghostwriter/compliance/.github/workflows/automation.yml@v1
     secrets:
       CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
       STRYKER_DASHBOARD_API_KEY: ${{ secrets.STRYKER_DASHBOARD_API_KEY }}
