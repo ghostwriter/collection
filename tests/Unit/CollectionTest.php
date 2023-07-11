@@ -7,16 +7,13 @@ namespace Ghostwriter\Collection\Tests\Unit;
 use Generator;
 use Ghostwriter\Collection\Collection;
 use Ghostwriter\Collection\Exception\CollectionException;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\TestCase;
 use function sprintf;
 
-/**
- * @coversDefaultClass \Ghostwriter\Collection\Collection
- *
- * @internal
- *
- * @small
- */
-final class CollectionTest extends AbstractTestCase
+#[CoversClass(Collection::class)]
+final class CollectionTest extends TestCase
 {
     public static function sliceDataProvider(): Generator
     {
@@ -32,13 +29,6 @@ final class CollectionTest extends AbstractTestCase
         ];
     }
 
-    /**
-     * @covers \Ghostwriter\Collection\Collection::__construct
-     * @covers \Ghostwriter\Collection\Collection::fromGenerator
-     * @covers \Ghostwriter\Collection\Collection::fromIterable
-     * @covers \Ghostwriter\Collection\Collection::getIterator
-     * @covers \Ghostwriter\Collection\Collection::contains
-     */
     public function testContains(): void
     {
         $collection = Collection::fromIterable([1, 2, 3]);
@@ -54,21 +44,6 @@ final class CollectionTest extends AbstractTestCase
         );
     }
 
-    /**
-     * @covers \Ghostwriter\Collection\Collection::__construct
-     * @covers \Ghostwriter\Collection\Collection::append
-     * @covers \Ghostwriter\Collection\Collection::count
-     * @covers \Ghostwriter\Collection\Collection::drop
-     * @covers \Ghostwriter\Collection\Collection::filter
-     * @covers \Ghostwriter\Collection\Collection::first
-     * @covers \Ghostwriter\Collection\Collection::fromGenerator
-     * @covers \Ghostwriter\Collection\Collection::fromIterable
-     * @covers \Ghostwriter\Collection\Collection::getIterator
-     * @covers \Ghostwriter\Collection\Collection::map
-     * @covers \Ghostwriter\Collection\Collection::slice
-     * @covers \Ghostwriter\Collection\Collection::take
-     * @covers \Ghostwriter\Collection\Collection::toArray
-     */
     public function testDropTakeSlice(): void
     {
         $collection = Collection::fromIterable([1, 2, 3]);
@@ -86,36 +61,16 @@ final class CollectionTest extends AbstractTestCase
         self::assertSame([60], $collection->toArray());
     }
 
-    /**
-     * @covers \Ghostwriter\Collection\Collection::__construct
-     * @covers \Ghostwriter\Collection\Collection::count
-     * @covers \Ghostwriter\Collection\Collection::fromGenerator
-     * @covers \Ghostwriter\Collection\Collection::getIterator
-     */
     public function testFromGenerator(): void
     {
         self::assertCount(0, Collection::fromGenerator(static fn (): Generator => yield from []));
     }
 
-    /**
-     * @covers \Ghostwriter\Collection\Collection::__construct
-     * @covers \Ghostwriter\Collection\Collection::count
-     * @covers \Ghostwriter\Collection\Collection::fromGenerator
-     * @covers \Ghostwriter\Collection\Collection::fromIterable
-     * @covers \Ghostwriter\Collection\Collection::getIterator
-     */
     public function testFromIterable(): void
     {
         self::assertEmpty(Collection::fromIterable([]));
     }
 
-    /**
-     * @covers \Ghostwriter\Collection\Collection::__construct
-     * @covers \Ghostwriter\Collection\Collection::fromGenerator
-     * @covers \Ghostwriter\Collection\Collection::fromIterable
-     * @covers \Ghostwriter\Collection\Collection::getIterator
-     * @covers \Ghostwriter\Collection\Collection::last
-     */
     public function testLast(): void
     {
         $collection = Collection::fromIterable([1, 2, 3]);
@@ -123,20 +78,6 @@ final class CollectionTest extends AbstractTestCase
         self::assertSame(2, $collection->last(static fn (int $value): bool => $value % 2 === 0));
     }
 
-    /**
-     * @covers \Ghostwriter\Collection\Collection::__construct
-     * @covers \Ghostwriter\Collection\Collection::append
-     * @covers \Ghostwriter\Collection\Collection::count
-     * @covers \Ghostwriter\Collection\Collection::drop
-     * @covers \Ghostwriter\Collection\Collection::filter
-     * @covers \Ghostwriter\Collection\Collection::fromGenerator
-     * @covers \Ghostwriter\Collection\Collection::fromIterable
-     * @covers \Ghostwriter\Collection\Collection::getIterator
-     * @covers \Ghostwriter\Collection\Collection::map
-     * @covers \Ghostwriter\Collection\Collection::slice
-     * @covers \Ghostwriter\Collection\Collection::take
-     * @covers \Ghostwriter\Collection\Collection::toArray
-     */
     public function testReadMeExample(): void
     {
         $collection = Collection::fromIterable([1, 2, 3]);
@@ -150,13 +91,6 @@ final class CollectionTest extends AbstractTestCase
         self::assertSame([60], $collection->drop(1)->take(2)->slice(1, 1)->toArray());
     }
 
-    /**
-     * @covers \Ghostwriter\Collection\Collection::__construct
-     * @covers \Ghostwriter\Collection\Collection::fromGenerator
-     * @covers \Ghostwriter\Collection\Collection::fromIterable
-     * @covers \Ghostwriter\Collection\Collection::getIterator
-     * @covers \Ghostwriter\Collection\Collection::reduce
-     */
     public function testReduce(): void
     {
         $collection = Collection::fromIterable([1, 2, 3]);
@@ -182,17 +116,9 @@ final class CollectionTest extends AbstractTestCase
     }
 
     /**
-     * @covers \Ghostwriter\Collection\Collection::__construct
-     * @covers \Ghostwriter\Collection\Collection::fromGenerator
-     * @covers \Ghostwriter\Collection\Collection::fromIterable
-     * @covers \Ghostwriter\Collection\Collection::getIterator
-     * @covers \Ghostwriter\Collection\Collection::slice
-     * @covers \Ghostwriter\Collection\Collection::toArray
-     *
-     * @dataProvider sliceDataProvider
-     *
      * @param array<int<0,max>> $slice
      */
+    #[DataProvider('sliceDataProvider')]
     public function testSlice(array $input, array $slice, array $expected, bool $throws = false): void
     {
         $collection = Collection::fromIterable($input);
