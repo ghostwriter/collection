@@ -49,10 +49,6 @@
         }
     },
     "config": {
-        "allow-plugins": {
-            "infection/extension-installer": true,
-            "dealerdirect/phpcodesniffer-composer-installer": true
-        },
         "classmap-authoritative": true,
         "discard-changes": true,
         "optimize-autoloader": true,
@@ -91,7 +87,7 @@
         "missing-returntypes": "psalm --alter --issues=MissingReturnType",
         "normalizer": "composer normalize --no-check-lock",
         "phpbench": "phpbench run",
-        "phpunit": "phpunit --colors=always --testdox --stop-on-failure",
+        "phpunit": "phpunit --colors=always --do-not-cache-result --testdox --stop-on-failure",
         "psalm": "@psalm:shepherd",
         "psalm:baseline": "psalm --set-baseline=psalm-baseline.xml",
         "psalm:dry-run": "psalm --alter --issues=all --dry-run",
