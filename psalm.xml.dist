@@ -22,6 +22,6 @@
         </ignoreFiles>
     </projectFiles>
     <plugins>
-        <pluginClass class="Psalm\PhpUnitPlugin\Plugin"/>
+        <pluginClass class="Ghostwriter\PsalmPlugin\Plugin"/>
     </plugins>
 </psalm>
