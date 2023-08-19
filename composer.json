@@ -52,13 +52,13 @@
         "classmap-authoritative": true,
         "discard-changes": true,
         "optimize-autoloader": true,
+        "platform": {
+            "php": "8.1.999"
+        },
         "preferred-install": "dist",
         "prepend-autoloader": true,
         "process-timeout": 5000,
-        "sort-packages": true,
-        "platform": {
-            "php": "8.1.999"
-        }
+        "sort-packages": true
     },
     "scripts": {
         "cache:clear": [
