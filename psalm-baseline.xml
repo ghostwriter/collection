@@ -1,22 +1,2 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<files psalm-version="5.13.1@086b94371304750d1c673315321a55d15fc59015">
-  <file src="src/Collection.php">
-    <PossiblyUnusedMethod>
-      <code>append</code>
-      <code>contains</code>
-      <code>count</code>
-      <code>drop</code>
-      <code>filter</code>
-      <code>first</code>
-      <code>fromIterable</code>
-      <code>last</code>
-      <code>map</code>
-      <code>reduce</code>
-      <code>take</code>
-      <code>toArray</code>
-    </PossiblyUnusedMethod>
-    <UnnecessaryVarAnnotation>
-      <code><![CDATA[Some<Closure():Traversable<int,TGenerator>>]]></code>
-    </UnnecessaryVarAnnotation>
-  </file>
-</files>
+<files psalm-version="5.14.1@b9d355e0829c397b9b3b47d0c0ed042a8a70284d"/>
