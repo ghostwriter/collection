@@ -10,6 +10,9 @@ use Ghostwriter\Collection\Exception\CollectionException;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
+
+use function is_object;
+use function is_string;
 use function sprintf;
 
 #[CoversClass(Collection::class)]
@@ -42,6 +45,8 @@ final class CollectionTest extends TestCase
         self::assertFalse(
             $collection->contains(static fn (int $value, int $key): bool => $value === 0 && $key === 1)
         );
+
+        self::assertSame(3, $collection->count());
     }
 
     public function testDropTakeSlice(): void
@@ -59,6 +64,12 @@ final class CollectionTest extends TestCase
         self::assertNull($collection->first(static fn (mixed $value): bool => is_object($value)));
         self::assertSame(60, $collection->first());
         self::assertSame([60], $collection->toArray());
+    }
+
+    public function testEach(): void
+    {
+        $collection = Collection::fromIterable([1, 2, 3]);
+        $collection->each(static fn (int $value, int $key) => self::assertSame($value, $key + 1));
     }
 
     public function testFromGenerator(): void
@@ -117,6 +128,8 @@ final class CollectionTest extends TestCase
 
     /**
      * @param array<int<0,max>> $slice
+     * @param array<int,int>    $input
+     * @param array<int,int>    $expected
      */
     #[DataProvider('sliceDataProvider')]
     public function testSlice(array $input, array $slice, array $expected, bool $throws = false): void
