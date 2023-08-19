@@ -14,6 +14,8 @@ use IteratorAggregate;
 use Traversable;
 
 use const PHP_INT_MAX;
+use function iterator_count;
+use function iterator_to_array;
 
 /**
  * @template TValue
@@ -79,6 +81,16 @@ final class Collection implements Countable, IteratorAggregate
     }
 
     /**
+     * @param Closure(TValue,int):void $function
+     */
+    public function each(Closure $function): void
+    {
+        foreach ($this->getIterator() as $key => $value) {
+            $function($value, $key);
+        }
+    }
+
+    /**
      * @param Closure(TValue,int):bool $function
      */
     public function filter(Closure $function): self
@@ -116,7 +128,6 @@ final class Collection implements Countable, IteratorAggregate
      */
     public static function fromGenerator(Closure $generator): self
     {
-        /** @var Some<Closure():Traversable<int,TGenerator>> $some */
         $some = Some::create($generator);
 
         return new self($some);
@@ -209,19 +220,20 @@ final class Collection implements Countable, IteratorAggregate
         return self::fromGenerator(
             function () use ($offset, $length): Generator {
                 $total = 0;
-                if ($total === $length) {
-                    return;
-                }
 
-                $limit = $offset + $length;
-                foreach ($this->getIterator() as $current) {
-                    if ($total++ < $offset) {
-                        continue;
-                    }
+                if ($total !== $length) {
+                    $limit = $offset + $length;
 
-                    yield $current;
-                    if ($total >= $limit) {
-                        break;
+                    foreach ($this->getIterator() as $current) {
+                        if ($total++ < $offset) {
+                            continue;
+                        }
+
+                        yield $current;
+
+                        if ($total >= $limit) {
+                            break;
+                        }
                     }
                 }
             }
