@@ -4,16 +4,22 @@ declare(strict_types=1);
 
 namespace Ghostwriter\Collection\Tests\Unit;
 
-use Generator;
-use Ghostwriter\Collection\Collection;
-use Ghostwriter\Collection\Exception\CollectionException;
-use PHPUnit\Framework\Attributes\CoversClass;
-use PHPUnit\Framework\Attributes\DataProvider;
-use PHPUnit\Framework\TestCase;
-
+use function array_sum;
 use function is_object;
 use function is_string;
 use function sprintf;
+use Generator;
+use Ghostwriter\Collection\Collection;
+use Ghostwriter\Collection\Exception\FirstValueNotFoundException;
+use Ghostwriter\Collection\Exception\LengthMustBePositiveIntegerException;
+
+use Ghostwriter\Collection\Exception\OffsetMustBePositiveIntegerException;
+
+use Ghostwriter\Collection\ExceptionInterface;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\TestCase;
+use Throwable;
 
 #[CoversClass(Collection::class)]
 final class CollectionTest extends TestCase
@@ -22,8 +28,8 @@ final class CollectionTest extends TestCase
     {
         yield from [
             'empty' => [[], [0], []],
-            '[1,2,3] -> slice(0, -1)' => [[1, 2, 3], [0, -1], [1], true],
-            '[1,2,3] -> slice(-1)' => [[1, 2, 3], [-1], [1], true],
+            '[1,2,3] -> slice(0, -1)' => [[1, 2, 3], [0, -1], [1], LengthMustBePositiveIntegerException::class],
+            '[1,2,3] -> slice(-1)' => [[1, 2, 3], [-1], [1], OffsetMustBePositiveIntegerException::class],
             '[1,2,3] -> slice(0)' => [[1, 2, 3], [0], [1, 2, 3]],
             '[1,2,3] -> slice(0, 1)' => [[1, 2, 3], [0, 1], [1]],
             '[1,2,3] -> slice(1, 1)' => [[1, 2, 3], [1, 1], [2]],
@@ -38,13 +44,11 @@ final class CollectionTest extends TestCase
 
         self::assertTrue($collection->contains(2));
 
-        self::assertTrue($collection->contains(static fn (int $value, int $key): bool => $value === 3 && $key === 2));
+        self::assertTrue($collection->contains(static fn (int $value): bool => $value === 3));
 
         self::assertTrue($collection->contains(static fn (int $value): bool => $value === 1));
 
-        self::assertFalse(
-            $collection->contains(static fn (int $value, int $key): bool => $value === 0 && $key === 1)
-        );
+        self::assertFalse($collection->contains(static fn (int $value): bool => $value === 0));
 
         self::assertSame(3, $collection->count());
     }
@@ -61,20 +65,41 @@ final class CollectionTest extends TestCase
             ->drop(1)
             ->take(1);
 
-        self::assertNull($collection->first(static fn (mixed $value): bool => is_object($value)));
         self::assertSame(60, $collection->first());
         self::assertSame([60], $collection->toArray());
+
+        $this->expectException(FirstValueNotFoundException::class);
+        self::assertNull($collection->first(static fn (mixed $value): bool => /** @psalm-suppress DocblockTypeContradiction */ \is_object($value)));
     }
 
     public function testEach(): void
     {
-        $collection = Collection::fromIterable([1, 2, 3]);
-        $collection->each(static fn (int $value, int $key) => self::assertSame($value, $key + 1));
+        $counter = new class () {
+            public int $value = 0;
+
+            public function increment(int $value): int
+            {
+                return $this->value += $value;
+            }
+
+            public function count(): int
+            {
+                return $this->value;
+            }
+        };
+
+        $expected = [1, 2, 3];
+
+        $collection = Collection::fromIterable($expected);
+
+        $collection->each(static fn (mixed $value) => $counter->increment((int) $value));
+
+        self::assertSame(array_sum($expected), $counter->count());
     }
 
     public function testFromGenerator(): void
     {
-        self::assertCount(0, Collection::fromGenerator(static fn (): Generator => yield from []));
+        self::assertCount(0, Collection::fromGenerator(static fn (): Generator => /** @psalm-suppress NoValue */yield from []));
     }
 
     public function testFromIterable(): void
@@ -85,14 +110,19 @@ final class CollectionTest extends TestCase
     public function testLast(): void
     {
         $collection = Collection::fromIterable([1, 2, 3]);
+
         self::assertSame(3, $collection->last());
-        self::assertSame(2, $collection->last(static fn (int $value): bool => $value % 2 === 0));
+
+        self::assertSame(
+            2,
+            $collection->last(static fn (mixed $value): bool => is_int($value) && $value % 2 === 0)
+        );
     }
 
     public function testReadMeExample(): void
     {
         $collection = Collection::fromIterable([1, 2, 3]);
-        self::assertCount(3, $collection);
+        self::assertSame(3, $collection->count());
 
         $collection = $collection->append([4, 5, 6, 7, 8, 9])
             ->map(static fn (int $v): int => $v * 10)
@@ -100,6 +130,13 @@ final class CollectionTest extends TestCase
 
         self::assertSame([20, 40, 60, 80], $collection->toArray());
         self::assertSame([60], $collection->drop(1)->take(2)->slice(1, 1)->toArray());
+    }
+
+    public function testAppendNothing(): void
+    {
+        $collection = Collection::fromIterable([1, 2, 3]);
+        self::assertSame($collection, $collection->append([]));
+        self::assertNotSame($collection, $collection->append([4]));
     }
 
     public function testReduce(): void
@@ -130,13 +167,16 @@ final class CollectionTest extends TestCase
      * @param array<int<0,max>> $slice
      * @param array<int,int>    $input
      * @param array<int,int>    $expected
+     * @param ?class-string<Throwable> $throws
      */
     #[DataProvider('sliceDataProvider')]
-    public function testSlice(array $input, array $slice, array $expected, bool $throws = false): void
+    public function testSlice(array $input, array $slice, array $expected, string $throws = null): void
     {
         $collection = Collection::fromIterable($input);
-        if ($throws) {
-            $this->expectException(CollectionException::class);
+
+        if (is_string($throws)) {
+            $this->expectException(ExceptionInterface::class);
+            $this->expectException($throws);
         }
 
         self::assertSame($expected, $collection->slice(...$slice)->toArray());
