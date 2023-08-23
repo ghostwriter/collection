@@ -1,6 +1,8 @@
 <?xml version="1.0"?>
 <psalm
     errorLevel="1"
+    checkForThrowsDocblock="true"
+    allowStringToStandInForClass="false"
     findUnusedPsalmSuppress="true"
     findUnusedVariablesAndParams="true"
     findUnusedCode="true"
@@ -13,12 +15,10 @@
 >
     <projectFiles>
         <directory name="src"/>
+        <directory name="tests"/>
         <ignoreFiles>
             <directory name=".github"/>
-            <directory name="tests"/>
             <directory name="vendor"/>
-            <file name="ecs.php"/>
-            <file name="rector.php"/>
         </ignoreFiles>
     </projectFiles>
     <plugins>
