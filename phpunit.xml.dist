@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <phpunit
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/10.1/phpunit.xsd"
+    xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/10.3/phpunit.xsd"
     beStrictAboutChangesToGlobalState="true"
     beStrictAboutCoverageMetadata="true"
     beStrictAboutOutputDuringTests="true"
@@ -23,14 +23,6 @@
     failOnSkipped="true"
     failOnWarning="true"
     requireCoverageMetadata="true"
-    stopOnDefect="true"
-    stopOnError="true"
-    stopOnFailure="true"
-    stopOnIncomplete="true"
-    stopOnRisky="true"
-    stopOnSkipped="true"
-    stopOnWarning="true"
-    testdox="true"
 >
     <coverage>
         <report>
