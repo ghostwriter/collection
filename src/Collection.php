@@ -5,10 +5,14 @@ declare(strict_types=1);
 namespace Ghostwriter\Collection;
 
 use Closure;
+use Countable;
+use Generator;
 use Ghostwriter\Collection\Exception\FirstValueNotFoundException;
 use Ghostwriter\Collection\Exception\LengthMustBePositiveIntegerException;
 use Ghostwriter\Collection\Exception\OffsetMustBePositiveIntegerException;
 use IteratorAggregate;
+use SplFixedArray;
+use function iterator_to_array;
 
 /**
  * @template TValue
@@ -17,13 +21,13 @@ use IteratorAggregate;
  *
  * @see \Ghostwriter\Collection\Tests\Unit\CollectionTest
  */
-final class Collection implements \Countable, \IteratorAggregate
+final class Collection implements Countable, IteratorAggregate
 {
     /**
-     * @param \SplFixedArray<TValue> $storage
+     * @param SplFixedArray<TValue> $storage
      */
     private function __construct(
-        private readonly \SplFixedArray $storage
+        private readonly SplFixedArray $storage
     ) {
     }
 
@@ -38,7 +42,7 @@ final class Collection implements \Countable, \IteratorAggregate
             return $this;
         }
 
-        return self::fromGenerator(function () use ($iterable): \Generator {
+        return self::fromGenerator(function () use ($iterable): Generator {
             foreach ($this->storage as $value) {
                 yield $value;
             }
@@ -52,16 +56,15 @@ final class Collection implements \Countable, \IteratorAggregate
     /**
      * @template TContains
      *
-     * @param (\Closure(TValue):bool)|TContains $functionOrValue
+     * @param Closure(TValue):bool|TContains $functionOrValue
      */
     public function contains(mixed $functionOrValue): bool
     {
-        $function = $functionOrValue;
-        if (!$function instanceof \Closure) {
-            $function = static fn (mixed $value): bool => $value === $functionOrValue;
-        }
+        /** @var Closure(TValue):bool $function */
+        $function = $functionOrValue instanceof Closure ?
+            $functionOrValue :
+            static fn (mixed $value): bool => $value === $functionOrValue;
 
-        /* @var Closure(TValue):bool $function */
         return (bool) $this->filter($function)->count();
     }
 
@@ -76,17 +79,17 @@ final class Collection implements \Countable, \IteratorAggregate
      * @return self<TValue>
      *
      * @throws LengthMustBePositiveIntegerException
+     * @throws OffsetMustBePositiveIntegerException
      */
     public function drop(int $length): self
     {
-        /* @psalm-suppress MissingThrowsDocblock OffsetMustBePositiveIntegerException */
         return $this->slice($length);
     }
 
     /**
-     * @param \Closure(TValue):void $function
+     * @param Closure(TValue):void $function
      */
-    public function each(\Closure $function): void
+    public function each(Closure $function): void
     {
         foreach ($this->storage as $value) {
             $function($value);
@@ -94,13 +97,13 @@ final class Collection implements \Countable, \IteratorAggregate
     }
 
     /**
-     * @param \Closure(TValue):bool $function
+     * @param Closure(TValue):bool $function
      *
      * @return self<TValue>
      */
-    public function filter(\Closure $function): self
+    public function filter(Closure $function): self
     {
-        return self::fromGenerator(function () use ($function): \Generator {
+        return self::fromGenerator(function () use ($function): Generator {
             foreach ($this->storage as $value) {
                 if (!$function($value)) {
                     continue;
@@ -112,13 +115,13 @@ final class Collection implements \Countable, \IteratorAggregate
     }
 
     /**
-     * @param ?\Closure(TValue):bool $function
+     * @param ?Closure(TValue):bool $function
      *
      * @return ?TValue
      *
      * @throws FirstValueNotFoundException If no value is found
      */
-    public function first(\Closure $function = null): mixed
+    public function first(Closure $function = null): mixed
     {
         $function ??= static fn (mixed $value): bool => null !== $value;
 
@@ -130,19 +133,19 @@ final class Collection implements \Countable, \IteratorAggregate
     }
 
     /**
-     * @param \Closure():\Generator $generator
+     * @param Closure():Generator $generator
      *
      * @return self<TValue>
      */
-    public static function fromGenerator(\Closure $generator): self
+    public static function fromGenerator(Closure $generator): self
     {
-        /** @var \Closure():\Generator<TValue> $generator */
+        /** @var Closure():Generator<TValue> $generator */
         $collection = $generator();
 
         /** @var array<int,TValue> $asArray */
-        $asArray = \iterator_to_array($collection);
+        $asArray = iterator_to_array($collection);
 
-        return new self(\SplFixedArray::fromArray($asArray, false));
+        return new self(SplFixedArray::fromArray($asArray, false));
     }
 
     /**
@@ -155,19 +158,19 @@ final class Collection implements \Countable, \IteratorAggregate
     }
 
     /**
-     * @return \Generator<TValue>
+     * @return Generator<TValue>
      */
-    public function getIterator(): \Generator
+    public function getIterator(): Generator
     {
         yield from $this->storage;
     }
 
     /**
-     * @param ?\Closure(TValue):bool $function
+     * @param ?Closure(TValue):bool $function
      *
      * @return TValue|null
      */
-    public function last(\Closure $function = null): mixed
+    public function last(Closure $function = null): mixed
     {
         $last = null;
 
@@ -183,13 +186,13 @@ final class Collection implements \Countable, \IteratorAggregate
     /**
      * @template TMap
      *
-     * @param \Closure(TValue):TMap $function
+     * @param Closure(TValue):TMap $function
      *
      * @return self<TMap>
      */
-    public function map(\Closure $function): self
+    public function map(Closure $function): self
     {
-        return self::fromGenerator(function () use ($function): \Generator {
+        return self::fromGenerator(function () use ($function): Generator {
             foreach ($this->storage as $value) {
                 yield $function($value);
             }
@@ -200,11 +203,11 @@ final class Collection implements \Countable, \IteratorAggregate
      * @template TAccumulator
      *
      * @param ?TAccumulator                                   $accumulator
-     * @param \Closure(TAccumulator|null,TValue):TAccumulator $function
+     * @param Closure(TAccumulator|null,TValue):TAccumulator $function
      *
      * @return ?TAccumulator
      */
-    public function reduce(\Closure $function, mixed $accumulator = null): mixed
+    public function reduce(Closure $function, mixed $accumulator = null): mixed
     {
         foreach ($this->storage as $value) {
             $accumulator = $function($accumulator, $value);
@@ -224,7 +227,7 @@ final class Collection implements \Countable, \IteratorAggregate
      * @throws OffsetMustBePositiveIntegerException
      * @throws LengthMustBePositiveIntegerException
      */
-    public function slice(int $offset, int $length = \PHP_INT_MAX): self
+    public function slice(int $offset, int $length = PHP_INT_MAX): self
     {
         if ($offset < 0) {
             throw new OffsetMustBePositiveIntegerException();
@@ -235,7 +238,7 @@ final class Collection implements \Countable, \IteratorAggregate
         }
 
         return self::fromGenerator(
-            function () use ($offset, $length): \Generator {
+            function () use ($offset, $length): Generator {
                 $total = 0;
 
                 if ($total !== $length) {
@@ -262,11 +265,11 @@ final class Collection implements \Countable, \IteratorAggregate
      *
      * @return self<TValue>
      *
+     * @throws OffsetMustBePositiveIntegerException
      * @throws LengthMustBePositiveIntegerException
      */
     public function take(int $length): self
     {
-        /* @psalm-suppress MissingThrowsDocblock OffsetMustBePositiveIntegerException */
         return $this->slice(0, $length);
     }
 
