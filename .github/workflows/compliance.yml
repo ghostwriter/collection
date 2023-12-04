@@ -8,6 +8,8 @@ on:
       - "main"
       - "[0-9]+.[0-9]+.x" # 1.2.x
       - "v[0-9]+" # v1
+  schedule:
+    - cron: "0 * * * *" # Runs hourly
   workflow_dispatch: # Manually Trigger workflow
 
 jobs:
