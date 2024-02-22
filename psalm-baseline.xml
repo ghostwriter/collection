@@ -1,2 +1,42 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<files psalm-version="5.14.1@b9d355e0829c397b9b3b47d0c0ed042a8a70284d"/>
+<files psalm-version="5.22.1@e9dad66e11274315dac27e08349c628c7d6a1a43">
+  <file src="src/Collection.php">
+    <DocblockTypeContradiction>
+      <code><![CDATA[$length < 0]]></code>
+      <code><![CDATA[$offset < 0]]></code>
+    </DocblockTypeContradiction>
+  </file>
+  <file src="tests/Unit/CollectionTest.php">
+    <DocblockTypeContradiction>
+      <code><![CDATA[is_object($value)]]></code>
+    </DocblockTypeContradiction>
+    <InvalidArgument>
+      <code><![CDATA[[4, 5, 6, 7, 8, 9]]]></code>
+      <code><![CDATA[[4, 5, 6, 7, 8, 9]]]></code>
+      <code><![CDATA[[4]]]></code>
+    </InvalidArgument>
+    <InvalidCast>
+      <code><![CDATA[$value]]></code>
+      <code><![CDATA[$value]]></code>
+    </InvalidCast>
+    <NoValue>
+      <code><![CDATA[$value]]></code>
+      <code><![CDATA[yield from []]]></code>
+    </NoValue>
+    <ReservedWord>
+      <code><![CDATA[int]]></code>
+      <code><![CDATA[int]]></code>
+      <code><![CDATA[int]]></code>
+      <code><![CDATA[int]]></code>
+      <code><![CDATA[int]]></code>
+      <code><![CDATA[int]]></code>
+      <code><![CDATA[int]]></code>
+      <code><![CDATA[int]]></code>
+      <code><![CDATA[mixed]]></code>
+      <code><![CDATA[mixed]]></code>
+    </ReservedWord>
+    <TypeDoesNotContainType>
+      <code><![CDATA[is_int($value)]]></code>
+    </TypeDoesNotContainType>
+  </file>
+</files>
