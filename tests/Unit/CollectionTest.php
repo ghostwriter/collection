@@ -2,45 +2,38 @@
 
 declare(strict_types=1);
 
-namespace Ghostwriter\Collection\Tests\Unit;
+namespace Ghostwriter\CollectionTests\Unit;
 
-use function array_sum;
-use function is_object;
-use function is_string;
-use function sprintf;
 use Generator;
 use Ghostwriter\Collection\Collection;
 use Ghostwriter\Collection\Exception\FirstValueNotFoundException;
 use Ghostwriter\Collection\Exception\LengthMustBePositiveIntegerException;
-
 use Ghostwriter\Collection\Exception\OffsetMustBePositiveIntegerException;
-
-use Ghostwriter\Collection\ExceptionInterface;
+use Ghostwriter\Collection\Interface\ExceptionInterface;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Throwable;
 
+use function array_sum;
+use function is_int;
+use function is_object;
+use function is_string;
+use function sprintf;
+
 #[CoversClass(Collection::class)]
 final class CollectionTest extends TestCase
 {
-    public static function sliceDataProvider(): Generator
+    public function testAppendNothing(): void
     {
-        yield from [
-            'empty' => [[], [0], []],
-            '[1,2,3] -> slice(0, -1)' => [[1, 2, 3], [0, -1], [1], LengthMustBePositiveIntegerException::class],
-            '[1,2,3] -> slice(-1)' => [[1, 2, 3], [-1], [1], OffsetMustBePositiveIntegerException::class],
-            '[1,2,3] -> slice(0)' => [[1, 2, 3], [0], [1, 2, 3]],
-            '[1,2,3] -> slice(0, 1)' => [[1, 2, 3], [0, 1], [1]],
-            '[1,2,3] -> slice(1, 1)' => [[1, 2, 3], [1, 1], [2]],
-            '[1,2,3] -> slice(1, PHP_MAX_INT)' => [[1, 2, 3], [1], [2, 3]],
-            '[1,2,3] -> slice(1, 0)' => [[1, 2, 3], [1, 0], []],
-        ];
+        $collection = Collection::new([1, 2, 3]);
+        self::assertSame($collection, $collection->append([]));
+        self::assertNotSame($collection, $collection->append([4]));
     }
 
     public function testContains(): void
     {
-        $collection = Collection::fromIterable([1, 2, 3]);
+        $collection = Collection::new([1, 2, 3]);
 
         self::assertTrue($collection->contains(2));
 
@@ -55,7 +48,7 @@ final class CollectionTest extends TestCase
 
     public function testDropTakeSlice(): void
     {
-        $collection = Collection::fromIterable([1, 2, 3]);
+        $collection = Collection::new([1, 2, 3]);
         self::assertCount(3, $collection);
 
         $collection = $collection->append([4, 5, 6, 7, 8, 9])
@@ -69,12 +62,12 @@ final class CollectionTest extends TestCase
         self::assertSame([60], $collection->toArray());
 
         $this->expectException(FirstValueNotFoundException::class);
-        self::assertNull($collection->first(static fn (mixed $value): bool => /** @psalm-suppress DocblockTypeContradiction */ \is_object($value)));
+        self::assertNull($collection->first(static fn (mixed $value): bool => is_object($value)));
     }
 
     public function testEach(): void
     {
-        $counter = new class () {
+        $counter = new class() {
             public int $value = 0;
 
             public function increment(int $value): int
@@ -90,7 +83,7 @@ final class CollectionTest extends TestCase
 
         $expected = [1, 2, 3];
 
-        $collection = Collection::fromIterable($expected);
+        $collection = Collection::new($expected);
 
         $collection->each(static fn (mixed $value) => $counter->increment((int) $value));
 
@@ -99,17 +92,17 @@ final class CollectionTest extends TestCase
 
     public function testFromGenerator(): void
     {
-        self::assertCount(0, Collection::fromGenerator(static fn (): Generator => /** @psalm-suppress NoValue */yield from []));
+        self::assertCount(0, Collection::from(static fn (): Generator => yield from []));
     }
 
     public function testFromIterable(): void
     {
-        self::assertEmpty(Collection::fromIterable([]));
+        self::assertEmpty(Collection::new([]));
     }
 
     public function testLast(): void
     {
-        $collection = Collection::fromIterable([1, 2, 3]);
+        $collection = Collection::new([1, 2, 3]);
 
         self::assertSame(3, $collection->last());
 
@@ -121,7 +114,7 @@ final class CollectionTest extends TestCase
 
     public function testReadMeExample(): void
     {
-        $collection = Collection::fromIterable([1, 2, 3]);
+        $collection = Collection::new([1, 2, 3]);
         self::assertSame(3, $collection->count());
 
         $collection = $collection->append([4, 5, 6, 7, 8, 9])
@@ -132,16 +125,9 @@ final class CollectionTest extends TestCase
         self::assertSame([60], $collection->drop(1)->take(2)->slice(1, 1)->toArray());
     }
 
-    public function testAppendNothing(): void
-    {
-        $collection = Collection::fromIterable([1, 2, 3]);
-        self::assertSame($collection, $collection->append([]));
-        self::assertNotSame($collection, $collection->append([4]));
-    }
-
     public function testReduce(): void
     {
-        $collection = Collection::fromIterable([1, 2, 3]);
+        $collection = Collection::new([1, 2, 3]);
         self::assertSame(6, $collection->reduce(
             static fn (mixed $accumulator, int $value): int =>
             /** @var null|int $accumulator */
@@ -164,15 +150,15 @@ final class CollectionTest extends TestCase
     }
 
     /**
-     * @param array<int<0,max>> $slice
-     * @param array<int,int>    $input
-     * @param array<int,int>    $expected
+     * @param array<int<0,max>>        $slice
+     * @param array<int,int>           $input
+     * @param array<int,int>           $expected
      * @param ?class-string<Throwable> $throws
      */
     #[DataProvider('sliceDataProvider')]
     public function testSlice(array $input, array $slice, array $expected, string $throws = null): void
     {
-        $collection = Collection::fromIterable($input);
+        $collection = Collection::new($input);
 
         if (is_string($throws)) {
             $this->expectException(ExceptionInterface::class);
@@ -180,5 +166,19 @@ final class CollectionTest extends TestCase
         }
 
         self::assertSame($expected, $collection->slice(...$slice)->toArray());
+    }
+
+    public static function sliceDataProvider(): Generator
+    {
+        yield from [
+            'empty' => [[], [0], []],
+            '[1,2,3] -> slice(0, -1)' => [[1, 2, 3], [0, -1], [1], LengthMustBePositiveIntegerException::class],
+            '[1,2,3] -> slice(-1)' => [[1, 2, 3], [-1], [1], OffsetMustBePositiveIntegerException::class],
+            '[1,2,3] -> slice(0)' => [[1, 2, 3], [0], [1, 2, 3]],
+            '[1,2,3] -> slice(0, 1)' => [[1, 2, 3], [0, 1], [1]],
+            '[1,2,3] -> slice(1, 1)' => [[1, 2, 3], [1, 1], [2]],
+            '[1,2,3] -> slice(1, PHP_MAX_INT)' => [[1, 2, 3], [1], [2, 3]],
+            '[1,2,3] -> slice(1, 0)' => [[1, 2, 3], [1, 0], []],
+        ];
     }
 }
