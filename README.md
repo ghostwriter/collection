@@ -18,11 +18,15 @@ You can install the package via composer:
 composer require ghostwriter/collection
 ```
 
+### Star ⭐️ this repo if you find it useful
+
+You can also star (🌟) this repo to find it easier later.
+
 ## Usage
 
 ```php
 /** @var \Ghostwriter\Collection\Collection $collection */
-$collection = Collection::fromIterable([1, 2, 3])
+$collection = Collection::new([1, 2, 3])
     ->append([4, 5, 6, 7, 8, 9])
     ->map(static fn ($v): int => $v * 10)
     ->filter(static fn ($v): bool => 0 === $v % 20);
