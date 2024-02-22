@@ -105,8 +105,6 @@ interface CollectionInterface extends Countable, IteratorAggregate
      * @param int<0,max> $offset
      * @param int<0,max> $length
      *
-     * @psalm-suppress DocblockTypeContradiction
-     *
      * @throws OffsetMustBePositiveIntegerException
      * @throws LengthMustBePositiveIntegerException
      *
