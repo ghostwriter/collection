@@ -63,12 +63,12 @@ final readonly class Collection implements CollectionInterface
     public function contains(mixed $functionOrValue): bool
     {
         /** @var Closure(TValue):bool $function */
-        $function = $functionOrValue instanceof Closure ?
-            $functionOrValue :
-            static fn (mixed $value): bool => $value === $functionOrValue;
+        $function = match (true) {
+            $functionOrValue instanceof Closure => $functionOrValue,
+            default => static fn (mixed $value): bool => $value === $functionOrValue,
+        };
 
-        return (bool) $this->filter($function)
-            ->count();
+        return (bool) $this->filter($function)->count();
     }
 
     public function count(): int
@@ -199,8 +199,6 @@ final readonly class Collection implements CollectionInterface
     /**
      * @param int<0,max> $offset
      * @param int<0,max> $length
-     *
-     * @psalm-suppress DocblockTypeContradiction
      *
      * @throws OffsetMustBePositiveIntegerException
      * @throws LengthMustBePositiveIntegerException
