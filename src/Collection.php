@@ -5,29 +5,31 @@ declare(strict_types=1);
 namespace Ghostwriter\Collection;
 
 use Closure;
-use Countable;
 use Generator;
 use Ghostwriter\Collection\Exception\FirstValueNotFoundException;
 use Ghostwriter\Collection\Exception\LengthMustBePositiveIntegerException;
 use Ghostwriter\Collection\Exception\OffsetMustBePositiveIntegerException;
-use IteratorAggregate;
+use Ghostwriter\Collection\Interface\CollectionInterface;
 use SplFixedArray;
+
+use const PHP_INT_MAX;
+
 use function iterator_to_array;
 
 /**
  * @template TValue
  *
- * @implements IteratorAggregate<TValue>
+ * @implements CollectionInterface<TValue>
  *
- * @see \Ghostwriter\Collection\Tests\Unit\CollectionTest
+ * @see \Ghostwriter\CollectionTests\Unit\CollectionTest
  */
-final class Collection implements Countable, IteratorAggregate
+final readonly class Collection implements CollectionInterface
 {
     /**
      * @param SplFixedArray<TValue> $storage
      */
     private function __construct(
-        private readonly SplFixedArray $storage
+        private SplFixedArray $storage
     ) {
     }
 
@@ -38,11 +40,11 @@ final class Collection implements Countable, IteratorAggregate
      */
     public function append(iterable $iterable = []): self
     {
-        if ([] === $iterable) {
+        if ($iterable === []) {
             return $this;
         }
 
-        return self::fromGenerator(function () use ($iterable): Generator {
+        return self::from(function () use ($iterable): Generator {
             foreach ($this->storage as $value) {
                 yield $value;
             }
@@ -65,7 +67,8 @@ final class Collection implements Countable, IteratorAggregate
             $functionOrValue :
             static fn (mixed $value): bool => $value === $functionOrValue;
 
-        return (bool) $this->filter($function)->count();
+        return (bool) $this->filter($function)
+            ->count();
     }
 
     public function count(): int
@@ -76,10 +79,11 @@ final class Collection implements Countable, IteratorAggregate
     /**
      * @param int<0,max> $length
      *
-     * @return self<TValue>
-     *
      * @throws LengthMustBePositiveIntegerException
      * @throws OffsetMustBePositiveIntegerException
+     *
+     * @return self<TValue>
+     *
      */
     public function drop(int $length): self
     {
@@ -103,9 +107,9 @@ final class Collection implements Countable, IteratorAggregate
      */
     public function filter(Closure $function): self
     {
-        return self::fromGenerator(function () use ($function): Generator {
+        return self::from(function () use ($function): Generator {
             foreach ($this->storage as $value) {
-                if (!$function($value)) {
+                if (! $function($value)) {
                     continue;
                 }
 
@@ -117,44 +121,20 @@ final class Collection implements Countable, IteratorAggregate
     /**
      * @param ?Closure(TValue):bool $function
      *
+     * @throws FirstValueNotFoundException If no value is found
+     *
      * @return ?TValue
      *
-     * @throws FirstValueNotFoundException If no value is found
      */
     public function first(Closure $function = null): mixed
     {
-        $function ??= static fn (mixed $value): bool => null !== $value;
+        $function ??= static fn (mixed $value): bool => $value !== null;
 
         foreach ($this->filter($function) as $value) {
             return $value;
         }
 
         throw new FirstValueNotFoundException();
-    }
-
-    /**
-     * @param Closure():Generator $generator
-     *
-     * @return self<TValue>
-     */
-    public static function fromGenerator(Closure $generator): self
-    {
-        /** @var Closure():Generator<TValue> $generator */
-        $collection = $generator();
-
-        /** @var array<int,TValue> $asArray */
-        $asArray = iterator_to_array($collection);
-
-        return new self(SplFixedArray::fromArray($asArray, false));
-    }
-
-    /**
-     * @return self<TValue>
-     */
-    public static function fromIterable(iterable $iterable = []): self
-    {
-        /* @var iterable<TValue> $iterable */
-        return self::fromGenerator(static fn () => yield from $iterable);
     }
 
     /**
@@ -168,13 +148,13 @@ final class Collection implements Countable, IteratorAggregate
     /**
      * @param ?Closure(TValue):bool $function
      *
-     * @return TValue|null
+     * @return null|TValue
      */
     public function last(Closure $function = null): mixed
     {
         $last = null;
 
-        $function ??= static fn (mixed $value): bool => null !== $value;
+        $function ??= static fn (mixed $value): bool => $value !== null;
 
         foreach ($this->filter($function) as $value) {
             $last = $value;
@@ -192,7 +172,7 @@ final class Collection implements Countable, IteratorAggregate
      */
     public function map(Closure $function): self
     {
-        return self::fromGenerator(function () use ($function): Generator {
+        return self::from(function () use ($function): Generator {
             foreach ($this->storage as $value) {
                 yield $function($value);
             }
@@ -202,8 +182,8 @@ final class Collection implements Countable, IteratorAggregate
     /**
      * @template TAccumulator
      *
-     * @param ?TAccumulator                                   $accumulator
-     * @param Closure(TAccumulator|null,TValue):TAccumulator $function
+     * @param ?TAccumulator                                  $accumulator
+     * @param Closure(null|TAccumulator,TValue):TAccumulator $function
      *
      * @return ?TAccumulator
      */
@@ -222,10 +202,11 @@ final class Collection implements Countable, IteratorAggregate
      *
      * @psalm-suppress DocblockTypeContradiction
      *
-     * @return self<TValue>
-     *
      * @throws OffsetMustBePositiveIntegerException
      * @throws LengthMustBePositiveIntegerException
+     *
+     * @return self<TValue>
+     *
      */
     public function slice(int $offset, int $length = PHP_INT_MAX): self
     {
@@ -237,7 +218,7 @@ final class Collection implements Countable, IteratorAggregate
             throw new LengthMustBePositiveIntegerException();
         }
 
-        return self::fromGenerator(
+        return self::from(
             function () use ($offset, $length): Generator {
                 $total = 0;
 
@@ -263,10 +244,11 @@ final class Collection implements Countable, IteratorAggregate
     /**
      * @param int<0,max> $length
      *
-     * @return self<TValue>
-     *
      * @throws OffsetMustBePositiveIntegerException
      * @throws LengthMustBePositiveIntegerException
+     *
+     * @return self<TValue>
+     *
      */
     public function take(int $length): self
     {
@@ -279,5 +261,30 @@ final class Collection implements Countable, IteratorAggregate
     public function toArray(): array
     {
         return $this->storage->toArray();
+    }
+
+    /**
+     * @param Closure():Generator $generator
+     *
+     * @return self<TValue>
+     */
+    public static function from(Closure $generator): self
+    {
+        /** @var Closure():Generator<TValue> $generator */
+        $collection = $generator();
+
+        /** @var array<int,TValue> $asArray */
+        $asArray = iterator_to_array($collection);
+
+        return new self(SplFixedArray::fromArray($asArray, false));
+    }
+
+    /**
+     * @return self<TValue>
+     */
+    public static function new(iterable $iterable = []): self
+    {
+        /** @var iterable<TValue> $iterable */
+        return self::from(static fn () => yield from $iterable);
     }
 }
