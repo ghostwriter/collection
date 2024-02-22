@@ -136,10 +136,10 @@ interface CollectionInterface extends Countable, IteratorAggregate
      *
      * @return self<TValue>
      */
-    public static function fromGenerator(Closure $generator): self;
+    public static function from(Closure $generator): self;
 
     /**
      * @return self<TValue>
      */
-    public static function fromIterable(iterable $iterable = []): self;
+    public static function new(iterable $iterable = []): self;
 }
