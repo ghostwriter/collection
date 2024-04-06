@@ -34,7 +34,7 @@
     },
     "require-dev": {
         "ghostwriter/coding-standard": "dev-main",
-        "ghostwriter/psalm-plugin": ">=0.2"
+        "ghostwriter/psalm-plugin": "^0.2.0"
     },
     "minimum-stability": "stable",
     "prefer-stable": true,
@@ -49,10 +49,16 @@
         }
     },
     "config": {
+        "allow-plugins": {
+            "ghostwriter/coding-standard": true
+        },
+        "classmap-authoritative": false,
         "discard-changes": true,
         "optimize-autoloader": true,
+        "preferred-install": "dist",
         "prepend-autoloader": true,
-        "sort-packages": true
+        "sort-packages": true,
+        "use-parent-dir": false
     },
     "scripts": {
         "cache:clear": [
