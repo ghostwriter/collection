@@ -68,7 +68,8 @@ final readonly class Collection implements CollectionInterface
             default => static fn (mixed $value): bool => $value === $functionOrValue,
         };
 
-        return (bool) $this->filter($function)->count();
+        return (bool) $this->filter($function)
+            ->count();
     }
 
     public function count(): int
