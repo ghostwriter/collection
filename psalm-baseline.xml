@@ -5,9 +5,41 @@
       <code><![CDATA[$length < 0]]></code>
       <code><![CDATA[$offset < 0]]></code>
     </DocblockTypeContradiction>
+    <LessSpecificReturnType>
+      <code><![CDATA[Generator]]></code>
+      <code><![CDATA[Generator]]></code>
+      <code><![CDATA[Generator]]></code>
+      <code><![CDATA[Generator]]></code>
+    </LessSpecificReturnType>
+    <MissingOverrideAttribute>
+      <code><![CDATA[public function append(iterable $iterable = []): self]]></code>
+      <code><![CDATA[public function contains(mixed $functionOrValue): bool]]></code>
+      <code><![CDATA[public function count(): int]]></code>
+      <code><![CDATA[public function drop(int $length): self]]></code>
+      <code><![CDATA[public function each(Closure $function): void]]></code>
+      <code><![CDATA[public function filter(Closure $function): self]]></code>
+      <code><![CDATA[public function first(Closure $function = null): mixed]]></code>
+      <code><![CDATA[public function getIterator(): Generator]]></code>
+      <code><![CDATA[public function last(Closure $function = null): mixed]]></code>
+      <code><![CDATA[public function map(Closure $function): self]]></code>
+      <code><![CDATA[public function reduce(Closure $function, mixed $accumulator = null): mixed]]></code>
+      <code><![CDATA[public function slice(int $offset, int $length = PHP_INT_MAX): self]]></code>
+      <code><![CDATA[public function take(int $length): self]]></code>
+      <code><![CDATA[public function toArray(): array]]></code>
+      <code><![CDATA[public static function from(Closure $generator): self]]></code>
+      <code><![CDATA[public static function new(iterable $iterable = []): self]]></code>
+    </MissingOverrideAttribute>
+  </file>
+  <file src="src/Interface/CollectionInterface.php">
+    <MissingOverrideAttribute>
+      <code><![CDATA[public function count(): int;]]></code>
+      <code><![CDATA[public function getIterator(): Generator;]]></code>
+    </MissingOverrideAttribute>
   </file>
   <file src="tests/Unit/CollectionTest.php">
     <DocblockTypeContradiction>
+      <code><![CDATA[assertSame]]></code>
+      <code><![CDATA[assertSame]]></code>
       <code><![CDATA[is_object($value)]]></code>
     </DocblockTypeContradiction>
     <InvalidArgument>
@@ -19,6 +51,11 @@
       <code><![CDATA[$value]]></code>
       <code><![CDATA[$value]]></code>
     </InvalidCast>
+    <LessSpecificReturnType>
+      <code><![CDATA[Generator]]></code>
+      <code><![CDATA[int]]></code>
+      <code><![CDATA[int]]></code>
+    </LessSpecificReturnType>
     <NoValue>
       <code><![CDATA[$value]]></code>
       <code><![CDATA[yield from []]]></code>
@@ -36,6 +73,8 @@
       <code><![CDATA[mixed]]></code>
     </ReservedWord>
     <TypeDoesNotContainType>
+      <code><![CDATA[assertSame]]></code>
+      <code><![CDATA[assertSame]]></code>
       <code><![CDATA[is_int($value)]]></code>
     </TypeDoesNotContainType>
   </file>
