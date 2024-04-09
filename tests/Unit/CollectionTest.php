@@ -67,7 +67,7 @@ final class CollectionTest extends TestCase
 
     public function testEach(): void
     {
-        $counter = new class() {
+        $counter = new class () {
             public int $value = 0;
 
             public function increment(int $value): int
