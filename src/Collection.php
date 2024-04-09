@@ -12,9 +12,9 @@ use Ghostwriter\Collection\Exception\OffsetMustBePositiveIntegerException;
 use Ghostwriter\Collection\Interface\CollectionInterface;
 use SplFixedArray;
 
-use const PHP_INT_MAX;
-
 use function iterator_to_array;
+
+use const PHP_INT_MAX;
 
 /**
  * @template TValue
@@ -30,8 +30,7 @@ final readonly class Collection implements CollectionInterface
      */
     private function __construct(
         private SplFixedArray $storage
-    ) {
-    }
+    ) {}
 
     /**
      * @param iterable<TValue> $iterable
