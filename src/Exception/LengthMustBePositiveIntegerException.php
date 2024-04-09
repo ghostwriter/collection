@@ -7,6 +7,4 @@ namespace Ghostwriter\Collection\Exception;
 use Ghostwriter\Collection\Interface\ExceptionInterface;
 use InvalidArgumentException;
 
-final class LengthMustBePositiveIntegerException extends InvalidArgumentException implements ExceptionInterface
-{
-}
+final class LengthMustBePositiveIntegerException extends InvalidArgumentException implements ExceptionInterface {}
