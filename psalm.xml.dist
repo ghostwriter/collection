@@ -31,12 +31,9 @@
         <directory name="src"/>
         <directory name="tests"/>
         <ignoreFiles allowMissingFiles="true">
-            <directory name=".github"/>
-            <directory name="vendor"/>
             <directory name=".cache"/>
-            <directory name=".idea"/>
-            <directory name=".vscode"/>
-            <directory name="docs"/>
+            <directory name="tests/Fixture"/>
+            <directory name="vendor"/>
         </ignoreFiles>
     </projectFiles>
     <plugins>
