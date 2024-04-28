@@ -45,7 +45,8 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Ghostwriter\\CollectionTests\\": "tests/"
+            "Ghostwriter\\CollectionTests\\": "tests/",
+            "Tests\\": "tests"
         }
     },
     "config": {
@@ -74,8 +75,8 @@
         "dev": [
             "@cache:clear",
             "@composer-normalize",
-            "@psalm:baseline",
             "@check",
+            "@psalm:update",
             "@psalm:security",
             "@psalm:dry-run"
         ],
@@ -83,13 +84,14 @@
         "infection": "vendor/ghostwriter/coding-standard/tools/infection --ansi --verbose --threads=max --min-msi=0 --min-covered-msi=0",
         "phpunit": "vendor/ghostwriter/coding-standard/tools/phpunit --do-not-cache-result --colors=always",
         "phpunit:migrate": "@phpunit --migrate-configuration",
-        "psalm": "vendor/ghostwriter/coding-standard/tools/psalm --no-cache",
-        "psalm:alter": "@psalm --no-diff --shepherd --stats --alter --allow-backwards-incompatible-changes=false",
+        "psalm": "vendor/ghostwriter/coding-standard/tools/psalm --no-cache --show-info=true",
+        "psalm:alter": "vendor/ghostwriter/coding-standard/tools/psalm --no-cache --alter --allow-backwards-incompatible-changes=false --safe-types",
         "psalm:baseline": "@psalm --no-diff --set-baseline=psalm-baseline.xml",
         "psalm:dry-run": "@psalm:alter --issues=all --dry-run",
-        "psalm:fix": "@psalm:alter --issues=MissingReturnType",
+        "psalm:fix": "@psalm:alter --issues=UnnecessaryVarAnnotation,MissingPureAnnotation,MissingImmutableAnnotation",
         "psalm:security": "@psalm --no-diff --taint-analysis",
         "psalm:shepherd": "@psalm --no-diff --shepherd --stats",
+        "psalm:update": "@psalm --no-diff --update-baseline=psalm-baseline.xml",
         "rector": "vendor/bin/rector process --no-ansi --no-interaction --clear-cache",
         "test": [
             "@phpunit",
