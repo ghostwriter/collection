@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Ghostwriter\CollectionTests\Unit;
+namespace Tests\Unit;
 
 use Generator;
 use Ghostwriter\Collection\Collection;
@@ -67,7 +67,7 @@ final class CollectionTest extends TestCase
 
     public function testEach(): void
     {
-        $counter = new class () {
+        $counter = new class() {
             public int $value = 0;
 
             public function increment(int $value): int
@@ -85,7 +85,7 @@ final class CollectionTest extends TestCase
 
         $collection = Collection::new($expected);
 
-        $collection->each(static fn (mixed $value) => $counter->increment((int) $value));
+        $collection->each(static fn (mixed $value) => $counter->increment($value));
 
         self::assertSame(array_sum($expected), $counter->count());
     }
@@ -128,6 +128,7 @@ final class CollectionTest extends TestCase
     public function testReduce(): void
     {
         $collection = Collection::new([1, 2, 3]);
+
         self::assertSame(6, $collection->reduce(
             static fn (mixed $accumulator, int $value): int =>
             /** @var null|int $accumulator */
@@ -139,7 +140,7 @@ final class CollectionTest extends TestCase
                 '%s%s',
                 $accumulator,
                 $value
-            ) : (string) $value
+            ) : $value . ''
         ));
 
         self::assertNull($collection->reduce(
