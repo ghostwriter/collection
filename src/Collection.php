@@ -10,33 +10,36 @@ use Ghostwriter\Collection\Exception\FirstValueNotFoundException;
 use Ghostwriter\Collection\Exception\LengthMustBePositiveIntegerException;
 use Ghostwriter\Collection\Exception\OffsetMustBePositiveIntegerException;
 use Ghostwriter\Collection\Interface\CollectionInterface;
-use SplFixedArray;
-
-use function iterator_to_array;
+use Override;
 
 use const PHP_INT_MAX;
+
+use function iterator_count;
+use function iterator_to_array;
 
 /**
  * @template TValue
  *
  * @implements CollectionInterface<TValue>
  *
- * @see \Ghostwriter\CollectionTests\Unit\CollectionTest
+ * @see \Tests\Unit\CollectionTest
  */
 final readonly class Collection implements CollectionInterface
 {
     /**
-     * @param SplFixedArray<TValue> $storage
+     * @param array<TValue> $storage
      */
     private function __construct(
-        private SplFixedArray $storage
-    ) {}
+        private array $storage
+    ) {
+    }
 
     /**
      * @param iterable<TValue> $iterable
      *
      * @return self<TValue>
      */
+    #[Override]
     public function append(iterable $iterable = []): self
     {
         if ($iterable === []) {
@@ -59,6 +62,7 @@ final readonly class Collection implements CollectionInterface
      *
      * @param Closure(TValue):bool|TContains $functionOrValue
      */
+    #[Override]
     public function contains(mixed $functionOrValue): bool
     {
         /** @var Closure(TValue):bool $function */
@@ -71,9 +75,10 @@ final readonly class Collection implements CollectionInterface
             ->count();
     }
 
+    #[Override]
     public function count(): int
     {
-        return $this->storage->count();
+        return iterator_count($this);
     }
 
     /**
@@ -85,6 +90,7 @@ final readonly class Collection implements CollectionInterface
      * @return self<TValue>
      *
      */
+    #[Override]
     public function drop(int $length): self
     {
         return $this->slice($length);
@@ -93,6 +99,7 @@ final readonly class Collection implements CollectionInterface
     /**
      * @param Closure(TValue):void $function
      */
+    #[Override]
     public function each(Closure $function): void
     {
         foreach ($this->storage as $value) {
@@ -105,6 +112,7 @@ final readonly class Collection implements CollectionInterface
      *
      * @return self<TValue>
      */
+    #[Override]
     public function filter(Closure $function): self
     {
         return self::from(function () use ($function): Generator {
@@ -126,6 +134,7 @@ final readonly class Collection implements CollectionInterface
      * @return ?TValue
      *
      */
+    #[Override]
     public function first(Closure $function = null): mixed
     {
         $function ??= static fn (mixed $value): bool => $value !== null;
@@ -140,6 +149,7 @@ final readonly class Collection implements CollectionInterface
     /**
      * @return Generator<TValue>
      */
+    #[Override]
     public function getIterator(): Generator
     {
         yield from $this->storage;
@@ -150,6 +160,7 @@ final readonly class Collection implements CollectionInterface
      *
      * @return null|TValue
      */
+    #[Override]
     public function last(Closure $function = null): mixed
     {
         $last = null;
@@ -170,6 +181,7 @@ final readonly class Collection implements CollectionInterface
      *
      * @return self<TMap>
      */
+    #[Override]
     public function map(Closure $function): self
     {
         return self::from(function () use ($function): Generator {
@@ -187,6 +199,7 @@ final readonly class Collection implements CollectionInterface
      *
      * @return ?TAccumulator
      */
+    #[Override]
     public function reduce(Closure $function, mixed $accumulator = null): mixed
     {
         foreach ($this->storage as $value) {
@@ -206,6 +219,7 @@ final readonly class Collection implements CollectionInterface
      * @return self<TValue>
      *
      */
+    #[Override]
     public function slice(int $offset, int $length = PHP_INT_MAX): self
     {
         if ($offset < 0) {
@@ -248,6 +262,7 @@ final readonly class Collection implements CollectionInterface
      * @return self<TValue>
      *
      */
+    #[Override]
     public function take(int $length): self
     {
         return $this->slice(0, $length);
@@ -256,9 +271,10 @@ final readonly class Collection implements CollectionInterface
     /**
      * @return array<TValue>
      */
+    #[Override]
     public function toArray(): array
     {
-        return $this->storage->toArray();
+        return $this->storage;
     }
 
     /**
@@ -266,6 +282,7 @@ final readonly class Collection implements CollectionInterface
      *
      * @return self<TValue>
      */
+    #[Override]
     public static function from(Closure $generator): self
     {
         /** @var Closure():Generator<TValue> $generator */
@@ -274,12 +291,13 @@ final readonly class Collection implements CollectionInterface
         /** @var array<int,TValue> $asArray */
         $asArray = iterator_to_array($collection);
 
-        return new self(SplFixedArray::fromArray($asArray, false));
+        return new self($asArray);
     }
 
     /**
      * @return self<TValue>
      */
+    #[Override]
     public static function new(iterable $iterable = []): self
     {
         /** @var iterable<TValue> $iterable */
