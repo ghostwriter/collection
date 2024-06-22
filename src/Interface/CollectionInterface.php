@@ -11,6 +11,7 @@ use Ghostwriter\Collection\Exception\FirstValueNotFoundException;
 use Ghostwriter\Collection\Exception\LengthMustBePositiveIntegerException;
 use Ghostwriter\Collection\Exception\OffsetMustBePositiveIntegerException;
 use IteratorAggregate;
+use Override;
 
 use const PHP_INT_MAX;
 
@@ -35,6 +36,10 @@ interface CollectionInterface extends Countable, IteratorAggregate
      */
     public function contains(mixed $functionOrValue): bool;
 
+    /**
+     * @return int<0,max>
+     */
+    #[Override]
     public function count(): int;
 
     /**
@@ -73,6 +78,7 @@ interface CollectionInterface extends Countable, IteratorAggregate
     /**
      * @return Generator<TValue>
      */
+    #[Override]
     public function getIterator(): Generator;
 
     /**
