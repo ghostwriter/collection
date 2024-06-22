@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<files psalm-version="5.23.1@8471a896ccea3526b26d082f4461eeea467f10a4">
+<files psalm-version="5.25.0@01a8eb06b9e9cc6cfb6a320bf9fb14331919d505">
   <file src="src/Collection.php">
     <DocblockTypeContradiction>
       <code><![CDATA[$length < 0]]></code>
@@ -11,30 +11,6 @@
       <code><![CDATA[Generator]]></code>
       <code><![CDATA[Generator]]></code>
     </LessSpecificReturnType>
-    <MissingOverrideAttribute>
-      <code><![CDATA[public function append(iterable $iterable = []): self]]></code>
-      <code><![CDATA[public function contains(mixed $functionOrValue): bool]]></code>
-      <code><![CDATA[public function count(): int]]></code>
-      <code><![CDATA[public function drop(int $length): self]]></code>
-      <code><![CDATA[public function each(Closure $function): void]]></code>
-      <code><![CDATA[public function filter(Closure $function): self]]></code>
-      <code><![CDATA[public function first(Closure $function = null): mixed]]></code>
-      <code><![CDATA[public function getIterator(): Generator]]></code>
-      <code><![CDATA[public function last(Closure $function = null): mixed]]></code>
-      <code><![CDATA[public function map(Closure $function): self]]></code>
-      <code><![CDATA[public function reduce(Closure $function, mixed $accumulator = null): mixed]]></code>
-      <code><![CDATA[public function slice(int $offset, int $length = PHP_INT_MAX): self]]></code>
-      <code><![CDATA[public function take(int $length): self]]></code>
-      <code><![CDATA[public function toArray(): array]]></code>
-      <code><![CDATA[public static function from(Closure $generator): self]]></code>
-      <code><![CDATA[public static function new(iterable $iterable = []): self]]></code>
-    </MissingOverrideAttribute>
-  </file>
-  <file src="src/Interface/CollectionInterface.php">
-    <MissingOverrideAttribute>
-      <code><![CDATA[public function count(): int;]]></code>
-      <code><![CDATA[public function getIterator(): Generator;]]></code>
-    </MissingOverrideAttribute>
   </file>
   <file src="tests/Unit/CollectionTest.php">
     <DocblockTypeContradiction>
@@ -47,10 +23,6 @@
       <code><![CDATA[[4, 5, 6, 7, 8, 9]]]></code>
       <code><![CDATA[[4]]]></code>
     </InvalidArgument>
-    <InvalidCast>
-      <code><![CDATA[$value]]></code>
-      <code><![CDATA[$value]]></code>
-    </InvalidCast>
     <LessSpecificReturnType>
       <code><![CDATA[Generator]]></code>
       <code><![CDATA[int]]></code>
