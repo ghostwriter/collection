@@ -8,7 +8,6 @@
     bootstrap="vendor/autoload.php"
     cacheDirectory=".cache/phpunit"
     cacheResult="false"
-    cacheResultFile=".cache/phpunit/phpunit.result.cache"
     colors="true"
     displayDetailsOnIncompleteTests="true"
     displayDetailsOnSkippedTests="true"
