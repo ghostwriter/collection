@@ -23,6 +23,11 @@ use const PHP_INT_MAX;
 interface CollectionInterface extends Countable, IteratorAggregate
 {
     /**
+     * @return self<TValue>
+     */
+    public static function new(iterable $iterable = []): self;
+
+    /**
      * @param iterable<TValue> $iterable
      *
      * @return self<TValue>
@@ -73,7 +78,7 @@ interface CollectionInterface extends Countable, IteratorAggregate
      * @return ?TValue
      *
      */
-    public function first(Closure $function = null): mixed;
+    public function first(?Closure $function = null): mixed;
 
     /**
      * @return Generator<TValue>
@@ -86,7 +91,7 @@ interface CollectionInterface extends Countable, IteratorAggregate
      *
      * @return null|TValue
      */
-    public function last(Closure $function = null): mixed;
+    public function last(?Closure $function = null): mixed;
 
     /**
      * @template TMap
@@ -100,8 +105,8 @@ interface CollectionInterface extends Countable, IteratorAggregate
     /**
      * @template TAccumulator
      *
-     * @param ?TAccumulator                                  $accumulator
      * @param Closure(null|TAccumulator,TValue):TAccumulator $function
+     * @param ?TAccumulator                                  $accumulator
      *
      * @return ?TAccumulator
      */
@@ -131,7 +136,7 @@ interface CollectionInterface extends Countable, IteratorAggregate
     public function take(int $length): self;
 
     /**
-     * @return array<TValue>
+     * @return list<TValue>
      */
     public function toArray(): array;
 
@@ -141,9 +146,4 @@ interface CollectionInterface extends Countable, IteratorAggregate
      * @return self<TValue>
      */
     public static function from(Closure $generator): self;
-
-    /**
-     * @return self<TValue>
-     */
-    public static function new(iterable $iterable = []): self;
 }
