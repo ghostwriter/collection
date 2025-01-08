@@ -11,6 +11,7 @@ use Ghostwriter\Collection\Exception\LengthMustBePositiveIntegerException;
 use Ghostwriter\Collection\Exception\OffsetMustBePositiveIntegerException;
 use Ghostwriter\Collection\Interface\CollectionInterface;
 use Override;
+use Tests\Unit\CollectionTest;
 
 use const PHP_INT_MAX;
 
@@ -22,16 +23,25 @@ use function iterator_to_array;
  *
  * @implements CollectionInterface<TValue>
  *
- * @see \Tests\Unit\CollectionTest
+ * @see CollectionTest
  */
 final readonly class Collection implements CollectionInterface
 {
     /**
-     * @param array<TValue> $storage
+     * @param list<TValue> $storage
      */
     private function __construct(
         private array $storage
-    ) {
+    ) {}
+
+    /**
+     * @return self<TValue>
+     */
+    #[Override]
+    public static function new(iterable $iterable = []): self
+    {
+        /** @var iterable<TValue> $iterable */
+        return self::from(static fn () => yield from $iterable);
     }
 
     /**
@@ -42,7 +52,7 @@ final readonly class Collection implements CollectionInterface
     #[Override]
     public function append(iterable $iterable = []): self
     {
-        if ($iterable === []) {
+        if ([] === $iterable) {
             return $this;
         }
 
@@ -135,9 +145,9 @@ final readonly class Collection implements CollectionInterface
      *
      */
     #[Override]
-    public function first(Closure $function = null): mixed
+    public function first(?Closure $function = null): mixed
     {
-        $function ??= static fn (mixed $value): bool => $value !== null;
+        $function ??= static fn (mixed $value): bool => null !== $value;
 
         foreach ($this->filter($function) as $value) {
             return $value;
@@ -161,11 +171,11 @@ final readonly class Collection implements CollectionInterface
      * @return null|TValue
      */
     #[Override]
-    public function last(Closure $function = null): mixed
+    public function last(?Closure $function = null): mixed
     {
         $last = null;
 
-        $function ??= static fn (mixed $value): bool => $value !== null;
+        $function ??= static fn (mixed $value): bool => null !== $value;
 
         foreach ($this->filter($function) as $value) {
             $last = $value;
@@ -194,8 +204,8 @@ final readonly class Collection implements CollectionInterface
     /**
      * @template TAccumulator
      *
-     * @param ?TAccumulator                                  $accumulator
      * @param Closure(null|TAccumulator,TValue):TAccumulator $function
+     * @param ?TAccumulator                                  $accumulator
      *
      * @return ?TAccumulator
      */
@@ -222,11 +232,11 @@ final readonly class Collection implements CollectionInterface
     #[Override]
     public function slice(int $offset, int $length = PHP_INT_MAX): self
     {
-        if ($offset < 0) {
+        if (0 > $offset) {
             throw new OffsetMustBePositiveIntegerException();
         }
 
-        if ($length < 0) {
+        if (0 > $length) {
             throw new LengthMustBePositiveIntegerException();
         }
 
@@ -269,7 +279,7 @@ final readonly class Collection implements CollectionInterface
     }
 
     /**
-     * @return array<TValue>
+     * @return list<TValue>
      */
     #[Override]
     public function toArray(): array
@@ -292,15 +302,5 @@ final readonly class Collection implements CollectionInterface
         $asArray = iterator_to_array($collection);
 
         return new self($asArray);
-    }
-
-    /**
-     * @return self<TValue>
-     */
-    #[Override]
-    public static function new(iterable $iterable = []): self
-    {
-        /** @var iterable<TValue> $iterable */
-        return self::from(static fn () => yield from $iterable);
     }
 }
