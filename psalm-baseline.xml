@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<files psalm-version="5.25.0@01a8eb06b9e9cc6cfb6a320bf9fb14331919d505">
+<files psalm-version="5.26.1@d747f6500b38ac4f7dfc5edbcae6e4b637d7add0">
   <file src="src/Collection.php">
+    <ArgumentTypeCoercion>
+      <code><![CDATA[$asArray]]></code>
+    </ArgumentTypeCoercion>
     <DocblockTypeContradiction>
-      <code><![CDATA[$length < 0]]></code>
-      <code><![CDATA[$offset < 0]]></code>
+      <code><![CDATA[0 > $length]]></code>
+      <code><![CDATA[0 > $offset]]></code>
     </DocblockTypeContradiction>
     <LessSpecificReturnType>
       <code><![CDATA[Generator]]></code>
@@ -23,12 +26,28 @@
       <code><![CDATA[[4, 5, 6, 7, 8, 9]]]></code>
       <code><![CDATA[[4]]]></code>
     </InvalidArgument>
+    <InvalidScalarArgument>
+      <code><![CDATA[$slice]]></code>
+    </InvalidScalarArgument>
     <LessSpecificReturnType>
       <code><![CDATA[Generator]]></code>
       <code><![CDATA[int]]></code>
       <code><![CDATA[int]]></code>
     </LessSpecificReturnType>
+    <MixedInferredReturnType>
+      <code><![CDATA[?string]]></code>
+      <code><![CDATA[int]]></code>
+    </MixedInferredReturnType>
+    <MixedOperand>
+      <code><![CDATA[$accumulator]]></code>
+    </MixedOperand>
+    <MixedReturnStatement>
+      <code><![CDATA[$accumulator]]></code>
+      <code><![CDATA[$accumulator]]></code>
+      <code><![CDATA[null !== $accumulator ? $accumulator + $value : $value]]></code>
+    </MixedReturnStatement>
     <NoValue>
+      <code><![CDATA[$value]]></code>
       <code><![CDATA[$value]]></code>
       <code><![CDATA[yield from []]]></code>
     </NoValue>
