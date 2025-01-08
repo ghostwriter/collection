@@ -1,6 +1,6 @@
 # Collection
 
-[![Compliance](https://github.com/ghostwriter/collection/actions/workflows/compliance.yml/badge.svg)](https://github.com/ghostwriter/collection/actions/workflows/compliance.yml)
+[![Automation](https://github.com/ghostwriter/collection/actions/workflows/automation.yml/badge.svg)](https://github.com/ghostwriter/collection/actions/workflows/automation.yml)
 [![Supported PHP Version](https://badgen.net/packagist/php/ghostwriter/collection?color=8892bf)](https://www.php.net/supported-versions)
 [![Mutation Coverage](https://img.shields.io/endpoint?style=flat&url=https%3A%2F%2Fbadge-api.stryker-mutator.io%2Fgithub.com%2Fghostwriter%2Fcollection%2Fmain)](https://dashboard.stryker-mutator.io/reports/github.com/ghostwriter/collection/main)
 [![Code Coverage](https://codecov.io/gh/ghostwriter/collection/branch/main/graph/badge.svg)](https://codecov.io/gh/ghostwriter/collection)
