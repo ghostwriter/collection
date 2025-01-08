@@ -37,13 +37,13 @@ final class CollectionTest extends TestCase
 
         self::assertTrue($collection->contains(2));
 
-        self::assertTrue($collection->contains(static fn (int $value): bool => $value === 3));
+        self::assertTrue($collection->contains(static fn (int $value): bool => 3 === $value));
 
-        self::assertTrue($collection->contains(static fn (int $value): bool => $value === 1));
+        self::assertTrue($collection->contains(static fn (int $value): bool => 1 === $value));
 
-        self::assertFalse($collection->contains(static fn (int $value): bool => $value === 0));
+        self::assertFalse($collection->contains(static fn (int $value): bool => 0 === $value));
 
-        self::assertSame(3, $collection->count());
+        self::assertCount(3, $collection);
     }
 
     public function testDropTakeSlice(): void
@@ -85,7 +85,7 @@ final class CollectionTest extends TestCase
 
         $collection = Collection::new($expected);
 
-        $collection->each(static fn (mixed $value) => $counter->increment($value));
+        $collection->each(static fn (mixed $value): int => $counter->increment($value));
 
         self::assertSame(array_sum($expected), $counter->count());
     }
@@ -115,7 +115,7 @@ final class CollectionTest extends TestCase
     public function testReadMeExample(): void
     {
         $collection = Collection::new([1, 2, 3]);
-        self::assertSame(3, $collection->count());
+        self::assertCount(3, $collection);
 
         $collection = $collection->append([4, 5, 6, 7, 8, 9])
             ->map(static fn (int $v): int => $v * 10)
@@ -130,9 +130,9 @@ final class CollectionTest extends TestCase
         $collection = Collection::new([1, 2, 3]);
 
         self::assertSame(6, $collection->reduce(
-            static fn (mixed $accumulator, int $value): int =>
+            static fn (mixed $accumulator, int $value): int
             /** @var null|int $accumulator */
-            $accumulator !== null ? $accumulator + $value : $value
+            => null !== $accumulator ? $accumulator + $value : $value
         ));
 
         self::assertSame('123', $collection->reduce(
@@ -144,20 +144,20 @@ final class CollectionTest extends TestCase
         ));
 
         self::assertNull($collection->reduce(
-            static fn (mixed $accumulator, int $_): ?string =>
+            static fn (mixed $accumulator, int $_): ?string
             /** @var null|string $accumulator */
-            $accumulator
+            => $accumulator
         ));
     }
 
     /**
-     * @param array<int<0,max>>        $slice
+     * @param list<int<0,max>>         $slice
      * @param array<int,int>           $input
      * @param array<int,int>           $expected
      * @param ?class-string<Throwable> $throws
      */
     #[DataProvider('sliceDataProvider')]
-    public function testSlice(array $input, array $slice, array $expected, string $throws = null): void
+    public function testSlice(array $input, array $slice, array $expected, ?string $throws = null): void
     {
         $collection = Collection::new($input);
 
