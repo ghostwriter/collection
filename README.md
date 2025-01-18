@@ -4,7 +4,6 @@
 [![Supported PHP Version](https://badgen.net/packagist/php/ghostwriter/collection?color=8892bf)](https://www.php.net/supported-versions)
 [![Mutation Coverage](https://img.shields.io/endpoint?style=flat&url=https%3A%2F%2Fbadge-api.stryker-mutator.io%2Fgithub.com%2Fghostwriter%2Fcollection%2Fmain)](https://dashboard.stryker-mutator.io/reports/github.com/ghostwriter/collection/main)
 [![Code Coverage](https://codecov.io/gh/ghostwriter/collection/branch/main/graph/badge.svg)](https://codecov.io/gh/ghostwriter/collection)
-[![Type Coverage](https://shepherd.dev/github/ghostwriter/collection/coverage.svg)](https://shepherd.dev/github/ghostwriter/collection)
 [![Latest Version on Packagist](https://badgen.net/packagist/v/ghostwriter/collection)](https://packagist.org/packages/ghostwriter/collection)
 [![Downloads](https://badgen.net/packagist/dt/ghostwriter/collection?color=blue)](https://packagist.org/packages/ghostwriter/collection)
 
@@ -41,7 +40,7 @@ $collection->drop(1)     // [40, 60, 80]
 ### Credits
 
 - [Nathanael Esayeas](https://github.com/ghostwriter)
-- [All Contributors](https://github.com/ghostwriter/wip/contributors)
+- [All Contributors](https://github.com/ghostwriter/collection/contributors)
 
 ## Thank you
 
