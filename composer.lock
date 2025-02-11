@@ -651,12 +651,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/ghostwriter/coding-standard.git",
-                "reference": "809a732740176b20ea3f74aa5e1fe6c205baa81e"
+                "reference": "ae1e31fb5da43e91c51e3b31624a0570c5065017"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ghostwriter/coding-standard/zipball/809a732740176b20ea3f74aa5e1fe6c205baa81e",
-                "reference": "809a732740176b20ea3f74aa5e1fe6c205baa81e",
+                "url": "https://api.github.com/repos/ghostwriter/coding-standard/zipball/ae1e31fb5da43e91c51e3b31624a0570c5065017",
+                "reference": "ae1e31fb5da43e91c51e3b31624a0570c5065017",
                 "shasum": ""
             },
             "require": {
@@ -687,7 +687,7 @@
                 "ext-xmlwriter": "*",
                 "ext-zlib": "*",
                 "mockery/mockery": "^1.6.12",
-                "php": "^8.2",
+                "php": "^8.4",
                 "phpunit/phpunit": "^12.0.2",
                 "symfony/var-dumper": "^7.2.3"
             },
@@ -695,6 +695,7 @@
                 "vimeo/psalm": "<6.0"
             },
             "require-dev": {
+                "ghostwriter/case-converter": "^2.0.0",
                 "ghostwriter/container": "^4.0.5",
                 "ghostwriter/filesystem": "^0.1.1",
                 "ghostwriter/json": "^3.0.0",
@@ -715,7 +716,7 @@
             },
             "autoload": {
                 "psr-4": {
-                    "Ghostwriter\\CodingStandard\\": "src"
+                    "Ghostwriter\\CodingStandard\\": "src/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -751,7 +752,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2025-02-08T17:01:17+00:00"
+            "time": "2025-02-10T20:18:56+00:00"
         },
         {
             "name": "hamcrest/hamcrest-php",
