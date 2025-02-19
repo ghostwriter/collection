@@ -651,12 +651,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/ghostwriter/coding-standard.git",
-                "reference": "6b94452200d90c1346b33a635af5f3ff20621ff2"
+                "reference": "95742ccce685abd58ed72018e208ed262d817eeb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ghostwriter/coding-standard/zipball/6b94452200d90c1346b33a635af5f3ff20621ff2",
-                "reference": "6b94452200d90c1346b33a635af5f3ff20621ff2",
+                "url": "https://api.github.com/repos/ghostwriter/coding-standard/zipball/95742ccce685abd58ed72018e208ed262d817eeb",
+                "reference": "95742ccce685abd58ed72018e208ed262d817eeb",
                 "shasum": ""
             },
             "require": {
@@ -752,7 +752,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2025-02-18T23:01:24+00:00"
+            "time": "2025-02-19T20:38:02+00:00"
         },
         {
             "name": "hamcrest/hamcrest-php",
