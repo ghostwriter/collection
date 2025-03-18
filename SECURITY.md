@@ -12,8 +12,8 @@ Instead, please use [`Security Advisories`](https://github.com/ghostwriter/colle
 
 currently being supported with security updates.
 
-| Version | Supported          |
-| ------- | ------------------ |
-| 1.0.x   | :white_check_mark: |
-| 0.1.x   | :white_check_mark: |
-| < 1.0   | :x:                |
+| Version | Supported |
+| ------- | --------- |
+|  2.0.x  | :white_check_mark: |
+|  1.4.x  | :white_check_mark: |
+| < 1.3.x | :x: |
