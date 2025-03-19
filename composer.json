@@ -50,10 +50,12 @@
         "psr-4": {
             "Tests\\Unit\\": "tests/Unit/"
         },
+        "files": [
+            "tests/bootstrap.php"
+        ],
         "exclude-from-classmap": [
             "tests/fixture/"
-        ],
-        "files": ["tests/bootstrap.php"]
+        ]
     },
     "config": {
         "allow-plugins": {
