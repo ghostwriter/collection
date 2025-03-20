@@ -1842,19 +1842,19 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/ghostwriter/coding-standard.git",
-                "reference": "cff4aea87a06ce745f5a40b340bb5de25cc09f39"
+                "reference": "1df6ffaf57f837cd0179f306ae32c91aa4a9165a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ghostwriter/coding-standard/zipball/cff4aea87a06ce745f5a40b340bb5de25cc09f39",
-                "reference": "cff4aea87a06ce745f5a40b340bb5de25cc09f39",
+                "url": "https://api.github.com/repos/ghostwriter/coding-standard/zipball/1df6ffaf57f837cd0179f306ae32c91aa4a9165a",
+                "reference": "1df6ffaf57f837cd0179f306ae32c91aa4a9165a",
                 "shasum": ""
             },
             "require": {
-                "composer-plugin-api": "^2.6.0",
-                "composer-runtime-api": "^2.2.2",
-                "composer/composer": "^2.8 <3.0",
-                "composer/semver": "^3.0 <4.0",
+                "composer-plugin-api": "~2.6.0",
+                "composer-runtime-api": "~2.2.2",
+                "composer/composer": "~2.8.6",
+                "composer/semver": "~3.4.3",
                 "ext-ctype": "*",
                 "ext-curl": "*",
                 "ext-dom": "*",
@@ -1877,24 +1877,25 @@
                 "ext-xml": "*",
                 "ext-xmlwriter": "*",
                 "ext-zlib": "*",
-                "infection/infection": "^0.29 <1.0",
-                "mockery/mockery": "^1.6 <2.0",
-                "php": "^8.4",
-                "phpunit/phpunit": "^12.0.8",
-                "symfony/var-dumper": "^7.0 <8.0",
-                "vimeo/psalm": "^6.9 <7.0"
+                "infection/infection": "~0.29.14",
+                "mockery/mockery": "~1.6.12",
+                "php": "^8.2",
+                "phpunit/phpunit": "~11.5.14 || ~12.0.9",
+                "symfony/var-dumper": "~7.2.3",
+                "vimeo/psalm": "~6.9.1"
             },
             "conflict": {
                 "pestphp/pest": "*",
                 "phpunit/phpunit": "<12.0"
             },
             "require-dev": {
-                "doctrine/inflector": "^2.0.10",
-                "ghostwriter/case-converter": "^2.0.0",
-                "ghostwriter/container": "^5.0.0",
-                "ghostwriter/filesystem": "^0.1.1",
-                "ghostwriter/json": "^3.0.0",
-                "ghostwriter/shell": "^0.1.0"
+                "doctrine/inflector": "~2.0.10",
+                "ghostwriter/case-converter": "~2.0.0",
+                "ghostwriter/container": "~5.0.1",
+                "ghostwriter/event-dispatcher": "~5.0.3",
+                "ghostwriter/filesystem": "~0.1.1",
+                "ghostwriter/json": "~3.0.0",
+                "ghostwriter/shell": "~0.1.0"
             },
             "default-branch": true,
             "bin": [
@@ -1991,7 +1992,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2025-03-18T17:13:44+00:00"
+            "time": "2025-03-20T02:37:13+00:00"
         },
         {
             "name": "hamcrest/hamcrest-php",
@@ -3693,16 +3694,16 @@
         },
         {
             "name": "phpunit/phpunit",
-            "version": "12.0.8",
+            "version": "12.0.9",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "ef9ca85556e4142ee2ca05ffb5afbe4303da20ac"
+                "reference": "7835bb4276780e0bbb385ce0a777b839e03096db"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/ef9ca85556e4142ee2ca05ffb5afbe4303da20ac",
-                "reference": "ef9ca85556e4142ee2ca05ffb5afbe4303da20ac",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/7835bb4276780e0bbb385ce0a777b839e03096db",
+                "reference": "7835bb4276780e0bbb385ce0a777b839e03096db",
                 "shasum": ""
             },
             "require": {
@@ -3770,7 +3771,7 @@
             "support": {
                 "issues": "https://github.com/sebastianbergmann/phpunit/issues",
                 "security": "https://github.com/sebastianbergmann/phpunit/security/policy",
-                "source": "https://github.com/sebastianbergmann/phpunit/tree/12.0.8"
+                "source": "https://github.com/sebastianbergmann/phpunit/tree/12.0.9"
             },
             "funding": [
                 {
@@ -3786,7 +3787,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2025-03-18T13:44:41+00:00"
+            "time": "2025-03-19T13:47:33+00:00"
         },
         {
             "name": "psr/container",
