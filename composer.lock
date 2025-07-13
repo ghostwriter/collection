@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "a63da478997f72f8f125c62d88be10d0",
+    "content-hash": "88a8e382fcf75efb8304237f4a5f2aaa",
     "packages": [],
     "packages-dev": [
         {
@@ -1917,12 +1917,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/ghostwriter/coding-standard.git",
-                "reference": "13fd1073fa6bb72971db5eac7cb1519744fb3fc2"
+                "reference": "7b25ba1b4101b78ad330c77e709f9548f649345a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ghostwriter/coding-standard/zipball/13fd1073fa6bb72971db5eac7cb1519744fb3fc2",
-                "reference": "13fd1073fa6bb72971db5eac7cb1519744fb3fc2",
+                "url": "https://api.github.com/repos/ghostwriter/coding-standard/zipball/7b25ba1b4101b78ad330c77e709f9548f649345a",
+                "reference": "7b25ba1b4101b78ad330c77e709f9548f649345a",
                 "shasum": ""
             },
             "require": {
@@ -1966,9 +1966,11 @@
             },
             "require-dev": {
                 "ext-xdebug": "*",
+                "infection/infection": "~0.30.3",
                 "mockery/mockery": "~1.6.12",
                 "nikic/php-parser": "~5.4.0 || ~5.5.0",
                 "phpunit/phpunit": "~12.2.7",
+                "symfony/var-dumper": "~7.3.1",
                 "vimeo/psalm": "~6.12.1"
             },
             "default-branch": true,
@@ -2066,7 +2068,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2025-07-13T08:10:12+00:00"
+            "time": "2025-07-13T15:47:27+00:00"
         },
         {
             "name": "ghostwriter/container",
