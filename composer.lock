@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "05a9bc6c26f9fc4d81a2aa55e2927d50",
+    "content-hash": "0261d950fe45fd3fc888b18612f14f20",
     "packages": [],
     "packages-dev": [
         {
@@ -1917,12 +1917,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/ghostwriter/coding-standard.git",
-                "reference": "0a13bea9e8bb2f63c01e3af499335b31e0c153f5"
+                "reference": "33166b0e95c9938f973daa3e6e86bfbb2ec4cefe"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ghostwriter/coding-standard/zipball/0a13bea9e8bb2f63c01e3af499335b31e0c153f5",
-                "reference": "0a13bea9e8bb2f63c01e3af499335b31e0c153f5",
+                "url": "https://api.github.com/repos/ghostwriter/coding-standard/zipball/33166b0e95c9938f973daa3e6e86bfbb2ec4cefe",
+                "reference": "33166b0e95c9938f973daa3e6e86bfbb2ec4cefe",
                 "shasum": ""
             },
             "require": {
@@ -2068,7 +2068,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2025-07-16T01:02:30+00:00"
+            "time": "2025-07-16T05:07:40+00:00"
         },
         {
             "name": "ghostwriter/container",
@@ -4694,16 +4694,16 @@
         },
         {
             "name": "sanmai/pipeline",
-            "version": "6.20",
+            "version": "6.21",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sanmai/pipeline.git",
-                "reference": "8efc643798aceac7021b4189b26db1de5e2f37ec"
+                "reference": "6d729c0b0c662010d84cdea9b99f90a65ae4cf5e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sanmai/pipeline/zipball/8efc643798aceac7021b4189b26db1de5e2f37ec",
-                "reference": "8efc643798aceac7021b4189b26db1de5e2f37ec",
+                "url": "https://api.github.com/repos/sanmai/pipeline/zipball/6d729c0b0c662010d84cdea9b99f90a65ae4cf5e",
+                "reference": "6d729c0b0c662010d84cdea9b99f90a65ae4cf5e",
                 "shasum": ""
             },
             "require": {
@@ -4748,7 +4748,7 @@
             "description": "General-purpose collections pipeline",
             "support": {
                 "issues": "https://github.com/sanmai/pipeline/issues",
-                "source": "https://github.com/sanmai/pipeline/tree/6.20"
+                "source": "https://github.com/sanmai/pipeline/tree/6.21"
             },
             "funding": [
                 {
@@ -4756,7 +4756,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2025-07-16T00:15:02+00:00"
+            "time": "2025-07-16T04:06:56+00:00"
         },
         {
             "name": "sebastian/cli-parser",
