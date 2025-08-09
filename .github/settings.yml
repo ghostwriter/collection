@@ -1,0 +1,33 @@
+"repository":
+  "name": "collection"
+  "description": "Provides a Collection implementation for PHP"
+  "homepage": "https://github.com/ghostwriter/collection"
+  "topics": "collection, ghostwriter"
+  "private": false
+  "has_issues": true
+  "has_projects": false
+  "has_wiki": false
+  "has_downloads": true
+  "default_branch": "2.0.x"
+  "allow_squash_merge": true
+  "allow_merge_commit": true
+  "allow_rebase_merge": true
+  "delete_branch_on_merge": true
+  "enable_automated_security_fixes": true
+  "enable_vulnerability_alerts": true
+"milestones":
+  - "title": "2.2.1"
+    "description": "Patch release – targeting 2.2.x branch (semantic version: 2.2.1)"
+    "state": "open"
+  - "title": "2.0.1"
+    "description": "Patch release – targeting 2.0.x branch (semantic version: 2.0.1)"
+    "state": "open"
+  - "title": "2.0.0"
+    "description": "Major release – targeting 2.0.x branch (semantic version: 2.0.0)"
+    "state": "closed"
+  - "title": "2.1.0"
+    "description": "Minor release – targeting 2.1.x branch (semantic version: 2.1.0)"
+    "state": "open"
+  - "title": "3.0.0"
+    "description": "Major release – targeting 3.0.x branch (semantic version: 3.0.0)"
+    "state": "open"
