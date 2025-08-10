@@ -3,7 +3,6 @@
   "description": "Provides a Collection implementation for PHP"
   "homepage": "https://github.com/ghostwriter/collection"
   "topics": "collection, ghostwriter"
-  "private": false
   "has_issues": true
   "has_projects": false
   "has_wiki": false
