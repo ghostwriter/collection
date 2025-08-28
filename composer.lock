@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "4ca17f4d5b7e441d336c20443e967044",
+    "content-hash": "3cc5c4ef17a2a12e09f3ac2474b4f58d",
     "packages": [],
     "packages-dev": [
         {
@@ -1872,12 +1872,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/ghostwriter/coding-standard.git",
-                "reference": "b185d5c16e7c91d4bbf731d1118adc77960d873e"
+                "reference": "53d9149"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ghostwriter/coding-standard/zipball/b185d5c16e7c91d4bbf731d1118adc77960d873e",
-                "reference": "b185d5c16e7c91d4bbf731d1118adc77960d873e",
+                "url": "https://api.github.com/repos/ghostwriter/coding-standard/zipball/53d9149",
+                "reference": "53d9149",
                 "shasum": ""
             },
             "require": {
@@ -1926,7 +1926,7 @@
                 "ext-xdebug": "*",
                 "mockery/mockery": "~1.6.12",
                 "nikic/php-parser": "~5.6.1",
-                "phpunit/phpunit": "~12.3.6",
+                "phpunit/phpunit": "~12.3.7",
                 "symfony/var-dumper": "~7.3.2",
                 "vimeo/psalm": "~6.13.1"
             },
@@ -2034,7 +2034,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2025-08-26T14:13:05+00:00"
+            "time": "2025-08-28T09:41:39+00:00"
         },
         {
             "name": "ghostwriter/config",
