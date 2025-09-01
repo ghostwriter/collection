@@ -81,24 +81,12 @@
         "use-parent-dir": false
     },
     "scripts": {
-        "bin_composer": "vendor/ghostwriter/coding-standard/tools/phar/composer",
-        "bin_infection": "vendor/ghostwriter/coding-standard/tools/phar/infection --ansi --min-covered-msi=0 --min-msi=0 --show-mutations --threads=max",
-        "bin_normalize": "vendor/ghostwriter/coding-standard/tools/phar/composer-normalize",
-        "bin_phive": "vendor/ghostwriter/coding-standard/tools/phar/phive",
-        "bin_phpunit": "vendor/ghostwriter/coding-standard/tools/phar/phpunit --do-not-cache-result --colors=always",
-        "bin_psalm": "vendor/ghostwriter/coding-standard/tools/phar/psalm --no-cache",
         "cache:clear": "rm -rf ./.cache/*",
         "check": [
             "@cache:clear",
-            "@bin_composer validate",
+            "vendor/ghostwriter/coding-standard/tools/phar/composer validate",
+            "@normalize",
             "@test"
-        ],
-        "dev": [
-            "@cache:clear",
-            "@check",
-            "@psalm:update",
-            "@psalm:security",
-            "@psalm:dry-run"
         ],
         "docker": [
             "@docker:build",
@@ -109,33 +97,17 @@
         "git:submodule:update": "git submodule update --depth=1 --init --recursive --recommend-shallow --remote",
         "infection": [
             "@xdebug",
-            "@bin_infection"
+            "vendor/ghostwriter/coding-standard/tools/phar/infection --min-covered-msi=0 --min-msi=0 --show-mutations --threads=max"
         ],
-        "normalize": "@bin_normalize --no-cache --diff --no-check-lock --no-scripts --no-plugins",
-        "phive": [
-            "@bin_phive update --force-accept-unsigned",
-            "@bin_phive purge"
-        ],
+        "normalize": "vendor/ghostwriter/coding-standard/tools/phar/composer-normalize --no-cache --diff --no-check-lock --no-scripts --no-plugins",
+        "phpbench": "vendor/ghostwriter/coding-standard/tools/phar/phpbench run --report='extends:aggregate,cols:[benchmark,subject,revs,its,mem_peak,mode,rstdev]' --time-unit=milliseconds",
         "phpunit": [
             "@xdebug",
-            "@bin_phpunit"
+            "vendor/ghostwriter/coding-standard/tools/phar/phpunit --do-not-cache-result --colors=always"
         ],
-        "phpunit:migrate": [
-            "@xdebug",
-            "@bin_phpunit --migrate-configuration"
-        ],
-        "psalm": "@bin_psalm --show-info=true --no-diff --shepherd --stats",
-        "psalm:alter": "@bin_psalm --alter --allow-backwards-incompatible-changes=false --safe-types",
-        "psalm:baseline": "@bin_psalm --no-diff --set-baseline=psalm-baseline.xml",
-        "psalm:dry-run": "@bin_psalm --alter --issues=all --dry-run",
-        "psalm:fix": "@bin_psalm --alter --issues=UnnecessaryVarAnnotation",
-        "psalm:security": "@bin_psalm --no-diff --taint-analysis",
-        "psalm:shepherd": "@psalm --no-diff --shepherd --stats",
-        "psalm:update": "@bin_psalm --no-diff --update-baseline=psalm-baseline.xml",
         "test": [
             "@phpunit",
-            "@infection",
-            "@psalm"
+            "@infection"
         ],
         "xdebug": "@putenv XDEBUG_MODE=coverage"
     }
