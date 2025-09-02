@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "66d640ff6923115ce4676c6b1b32f9d6",
+    "content-hash": "33ceaf8c180013138e237db5afa41368",
     "packages": [],
     "packages-dev": [
         {
@@ -1406,160 +1406,6 @@
                 }
             ],
             "time": "2024-06-22T22:15:04+00:00"
-        },
-        {
-            "name": "ghostwriter/uuid",
-            "version": "1.0.3",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/ghostwriter/uuid.git",
-                "reference": "3e34ec75ee18aa4a7cf9b20bc821dc572d1209b9"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/ghostwriter/uuid/zipball/3e34ec75ee18aa4a7cf9b20bc821dc572d1209b9",
-                "reference": "3e34ec75ee18aa4a7cf9b20bc821dc572d1209b9",
-                "shasum": ""
-            },
-            "require": {
-                "ext-mbstring": "*",
-                "php": "^8.4"
-            },
-            "require-dev": {
-                "ghostwriter/coding-standard": "dev-main"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Ghostwriter\\Uuid\\": "src"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "BSD-3-Clause"
-            ],
-            "authors": [
-                {
-                    "name": "Nathanael Esayeas",
-                    "email": "nathanael.esayeas@protonmail.com",
-                    "homepage": "https://github.com/ghostwriter",
-                    "role": "Developer"
-                }
-            ],
-            "description": "Version 7 UUIDs using a Unix timestamp for PHP",
-            "homepage": "https://github.com/ghostwriter/uuid",
-            "keywords": [
-                "ghostwriter",
-                "uuid"
-            ],
-            "support": {
-                "docs": "https://github.com/ghostwriter/uuid",
-                "issues": "https://github.com/ghostwriter/uuid/issues",
-                "rss": "https://github.com/ghostwriter/uuid/releases.atom",
-                "security": "https://github.com/ghostwriter/uuid/security/advisories/new",
-                "source": "https://github.com/ghostwriter/uuid"
-            },
-            "funding": [
-                {
-                    "url": "https://github.com/sponsors/ghostwriter",
-                    "type": "github"
-                }
-            ],
-            "time": "2025-03-17T20:27:11+00:00"
-        },
-        {
-            "name": "ghostwriter/workbench",
-            "version": "0.1.x-dev",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/ghostwriter/workbench.git",
-                "reference": "095465474157088558948a1ea7176e1295a7e5a3"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/ghostwriter/workbench/zipball/095465474157088558948a1ea7176e1295a7e5a3",
-                "reference": "095465474157088558948a1ea7176e1295a7e5a3",
-                "shasum": ""
-            },
-            "require": {
-                "composer-plugin-api": "~2.6.0",
-                "composer-runtime-api": "~2.2.2",
-                "composer/composer": "~2.8.11",
-                "composer/semver": "~3.4.4",
-                "ext-mbstring": "*",
-                "ghostwriter/case-converter": "~2.1.0",
-                "ghostwriter/clock": "~3.0.1",
-                "ghostwriter/collection": "~2.0.0",
-                "ghostwriter/config": "~1.0.0",
-                "ghostwriter/container": "~5.0.1",
-                "ghostwriter/event-dispatcher": "~5.0.3",
-                "ghostwriter/filesystem": "~0.1.1",
-                "ghostwriter/json": "~3.0.0",
-                "ghostwriter/shell": "~0.1.0",
-                "ghostwriter/uuid": "~1.0.3",
-                "nikic/php-parser": "~5.6.1",
-                "php": "~8.4.0 || ~8.5.0",
-                "sebastian/diff": "~7.0.0"
-            },
-            "conflict": {
-                "pestphp/pest": "*"
-            },
-            "require-dev": {
-                "ext-xdebug": "*",
-                "ghostwriter/coding-standard": "dev-main",
-                "mockery/mockery": "~1.6.12",
-                "phpunit/phpunit": "~12.3.7",
-                "symfony/var-dumper": "~7.3.3"
-            },
-            "default-branch": true,
-            "bin": [
-                "bin/workbench",
-                "bin/workbench.php"
-            ],
-            "type": "composer-plugin",
-            "extra": {
-                "class": "Ghostwriter\\Workbench\\Service\\Composer\\Plugin",
-                "plugin-optional": false,
-                "plugin-modifies-downloads": false,
-                "plugin-modifies-install-path": false
-            },
-            "autoload": {
-                "psr-4": {
-                    "Ghostwriter\\Workbench\\": "src"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "BSD-4-Clause"
-            ],
-            "authors": [
-                {
-                    "name": "Nathanael Esayeas",
-                    "email": "nathanael.esayeas@protonmail.com",
-                    "homepage": "https://github.com/ghostwriter",
-                    "role": "Developer"
-                }
-            ],
-            "description": "Local development tool for PHP",
-            "homepage": "https://github.com/ghostwriter/workbench",
-            "keywords": [
-                "dev",
-                "ghostwriter",
-                "workbench"
-            ],
-            "support": {
-                "issues": "https://github.com/ghostwriter/workbench/issues",
-                "rss": "https://github.com/ghostwriter/workbench/releases.atom",
-                "security": "https://github.com/ghostwriter/workbench/security/advisories/new",
-                "source": "https://github.com/ghostwriter/workbench"
-            },
-            "funding": [
-                {
-                    "url": "https://github.com/sponsors/ghostwriter",
-                    "type": "github"
-                }
-            ],
-            "time": "2025-09-02T02:49:16+00:00"
         },
         {
             "name": "hamcrest/hamcrest-php",
@@ -5054,8 +4900,7 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
-        "ghostwriter/coding-standard": 20,
-        "ghostwriter/workbench": 20
+        "ghostwriter/coding-standard": 20
     },
     "prefer-stable": true,
     "prefer-lowest": false,
