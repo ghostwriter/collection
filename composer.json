@@ -53,9 +53,8 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Tests\\PHPT\\": "tests/PHPT/",
-            "Tests\\Unit\\": "tests/Unit/",
-            "\\": "tests/Fixture/"
+            "": "tests/Fixture/",
+            "Tests\\": "tests/"
         },
         "files": [
             "tests/bootstrap.php"
