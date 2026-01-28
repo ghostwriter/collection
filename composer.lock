@@ -638,12 +638,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/ghostwriter/coding-standard.git",
-                "reference": "46c1baf495c61e48e6a9df09e3142a0e3ac37707"
+                "reference": "e0136bdf1ebe97475fd87da2572444ff84d7eedf"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ghostwriter/coding-standard/zipball/46c1baf495c61e48e6a9df09e3142a0e3ac37707",
-                "reference": "46c1baf495c61e48e6a9df09e3142a0e3ac37707",
+                "url": "https://api.github.com/repos/ghostwriter/coding-standard/zipball/e0136bdf1ebe97475fd87da2572444ff84d7eedf",
+                "reference": "e0136bdf1ebe97475fd87da2572444ff84d7eedf",
                 "shasum": ""
             },
             "require": {
@@ -703,7 +703,7 @@
                 "nikic/php-parser": "^5.7.0",
                 "php": "~8.4.0 || ~8.5.0",
                 "phpunit/phpunit": "^12.5.8",
-                "symfony/process": "^8.0.4",
+                "symfony/process": "^8.0.5",
                 "symfony/var-dumper": "^8.0.4"
             },
             "conflict": {
@@ -818,7 +818,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-01-27T20:31:57+00:00"
+            "time": "2026-01-28T11:20:05+00:00"
         },
         {
             "name": "ghostwriter/config",
@@ -4408,16 +4408,16 @@
         },
         {
             "name": "symfony/process",
-            "version": "v8.0.4",
+            "version": "v8.0.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/process.git",
-                "reference": "10df72602d88c0a3fa685b822976a052611dd607"
+                "reference": "b5f3aa6762e33fd95efbaa2ec4f4bc9fdd16d674"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/process/zipball/10df72602d88c0a3fa685b822976a052611dd607",
-                "reference": "10df72602d88c0a3fa685b822976a052611dd607",
+                "url": "https://api.github.com/repos/symfony/process/zipball/b5f3aa6762e33fd95efbaa2ec4f4bc9fdd16d674",
+                "reference": "b5f3aa6762e33fd95efbaa2ec4f4bc9fdd16d674",
                 "shasum": ""
             },
             "require": {
@@ -4449,7 +4449,7 @@
             "description": "Executes commands in sub-processes",
             "homepage": "https://symfony.com",
             "support": {
-                "source": "https://github.com/symfony/process/tree/v8.0.4"
+                "source": "https://github.com/symfony/process/tree/v8.0.5"
             },
             "funding": [
                 {
@@ -4469,7 +4469,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2026-01-23T11:07:10+00:00"
+            "time": "2026-01-26T15:08:38+00:00"
         },
         {
             "name": "symfony/service-contracts",
