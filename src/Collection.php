@@ -247,7 +247,7 @@ final readonly class Collection implements CollectionInterface
                 if ($total !== $length) {
                     $limit = $offset + $length;
 
-                    foreach ($this as $current) {
+                    foreach ($this->storage as $current) {
                         if ($total++ < $offset) {
                             continue;
                         }
