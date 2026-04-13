@@ -49,7 +49,7 @@ foreach ($phpVersions as $versionChecked) {
         $phpVersionOnlyPath = \implode(\DIRECTORY_SEPARATOR, [
             __DIR__,
             'Fixture',
-            \sprintf('PHP%dOnly', $versionChecked)
+            \sprintf('PHP%dOnly', $versionChecked),
         ]);
         if (\is_dir($phpVersionOnlyPath)) {
             // load the Fixture files in the "PHP{version}Only" directory
@@ -59,11 +59,7 @@ foreach ($phpVersions as $versionChecked) {
         }
     }
 
-    $phpVersionPath = \implode(\DIRECTORY_SEPARATOR, [
-        __DIR__,
-        'Fixture',
-        \sprintf('PHP%d', $versionChecked)
-    ]);
+    $phpVersionPath = \implode(\DIRECTORY_SEPARATOR, [__DIR__, 'Fixture', \sprintf('PHP%d', $versionChecked)]);
     if (\is_dir($phpVersionPath)) {
         // load the Fixture files in the "PHP{version}" directory
         foreach (\recursiveDirectoryRegexIterator($phpVersionPath, '#^.+\.php$#iu') as $file) {
