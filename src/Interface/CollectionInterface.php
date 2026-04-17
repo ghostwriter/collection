@@ -16,34 +16,31 @@ use Override;
 use const PHP_INT_MAX;
 
 /**
+ * @template TKey
  * @template TValue
  *
- * @extends IteratorAggregate<TValue>
+ * @extends IteratorAggregate<TKey,TValue>
  */
 interface CollectionInterface extends Countable, IteratorAggregate
 {
-    /**
-     * @return self<TValue>
-     */
+    /** @return self<TKey,TValue> */
     public static function new(iterable $iterable = []): self;
 
     /**
-     * @param iterable<TValue> $iterable
+     * @param iterable<TKey,TValue> $iterable
      *
-     * @return self<TValue>
+     * @return self<TKey,TValue>
      */
     public function append(iterable $iterable = []): self;
 
     /**
      * @template TContains
      *
-     * @param Closure(TValue):bool|TContains $functionOrValue
+     * @param Closure(TValue,TKey):bool|TContains $functionOrValue
      */
     public function contains(mixed $functionOrValue): bool;
 
-    /**
-     * @return int<0,max>
-     */
+    /** @return int<0,max> */
     #[Override]
     public function count(): int;
 
@@ -54,40 +51,34 @@ interface CollectionInterface extends Countable, IteratorAggregate
      * @throws OffsetMustBePositiveIntegerException
      *
      * @return self<TValue>
-     *
      */
     public function drop(int $length): self;
 
-    /**
-     * @param Closure(TValue):void $function
-     */
-    public function each(Closure $function): void;
+    /** @param Closure(TValue,TKey):void $function */
+    public function each(Closure $function): self;
 
     /**
-     * @param Closure(TValue):bool $function
+     * @param Closure(TValue,TKey):bool $function
      *
      * @return self<TValue>
      */
     public function filter(Closure $function): self;
 
     /**
-     * @param ?Closure(TValue):bool $function
+     * @param ?Closure(TValue,TKey):bool $function
      *
      * @throws FirstValueNotFoundException If no value is found
      *
      * @return ?TValue
-     *
      */
     public function first(?Closure $function = null): mixed;
 
-    /**
-     * @return Generator<TValue>
-     */
+    /** @return Generator<TValue> */
     #[Override]
     public function getIterator(): Generator;
 
     /**
-     * @param ?Closure(TValue):bool $function
+     * @param ?Closure(TValue,TKey):bool $function
      *
      * @return null|TValue
      */
@@ -96,7 +87,7 @@ interface CollectionInterface extends Countable, IteratorAggregate
     /**
      * @template TMap
      *
-     * @param Closure(TValue):TMap $function
+     * @param Closure(TValue,TKey):TMap $function
      *
      * @return self<TMap>
      */
@@ -105,8 +96,8 @@ interface CollectionInterface extends Countable, IteratorAggregate
     /**
      * @template TAccumulator
      *
-     * @param Closure(null|TAccumulator,TValue):TAccumulator $function
-     * @param ?TAccumulator                                  $accumulator
+     * @param Closure(null|TAccumulator,TValue,TKey):TAccumulator $function
+     * @param ?TAccumulator                                       $accumulator
      *
      * @return ?TAccumulator
      */
@@ -119,8 +110,7 @@ interface CollectionInterface extends Countable, IteratorAggregate
      * @throws OffsetMustBePositiveIntegerException
      * @throws LengthMustBePositiveIntegerException
      *
-     * @return self<TValue>
-     *
+     * @return self<TKey,TValue>
      */
     public function slice(int $offset, int $length = PHP_INT_MAX): self;
 
@@ -130,20 +120,17 @@ interface CollectionInterface extends Countable, IteratorAggregate
      * @throws OffsetMustBePositiveIntegerException
      * @throws LengthMustBePositiveIntegerException
      *
-     * @return self<TValue>
-     *
+     * @return self<TKey,TValue>
      */
     public function take(int $length): self;
 
-    /**
-     * @return list<TValue>
-     */
+    /** @return array<TKey,TValue> */
     public function toArray(): array;
 
     /**
      * @param Closure():Generator $generator
      *
-     * @return self<TValue>
+     * @return self<TKey,TValue>
      */
     public static function from(Closure $generator): self;
 }
