@@ -15,39 +15,45 @@ use Tests\Unit\CollectionTest;
 
 use const PHP_INT_MAX;
 
-use function iterator_count;
+use function count;
 use function iterator_to_array;
 
 /**
+ * @template TKey
  * @template TValue
  *
- * @implements CollectionInterface<TValue>
+ * @implements CollectionInterface<TKey,TValue>
  *
  * @see CollectionTest
  */
 final readonly class Collection implements CollectionInterface
 {
-    /**
-     * @param list<TValue> $storage
-     */
+    /** @param array<TKey,TValue> $storage */
     private function __construct(
         private array $storage
     ) {}
 
-    /**
-     * @return self<TValue>
-     */
+    /** @return self<TKey,TValue> */
     #[Override]
     public static function new(iterable $iterable = []): self
     {
-        /** @var iterable<TValue> $iterable */
-        return self::from(static fn () => yield from $iterable);
+        if ([] === $iterable) {
+            return new self([]);
+        }
+
+        $storage = [];
+
+        foreach ($iterable as $value) {
+            $storage[] = $value;
+        }
+
+        return new self($storage);
     }
 
     /**
-     * @param iterable<TValue> $iterable
+     * @param iterable<TKey,TValue> $iterable
      *
-     * @return self<TValue>
+     * @return self<TKey,TValue>
      */
     #[Override]
     public function append(iterable $iterable = []): self
@@ -56,49 +62,45 @@ final readonly class Collection implements CollectionInterface
             return $this;
         }
 
-        return self::from(function () use ($iterable): Generator {
-            foreach ($this->storage as $value) {
-                yield $value;
-            }
+        $storage = [...$this->storage];
 
-            foreach ($iterable as $value) {
-                yield $value;
-            }
-        });
+        foreach ($iterable as $value) {
+            $storage[] = $value;
+        }
+
+        return new self($storage);
     }
 
     /**
      * @template TContains
      *
-     * @param Closure(TValue):bool|TContains $functionOrValue
+     * @param Closure(TValue,TKey):bool|TContains $functionOrValue
      */
     #[Override]
     public function contains(mixed $functionOrValue): bool
     {
-        /** @var Closure(TValue):bool $function */
+        /** @var Closure(TValue,TKey):bool $function */
         $function = match (true) {
             $functionOrValue instanceof Closure => $functionOrValue,
             default => static fn (mixed $value): bool => $value === $functionOrValue,
         };
 
-        return (bool) $this->filter($function)
-            ->count();
+        return $this->filter($function)->count() !== 0;
     }
 
     #[Override]
     public function count(): int
     {
-        return iterator_count($this);
+        return count($this->storage);
     }
 
     /**
      * @param int<0,max> $length
      *
-     * @throws LengthMustBePositiveIntegerException
      * @throws OffsetMustBePositiveIntegerException
+     * @throws LengthMustBePositiveIntegerException
      *
-     * @return self<TValue>
-     *
+     * @return self<TKey,TValue>
      */
     #[Override]
     public function drop(int $length): self
@@ -106,43 +108,42 @@ final readonly class Collection implements CollectionInterface
         return $this->slice($length);
     }
 
-    /**
-     * @param Closure(TValue):void $function
-     */
+    /** @param Closure(TValue,TKey):void $function */
     #[Override]
-    public function each(Closure $function): void
+    public function each(Closure $function): self
     {
-        foreach ($this->storage as $value) {
-            $function($value);
+        foreach ($this->storage as $key => $value) {
+            $function($value, $key);
         }
+
+        return $this;
     }
 
     /**
-     * @param Closure(TValue):bool $function
+     * @param Closure(TValue,TKey):bool $function
      *
      * @return self<TValue>
      */
     #[Override]
     public function filter(Closure $function): self
     {
-        return self::from(function () use ($function): Generator {
-            foreach ($this->storage as $value) {
-                if (! $function($value)) {
-                    continue;
-                }
+        $storage = [];
 
-                yield $value;
+        foreach ($this->storage as $key => $value) {
+            if ($function($value, $key) === true) {
+                $storage[] = $value;
             }
-        });
+        }
+
+        return new self($storage);
     }
 
     /**
-     * @param ?Closure(TValue):bool $function
+     * @param ?Closure(TValue,TKey):bool $function
      *
      * @throws FirstValueNotFoundException If no value is found
      *
      * @return ?TValue
-     *
      */
     #[Override]
     public function first(?Closure $function = null): mixed
@@ -156,9 +157,7 @@ final readonly class Collection implements CollectionInterface
         throw new FirstValueNotFoundException();
     }
 
-    /**
-     * @return Generator<TValue>
-     */
+    /** @return Generator<TKey,TValue> */
     #[Override]
     public function getIterator(): Generator
     {
@@ -166,7 +165,7 @@ final readonly class Collection implements CollectionInterface
     }
 
     /**
-     * @param ?Closure(TValue):bool $function
+     * @param ?Closure(TValue,TKey):bool $function
      *
      * @return null|TValue
      */
@@ -187,33 +186,35 @@ final readonly class Collection implements CollectionInterface
     /**
      * @template TMap
      *
-     * @param Closure(TValue):TMap $function
+     * @param Closure(TValue,TKey):TMap $function
      *
      * @return self<TMap>
      */
     #[Override]
     public function map(Closure $function): self
     {
-        return self::from(function () use ($function): Generator {
-            foreach ($this->storage as $value) {
-                yield $function($value);
-            }
-        });
+        $storage = [];
+
+        foreach ($this->storage as $key => $value) {
+            $storage[] = $function($value, $key);
+        }
+
+        return new self($storage);
     }
 
     /**
      * @template TAccumulator
      *
-     * @param Closure(null|TAccumulator,TValue):TAccumulator $function
-     * @param ?TAccumulator                                  $accumulator
+     * @param Closure(null|TAccumulator,TValue,TKey):TAccumulator $function
+     * @param ?TAccumulator                                       $accumulator
      *
      * @return ?TAccumulator
      */
     #[Override]
     public function reduce(Closure $function, mixed $accumulator = null): mixed
     {
-        foreach ($this->storage as $value) {
-            $accumulator = $function($accumulator, $value);
+        foreach ($this->storage as $key => $value) {
+            $accumulator = $function($accumulator, $value, $key);
         }
 
         return $accumulator;
@@ -226,8 +227,7 @@ final readonly class Collection implements CollectionInterface
      * @throws OffsetMustBePositiveIntegerException
      * @throws LengthMustBePositiveIntegerException
      *
-     * @return self<TValue>
-     *
+     * @return self<TKey,TValue>
      */
     #[Override]
     public function slice(int $offset, int $length = PHP_INT_MAX): self
@@ -240,37 +240,36 @@ final readonly class Collection implements CollectionInterface
             throw new LengthMustBePositiveIntegerException();
         }
 
-        return self::from(
-            function () use ($offset, $length): Generator {
-                $total = 0;
+        if (0 === $length) {
+            return new self([]);
+        }
 
-                if ($total !== $length) {
-                    $limit = $offset + $length;
+        $storage = [];
+        $limit = $offset + $length;
+        $total = 0;
 
-                    foreach ($this->storage as $current) {
-                        if ($total++ < $offset) {
-                            continue;
-                        }
-
-                        yield $current;
-
-                        if ($total >= $limit) {
-                            break;
-                        }
-                    }
-                }
+        foreach ($this->storage as $current) {
+            if ($total++ < $offset) {
+                continue;
             }
-        );
+
+            $storage[] = $current;
+
+            if ($total >= $limit) {
+                break;
+            }
+        }
+
+        return new self($storage);
     }
 
     /**
      * @param int<0,max> $length
      *
-     * @throws OffsetMustBePositiveIntegerException
      * @throws LengthMustBePositiveIntegerException
+     * @throws OffsetMustBePositiveIntegerException
      *
-     * @return self<TValue>
-     *
+     * @return self<TKey,TValue>
      */
     #[Override]
     public function take(int $length): self
@@ -278,9 +277,7 @@ final readonly class Collection implements CollectionInterface
         return $this->slice(0, $length);
     }
 
-    /**
-     * @return list<TValue>
-     */
+    /** @return array<TKey,TValue> */
     #[Override]
     public function toArray(): array
     {
@@ -290,17 +287,11 @@ final readonly class Collection implements CollectionInterface
     /**
      * @param Closure():Generator $generator
      *
-     * @return self<TValue>
+     * @return self<TKey,TValue>
      */
     #[Override]
     public static function from(Closure $generator): self
     {
-        /** @var Closure():Generator<TValue> $generator */
-        $collection = $generator();
-
-        /** @var array<int,TValue> $asArray */
-        $asArray = iterator_to_array($collection);
-
-        return new self($asArray);
+        return new self(iterator_to_array($generator()));
     }
 }

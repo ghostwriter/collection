@@ -156,7 +156,7 @@ final class CollectionTest extends TestCase
      * @param array<int,int>           $expected
      * @param ?class-string<Throwable> $throws
      */
-    #[DataProvider('sliceDataProvider')]
+    #[DataProvider('provideSliceCases')]
     public function testSlice(array $input, array $slice, array $expected, ?string $throws = null): void
     {
         $collection = Collection::new($input);
@@ -169,7 +169,7 @@ final class CollectionTest extends TestCase
         self::assertSame($expected, $collection->slice(...$slice)->toArray());
     }
 
-    public static function sliceDataProvider(): Generator
+    public static function provideSliceCases(): iterable
     {
         yield from [
             'empty' => [[], [0], []],
