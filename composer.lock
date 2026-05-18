@@ -4,21 +4,21 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "2553faa5c03d3adc4ef4452c3f72be26",
+    "content-hash": "afe1335e5caf338d627b5d7a10f9c1a5",
     "packages": [],
     "packages-dev": [
         {
             "name": "boundwize/structarmed",
-            "version": "0.6.5",
+            "version": "0.6.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/boundwize/structarmed.git",
-                "reference": "3a1caa93b368e1bb6fb7c4344dc27eff2db9ff66"
+                "reference": "7c8221644ea04f476d328a29ea4d9bbce9933ce8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/boundwize/structarmed/zipball/3a1caa93b368e1bb6fb7c4344dc27eff2db9ff66",
-                "reference": "3a1caa93b368e1bb6fb7c4344dc27eff2db9ff66",
+                "url": "https://api.github.com/repos/boundwize/structarmed/zipball/7c8221644ea04f476d328a29ea4d9bbce9933ce8",
+                "reference": "7c8221644ea04f476d328a29ea4d9bbce9933ce8",
                 "shasum": ""
             },
             "require": {
@@ -67,7 +67,7 @@
             ],
             "support": {
                 "issues": "https://github.com/boundwize/structarmed/issues",
-                "source": "https://github.com/boundwize/structarmed/tree/0.6.5"
+                "source": "https://github.com/boundwize/structarmed/tree/0.6.6"
             },
             "funding": [
                 {
@@ -75,7 +75,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-05-17T03:44:56+00:00"
+            "time": "2026-05-17T23:55:12+00:00"
         },
         {
             "name": "fidry/cpu-core-counter",
@@ -144,16 +144,16 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/ghostwriter/coding-standard.git",
-                "reference": "43b9a51ce715249094aac7e9b6e2b4e5450d2caa"
+                "reference": "d3e21d2b86352460983d1bb9ffc67b78a289e468"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ghostwriter/coding-standard/zipball/43b9a51ce715249094aac7e9b6e2b4e5450d2caa",
-                "reference": "43b9a51ce715249094aac7e9b6e2b4e5450d2caa",
+                "url": "https://api.github.com/repos/ghostwriter/coding-standard/zipball/d3e21d2b86352460983d1bb9ffc67b78a289e468",
+                "reference": "d3e21d2b86352460983d1bb9ffc67b78a289e468",
                 "shasum": ""
             },
             "require": {
-                "boundwize/structarmed": "^0.6.5",
+                "boundwize/structarmed": "^0.6.6",
                 "ext-apcu": "*",
                 "ext-bcmath": "*",
                 "ext-ctype": "*",
@@ -264,7 +264,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-05-17T11:12:21+00:00"
+            "time": "2026-05-18T00:18:19+00:00"
         },
         {
             "name": "hamcrest/hamcrest-php",
