@@ -4,21 +4,21 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "9e43928457c263263309a5a912cc802c",
+    "content-hash": "2631f9e401d59aec1b9a0c8600f86d61",
     "packages": [],
     "packages-dev": [
         {
             "name": "boundwize/structarmed",
-            "version": "0.6.15",
+            "version": "0.6.16",
             "source": {
                 "type": "git",
                 "url": "https://github.com/boundwize/structarmed.git",
-                "reference": "1c9f1eac7058af6117b4581fbecaff001fb38e97"
+                "reference": "8df4838a8266ed13867f9647ac52d98fc5a307d4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/boundwize/structarmed/zipball/1c9f1eac7058af6117b4581fbecaff001fb38e97",
-                "reference": "1c9f1eac7058af6117b4581fbecaff001fb38e97",
+                "url": "https://api.github.com/repos/boundwize/structarmed/zipball/8df4838a8266ed13867f9647ac52d98fc5a307d4",
+                "reference": "8df4838a8266ed13867f9647ac52d98fc5a307d4",
                 "shasum": ""
             },
             "require": {
@@ -67,7 +67,7 @@
             ],
             "support": {
                 "issues": "https://github.com/boundwize/structarmed/issues",
-                "source": "https://github.com/boundwize/structarmed/tree/0.6.15"
+                "source": "https://github.com/boundwize/structarmed/tree/0.6.16"
             },
             "funding": [
                 {
@@ -75,7 +75,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-05-20T13:36:47+00:00"
+            "time": "2026-05-21T05:21:20+00:00"
         },
         {
             "name": "fidry/cpu-core-counter",
@@ -144,16 +144,16 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/ghostwriter/coding-standard.git",
-                "reference": "6439cb7c20121d26b48e7798f9ac69fc695ac8ff"
+                "reference": "f40d7d3a923f6645a95b736fdeb625399bc8b0bb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ghostwriter/coding-standard/zipball/6439cb7c20121d26b48e7798f9ac69fc695ac8ff",
-                "reference": "6439cb7c20121d26b48e7798f9ac69fc695ac8ff",
+                "url": "https://api.github.com/repos/ghostwriter/coding-standard/zipball/f40d7d3a923f6645a95b736fdeb625399bc8b0bb",
+                "reference": "f40d7d3a923f6645a95b736fdeb625399bc8b0bb",
                 "shasum": ""
             },
             "require": {
-                "boundwize/structarmed": "^0.6.15",
+                "boundwize/structarmed": "^0.6.16",
                 "ext-apcu": "*",
                 "ext-bcmath": "*",
                 "ext-ctype": "*",
@@ -264,7 +264,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-05-20T17:12:56+00:00"
+            "time": "2026-05-21T06:37:46+00:00"
         },
         {
             "name": "hamcrest/hamcrest-php",
@@ -1181,16 +1181,16 @@
         },
         {
             "name": "sebastian/comparator",
-            "version": "8.2.0",
+            "version": "8.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/comparator.git",
-                "reference": "ddacb462216a4f6d97e84bf08165b9074ddbafeb"
+                "reference": "ce999bf08b2c387a5423fe56961c32eed3f88089"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/comparator/zipball/ddacb462216a4f6d97e84bf08165b9074ddbafeb",
-                "reference": "ddacb462216a4f6d97e84bf08165b9074ddbafeb",
+                "url": "https://api.github.com/repos/sebastianbergmann/comparator/zipball/ce999bf08b2c387a5423fe56961c32eed3f88089",
+                "reference": "ce999bf08b2c387a5423fe56961c32eed3f88089",
                 "shasum": ""
             },
             "require": {
@@ -1249,7 +1249,7 @@
             "support": {
                 "issues": "https://github.com/sebastianbergmann/comparator/issues",
                 "security": "https://github.com/sebastianbergmann/comparator/security/policy",
-                "source": "https://github.com/sebastianbergmann/comparator/tree/8.2.0"
+                "source": "https://github.com/sebastianbergmann/comparator/tree/8.2.1"
             },
             "funding": [
                 {
@@ -1269,7 +1269,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2026-05-20T11:55:37+00:00"
+            "time": "2026-05-21T04:46:40+00:00"
         },
         {
             "name": "sebastian/complexity",
