@@ -237,16 +237,16 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/ghostwriter/coding-standard.git",
-                "reference": "1cc11f6b5bbc3d4e9e7c01f5bee0648de0d40643"
+                "reference": "33f2332341fecf8f3aaa266cd5862354a94d2c3a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ghostwriter/coding-standard/zipball/1cc11f6b5bbc3d4e9e7c01f5bee0648de0d40643",
-                "reference": "1cc11f6b5bbc3d4e9e7c01f5bee0648de0d40643",
+                "url": "https://api.github.com/repos/ghostwriter/coding-standard/zipball/33f2332341fecf8f3aaa266cd5862354a94d2c3a",
+                "reference": "33f2332341fecf8f3aaa266cd5862354a94d2c3a",
                 "shasum": ""
             },
             "require": {
-                "boundwize/structarmed": "^0.7.11",
+                "boundwize/structarmed": "^0.7.12",
                 "ext-apcu": "*",
                 "ext-bcmath": "*",
                 "ext-ctype": "*",
@@ -357,7 +357,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-05-26T13:51:07+00:00"
+            "time": "2026-05-26T18:12:02+00:00"
         },
         {
             "name": "ghostwriter/config",
@@ -516,16 +516,16 @@
         },
         {
             "name": "ghostwriter/container",
-            "version": "7.0.1",
+            "version": "7.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ghostwriter/container.git",
-                "reference": "8e49e51d5558cb6482eac4da7170d75a765ee418"
+                "reference": "a5474864d2a54074fef019646bf7ca060eb3638b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ghostwriter/container/zipball/8e49e51d5558cb6482eac4da7170d75a765ee418",
-                "reference": "8e49e51d5558cb6482eac4da7170d75a765ee418",
+                "url": "https://api.github.com/repos/ghostwriter/container/zipball/a5474864d2a54074fef019646bf7ca060eb3638b",
+                "reference": "a5474864d2a54074fef019646bf7ca060eb3638b",
                 "shasum": ""
             },
             "require": {
@@ -536,10 +536,12 @@
                 "psr/container-implementation": "*"
             },
             "require-dev": {
+                "boundwize/structarmed": "^0.7.12",
                 "ext-xdebug": "*",
                 "ghostwriter/coding-standard": "dev-main",
+                "ghostwriter/testify": "^0.1.1",
                 "mockery/mockery": "^1.6.12",
-                "phpunit/phpunit": "^13.1.7",
+                "phpunit/phpunit": "^13.1.12",
                 "symfony/var-dumper": "^8.0.8"
             },
             "type": "library",
@@ -591,7 +593,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-04-22T17:22:16+00:00"
+            "time": "2026-05-27T01:57:36+00:00"
         },
         {
             "name": "ghostwriter/event-dispatcher",
@@ -3121,16 +3123,16 @@
         },
         {
             "name": "symfony/polyfill-intl-grapheme",
-            "version": "v1.38.0",
+            "version": "v1.38.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/polyfill-intl-grapheme.git",
-                "reference": "9c862df890f7c833b1101ac5578ec4dcf199efb5"
+                "reference": "e9247d281d694a5120554d9afaf54e070e88a603"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/polyfill-intl-grapheme/zipball/9c862df890f7c833b1101ac5578ec4dcf199efb5",
-                "reference": "9c862df890f7c833b1101ac5578ec4dcf199efb5",
+                "url": "https://api.github.com/repos/symfony/polyfill-intl-grapheme/zipball/e9247d281d694a5120554d9afaf54e070e88a603",
+                "reference": "e9247d281d694a5120554d9afaf54e070e88a603",
                 "shasum": ""
             },
             "require": {
@@ -3179,7 +3181,7 @@
                 "shim"
             ],
             "support": {
-                "source": "https://github.com/symfony/polyfill-intl-grapheme/tree/v1.38.0"
+                "source": "https://github.com/symfony/polyfill-intl-grapheme/tree/v1.38.1"
             },
             "funding": [
                 {
@@ -3199,7 +3201,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2026-05-25T12:39:52+00:00"
+            "time": "2026-05-26T05:58:03+00:00"
         },
         {
             "name": "symfony/polyfill-intl-normalizer",
@@ -3288,16 +3290,16 @@
         },
         {
             "name": "symfony/polyfill-mbstring",
-            "version": "v1.38.0",
+            "version": "v1.38.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/polyfill-mbstring.git",
-                "reference": "6b177d03d2eb04a6c9d01bab9818fb93a30ce7fd"
+                "reference": "14c5439eec4ccff081ac14eca2dc57feb2a66d92"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/polyfill-mbstring/zipball/6b177d03d2eb04a6c9d01bab9818fb93a30ce7fd",
-                "reference": "6b177d03d2eb04a6c9d01bab9818fb93a30ce7fd",
+                "url": "https://api.github.com/repos/symfony/polyfill-mbstring/zipball/14c5439eec4ccff081ac14eca2dc57feb2a66d92",
+                "reference": "14c5439eec4ccff081ac14eca2dc57feb2a66d92",
                 "shasum": ""
             },
             "require": {
@@ -3349,7 +3351,7 @@
                 "shim"
             ],
             "support": {
-                "source": "https://github.com/symfony/polyfill-mbstring/tree/v1.38.0"
+                "source": "https://github.com/symfony/polyfill-mbstring/tree/v1.38.1"
             },
             "funding": [
                 {
@@ -3369,7 +3371,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2026-05-25T14:08:27+00:00"
+            "time": "2026-05-26T12:51:13+00:00"
         },
         {
             "name": "symfony/service-contracts",
