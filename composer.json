@@ -35,9 +35,10 @@
     },
     "require-dev": {
         "ext-xdebug": "*",
-        "boundwize/structarmed": "^0.7.12",
+        "boundwize/structarmed": "^0.8.0",
         "ghostwriter/coding-standard": "dev-main",
-        "ghostwriter/testify": "^0.1.1",
+        "ghostwriter/phpunit-assertions": "^0.1.0",
+        "ghostwriter/testify": "^0.1.2",
         "mockery/mockery": "^1.6.12",
         "phpunit/phpunit": "^13.1.12",
         "symfony/var-dumper": "^8.0.8"
@@ -59,8 +60,7 @@
     },
     "config": {
         "allow-plugins": {
-            "ghostwriter/coding-standard": true,
-            "infection/extension-installer": true
+            "ghostwriter/coding-standard": true
         },
         "bump-after-update": false,
         "classmap-authoritative": false,
