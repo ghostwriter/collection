@@ -35,13 +35,13 @@
     },
     "require-dev": {
         "ext-xdebug": "*",
-        "boundwize/structarmed": "^0.8.6",
+        "boundwize/structarmed": "^0.8.7",
         "ghostwriter/coding-standard": "dev-main",
         "ghostwriter/phpunit-assertions": "^0.1.0",
         "ghostwriter/testify": "^0.1.2",
         "mockery/mockery": "^1.6.12",
         "phpunit/phpunit": "^13.1.12",
-        "symfony/var-dumper": "^8.0.8"
+        "symfony/var-dumper": "^8.1.0"
     },
     "prefer-stable": true,
     "autoload": {
