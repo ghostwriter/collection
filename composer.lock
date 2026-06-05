@@ -4,21 +4,21 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e26cbf9465f5634fd0919e1451385147",
+    "content-hash": "20855c6e6d6b3546a38d7588f143d397",
     "packages": [],
     "packages-dev": [
         {
             "name": "boundwize/structarmed",
-            "version": "0.11.3",
+            "version": "0.12.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/boundwize/structarmed.git",
-                "reference": "42a2520eda670609d701f9e6704b7d31d8d8b697"
+                "reference": "e3b038b0675e0b1e3c056dc8e4ffcbab15b39bf8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/boundwize/structarmed/zipball/42a2520eda670609d701f9e6704b7d31d8d8b697",
-                "reference": "42a2520eda670609d701f9e6704b7d31d8d8b697",
+                "url": "https://api.github.com/repos/boundwize/structarmed/zipball/e3b038b0675e0b1e3c056dc8e4ffcbab15b39bf8",
+                "reference": "e3b038b0675e0b1e3c056dc8e4ffcbab15b39bf8",
                 "shasum": ""
             },
             "require": {
@@ -71,7 +71,7 @@
             ],
             "support": {
                 "issues": "https://github.com/boundwize/structarmed/issues",
-                "source": "https://github.com/boundwize/structarmed/tree/0.11.3"
+                "source": "https://github.com/boundwize/structarmed/tree/0.12.0"
             },
             "funding": [
                 {
@@ -79,7 +79,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-06-04T16:05:09+00:00"
+            "time": "2026-06-05T02:51:34+00:00"
         },
         {
             "name": "fidry/cpu-core-counter",
