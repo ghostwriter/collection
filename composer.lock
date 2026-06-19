@@ -682,28 +682,31 @@
         },
         {
             "name": "ghostwriter/filesystem",
-            "version": "0.2.0",
+            "version": "0.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ghostwriter/filesystem.git",
-                "reference": "5f4cf2cdb8c71523ff3d79402d23d05fd12d4979"
+                "reference": "7a1835ecea67f4f288de376131576ca3880a5778"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ghostwriter/filesystem/zipball/5f4cf2cdb8c71523ff3d79402d23d05fd12d4979",
-                "reference": "5f4cf2cdb8c71523ff3d79402d23d05fd12d4979",
+                "url": "https://api.github.com/repos/ghostwriter/filesystem/zipball/7a1835ecea67f4f288de376131576ca3880a5778",
+                "reference": "7a1835ecea67f4f288de376131576ca3880a5778",
                 "shasum": ""
             },
             "require": {
-                "php": "~8.4.0 || ~8.5.0"
+                "php": "~8.4.0 || ~8.5.0 || ~8.6.0"
             },
             "require-dev": {
+                "boundwize/structarmed": "^0.13.4",
                 "ext-xdebug": "*",
                 "ghostwriter/coding-standard": "dev-main",
-                "ghostwriter/container": "^6.1.1",
+                "ghostwriter/container": "^7.0.2",
+                "ghostwriter/phpunit-assertions": "^0.1.0",
+                "ghostwriter/testify": "^0.1.2",
                 "mockery/mockery": "^1.6.12",
-                "phpunit/phpunit": "^13.1.3",
-                "symfony/var-dumper": "^8.0.8"
+                "phpunit/phpunit": "^13.2.1",
+                "symfony/var-dumper": "^8.1.0"
             },
             "type": "library",
             "extra": {
@@ -752,9 +755,13 @@
                 {
                     "url": "https://github.com/sponsors/ghostwriter",
                     "type": "github"
+                },
+                {
+                    "url": "https://paypal.me/codepoet",
+                    "type": "paypal"
                 }
             ],
-            "time": "2026-04-14T15:21:54+00:00"
+            "time": "2026-06-19T17:37:20+00:00"
         },
         {
             "name": "ghostwriter/phpunit-assertions",
