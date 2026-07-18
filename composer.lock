@@ -13,12 +13,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/ghostwriter/coding-standard.git",
-                "reference": "77ef9a26a1c855936cc7811f319ab069849b937f"
+                "reference": "a5b672744984c25b10cea76bd590701a01b254c1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ghostwriter/coding-standard/zipball/77ef9a26a1c855936cc7811f319ab069849b937f",
-                "reference": "77ef9a26a1c855936cc7811f319ab069849b937f",
+                "url": "https://api.github.com/repos/ghostwriter/coding-standard/zipball/a5b672744984c25b10cea76bd590701a01b254c1",
+                "reference": "a5b672744984c25b10cea76bd590701a01b254c1",
                 "shasum": ""
             },
             "require": {
@@ -73,17 +73,6 @@
                 "pestphp/pest": "*"
             },
             "default-branch": true,
-            "bin": [
-                "tools/phar/composer-normalize",
-                "tools/phar/composer-require-checker",
-                "tools/phar/composer-unused",
-                "tools/phar/infection",
-                "tools/phar/phive",
-                "tools/phar/phpactor",
-                "tools/phar/phpbench",
-                "tools/phar/phpdocumentor",
-                "tools/phar/psalm"
-            ],
             "type": "library",
             "extra": {
                 "thanks": {
@@ -133,7 +122,7 @@
                     "type": "paypal"
                 }
             ],
-            "time": "2026-06-04T12:20:37+00:00"
+            "time": "2026-07-16T13:58:43+00:00"
         },
         {
             "name": "ghostwriter/phpunit-assertions",
