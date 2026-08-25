@@ -46,7 +46,6 @@
     "require-dev": {
         "ext-xdebug": "*",
         "ghostwriter/coding-standard": "dev-main",
-        "mockery/mockery": "^1.6.15",
         "phpunit/phpunit": "^13.3.1"
     },
     "prefer-stable": true,
