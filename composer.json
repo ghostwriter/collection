@@ -47,6 +47,7 @@
         "ext-xdebug": "*",
         "boundwize/structarmed": "^0.16.22",
         "ghostwriter/coding-standard": "dev-main",
+        "ghostwriter/phpunit-assertions": "^0.1.1",
         "phpunit/phpunit": "^13.3.1"
     },
     "prefer-stable": true,
